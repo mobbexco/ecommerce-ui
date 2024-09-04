@@ -1,0 +1,37 @@
+import React, { useState } from 'react';
+
+export default function SelectCard({
+  sourcesData,
+  selectedCard,
+  onSelectCard,
+}: any) {
+  const handleSelectCard = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const targetCard = e.target.value;
+    onSelectCard(targetCard);
+  };
+
+  const sources: any = sourcesData;
+  const cards: any = sources
+    .filter((item: any) => item.view.group === 'card')
+    .map((item: any) => item.source.name);
+
+  return (
+    <div className="mt-4 ">
+      <label className="block text-black dark:text-mobbexWhite text-base font-sans font-medium mb-2">
+        Selecciona la tarjeta:
+      </label>
+      <select
+        value={selectedCard}
+        onChange={handleSelectCard}
+        className="p-2 bg-mobbexWhite text-black text-sm font-sans rounded-lg shadow w-full"
+      >
+        <option value="">Selecciona una tarjeta</option>
+        {cards.map((card: any) => (
+          <option key={card} value={card}>
+            {card}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
