@@ -1,7 +1,7 @@
-import { textStylizer } from '../functions';
+import { stylizeText } from './functions';
 
-export default function BestInstallmentDetails({ installment }: any) {
-  const [boldNumber, coloredText] = textStylizer(installment.installments);
+export default function FeaturedInstallmentDetails( {installment} : InstallmentDetailsProps) {
+  const [boldNumber, coloredText] = stylizeText(installment.installments);
 
   return (
     <div className="mb-4">
@@ -21,4 +21,12 @@ export default function BestInstallmentDetails({ installment }: any) {
       </p>
     </div>
   );
+}
+
+interface InstallmentDetailsProps {
+  installment: {
+    installments: string;
+    installmentValue: number | string;
+    img: string[];
+  };
 }

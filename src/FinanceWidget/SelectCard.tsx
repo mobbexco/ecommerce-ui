@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export default function SelectCard({
-  sourcesData,
+  sources,
   selectedCard,
   onSelectCard,
-}: any) {
+}: SelectCardProps) {
   const handleSelectCard = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const targetCard = e.target.value;
     onSelectCard(targetCard);
   };
 
-  const sources: any = sourcesData;
   const cards: any = sources
     .filter((item: any) => item.view.group === 'card')
     .map((item: any) => item.source.name);
@@ -34,4 +33,10 @@ export default function SelectCard({
       </select>
     </div>
   );
+}
+
+interface SelectCardProps {
+  sources: any[];
+  selectedCard: string;
+  onSelectCard: (card: string) => void;
 }

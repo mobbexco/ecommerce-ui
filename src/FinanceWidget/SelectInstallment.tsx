@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export default function SelectInstallment({
-  sourcesData,
+  sources,
   selectedInstallment,
   selectedCard,
   onSelectInstallment,
-}: any) {
-  const paymentData = sourcesData;
-  const installments = paymentData
+}: SelectInstallmentProps) {
+  const installments = sources
     .filter((item: any) => item.source.name === selectedCard)
     .map((item: any) =>
       item.installments.enabled
@@ -41,4 +40,11 @@ export default function SelectInstallment({
       </select>
     </div>
   );
+}
+
+interface SelectInstallmentProps {
+  sources: any[];
+  selectedInstallment: string;
+  selectedCard: string;
+  onSelectInstallment: (installment: string) => void;
 }

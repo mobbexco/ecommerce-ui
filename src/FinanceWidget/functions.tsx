@@ -21,7 +21,7 @@ export function formatTags(tags: any) {
  * @param installments string
  * @return array
  */
-export function textStylizer(installments: string) {
+export function stylizeText(installments: string) {
   // Sets text to colorize
   const stringToColorize = /sin[ ]?inter[eé]s/i;
   // Extract number in string

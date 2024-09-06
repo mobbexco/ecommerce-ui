@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function Button({ handleParentVariable }: IButton) {
-  const [isToggled, setIsToggled] = useState<boolean>(false);
+  const [isToggled, setIsToggled] = useState(false);
 
   /* Use handleParentVariable() to sets a state in parent component */
   const handleClick = () => {

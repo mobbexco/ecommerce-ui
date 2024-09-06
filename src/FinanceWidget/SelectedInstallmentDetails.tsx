@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { formatTags } from '../functions';
+import { formatTags } from './functions';
 
 export default function InstallmentDetails({
-  sourcesData,
+  sources,
   selectedCard,
   selectedInstallment,
-}: any) {
-  const [installmentData, setInstallmentData] = useState<any>(null);
-  const [tags, setTags] = useState<any>({});
+}: InstallmentDetailsProps) {
+  const [installmentData, setInstallmentData] = useState(null);
+  const [tags, setTags] = useState({});
 
   useEffect(() => {
-    const data = sourcesData;
-    console.log('Fetched data:', data);
-
-    const selectedData = data
+    const selectedData = sources
       .filter((option: any) => option.source.name === selectedCard)
       .flatMap((option: any) => option.installments.list || [])
       .find((installment: any) => installment.name === selectedInstallment);
 
     if (selectedData) {
       setInstallmentData(selectedData);
-      console.log('Filtered installment data:', selectedData);
 
       const formattedTags: any = formatTags(selectedData.tags);
       setTags(formattedTags);
@@ -56,4 +52,10 @@ export default function InstallmentDetails({
       </div>
     )
   );
+}
+
+interface InstallmentDetailsProps {
+  sources: any;
+  selectedCard: string;
+  selectedInstallment: string;
 }

@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import Button from './components/Button';
-import SelectCard from './components/SelectCard';
-import SelectInstallment from './components/SelectInstallment';
-import SelectedInstallmentDetails from './components/SelectedInstallmentDetails';
-import BestInstallments from './components/BestInstallments';
+import Button from './Button';
+import SelectCard from './SelectCard';
+import SelectInstallment from './SelectInstallment';
+import SelectedInstallmentDetails from './SelectedInstallmentDetails';
+import FeaturedInstallments from './FeaturedInstallments';
 
 export default function FinanceWidget({
-  bestInstallmentsData,
-  sourcesData,
-}: any) {
-  const [showSelects, setShowSelects] = useState<boolean>(false);
-  const [selectedCard, setSelectedCard] = useState<string>('');
-  const [selectedInstallment, setSelectedInstallment] = useState<any>(null);
+  bestInstallments,
+  sources,
+}: FinanceWidgetProps) {
+  const [showSelects, setShowSelects] = useState(false);
+  const [selectedCard, setSelectedCard] = useState('');
+  const [selectedInstallment, setSelectedInstallment] = useState(null);
 
   const handleShowSelects = () => {
     setShowSelects((showSelects) => !showSelects);
@@ -20,7 +20,7 @@ export default function FinanceWidget({
   return (
     <>
       <div className="bg-mobbexGrey-Soft dark:bg-mobbexGrey-Dark shadow-md rounded-lg px-8 pt-6 pb-6 m-2 w-auto">
-        <BestInstallments bestInstallmentsData={bestInstallmentsData} />
+        <FeaturedInstallments bestInstallments={bestInstallments}/>
         <div className="text-center mt-4 max-w-sm mx-auto">
           <Button handleParentVariable={handleShowSelects} />
         </div>
@@ -28,12 +28,12 @@ export default function FinanceWidget({
           <form className="max-w-sm mx-auto">
             <div key="selectInstallment">
               <SelectCard
-                sourcesData={sourcesData}
+                sources={sources}
                 selectedCard={selectedCard}
                 onSelectCard={setSelectedCard}
               />
               <SelectInstallment
-                sourcesData={sourcesData}
+                sources={sources}
                 selectedInstallment={selectedInstallment}
                 selectedCard={selectedCard}
                 onSelectInstallment={setSelectedInstallment}
@@ -42,7 +42,7 @@ export default function FinanceWidget({
             {selectedInstallment && (
               <div key="installmentDetail">
                 <SelectedInstallmentDetails
-                  sourcesData={sourcesData}
+                  sources={sources}
                   selectedCard={selectedCard}
                   selectedInstallment={selectedInstallment}
                 />
@@ -53,4 +53,15 @@ export default function FinanceWidget({
       </div>
     </>
   );
+}
+
+interface FinanceWidgetProps {
+  bestInstallments :  Array<{
+    installment: {
+      installments: string;
+      installmentValue: number | string;
+      img: string[];
+    };
+  }>;
+  sources: string[];
 }
