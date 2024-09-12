@@ -1,7 +1,5 @@
 /**
  * Formats tags accumulating them in a new object
- * @param tags any
- * @return OTags object
  */
 export function formatTags(tags: any) {
   if (tags.length < 1) {
@@ -16,11 +14,6 @@ export function formatTags(tags: any) {
   return formattedTags;
 }
 
-/**
- * Stylize text
- * @param installments string
- * @return array
- */
 export function stylizeText(installments: string) {
   // Sets text to colorize
   const stringToColorize = /sin[ ]?inter[eé]s/i;

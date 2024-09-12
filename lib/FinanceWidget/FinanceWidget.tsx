@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Button from './Button';
 import SelectCard from './SelectCard';
 import SelectInstallment from './SelectInstallment';
@@ -11,7 +11,7 @@ export default function FinanceWidget({
 }: FinanceWidgetProps) {
   const [showSelects, setShowSelects] = useState(false);
   const [selectedCard, setSelectedCard] = useState('');
-  const [selectedInstallment, setSelectedInstallment] = useState(null);
+  const [selectedInstallment, setSelectedInstallment] = useState('');
 
   const handleShowSelects = () => {
     setShowSelects((showSelects) => !showSelects);
@@ -20,7 +20,7 @@ export default function FinanceWidget({
   return (
     <>
       <div className="bg-mobbexGrey-Soft dark:bg-mobbexGrey-Dark shadow-md rounded-lg px-8 pt-6 pb-6 m-2 w-auto">
-        <FeaturedInstallments bestInstallments={bestInstallments}/>
+        <FeaturedInstallments bestInstallments={bestInstallments} />
         <div className="text-center mt-4 max-w-sm mx-auto">
           <Button handleParentVariable={handleShowSelects} />
         </div>
@@ -56,7 +56,7 @@ export default function FinanceWidget({
 }
 
 interface FinanceWidgetProps {
-  bestInstallments :  Array<{
+  bestInstallments: Array<{
     installment: {
       installments: string;
       installmentValue: number | string;

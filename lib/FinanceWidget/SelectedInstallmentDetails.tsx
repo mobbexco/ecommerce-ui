@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { formatTags } from './functions';
 
 export default function InstallmentDetails({
@@ -6,17 +6,19 @@ export default function InstallmentDetails({
   selectedCard,
   selectedInstallment,
 }: InstallmentDetailsProps) {
-  const [installmentData, setInstallmentData] = useState(null);
-  const [tags, setTags] = useState({});
+  const [installment, setInstallment] = useState<InstallmentsProps | null>(
+    null
+  );
+  const [tags, setTags] = useState<TagProps | null>(null);
 
   useEffect(() => {
-    const selectedData = sources
+    const selectedData: any = sources
       .filter((option: any) => option.source.name === selectedCard)
       .flatMap((option: any) => option.installments.list || [])
       .find((installment: any) => installment.name === selectedInstallment);
 
     if (selectedData) {
-      setInstallmentData(selectedData);
+      setInstallment(selectedData);
 
       const formattedTags: any = formatTags(selectedData.tags);
       setTags(formattedTags);
@@ -26,18 +28,18 @@ export default function InstallmentDetails({
   }, [selectedCard, selectedInstallment]);
 
   return (
-    installmentData && (
+    installment && (
       <div className="font-sans dark:text-mobbexWhite border-t-2 border-solid border-mobbexGrey-Medium mt-6">
         <div className="grid grid-cols-2 gap-2 mt-1">
           <div className="col-start-1 font-bold">
             <p>{selectedCard}</p>
             <p className="text-xl">
-              {installmentData.count} Cuotas de $
-              {installmentData.totals.installment.amount}
+              {installment.count} Cuotas de $
+              {installment.totals.installment.amount}
             </p>
           </div>
           <p className="col-start-2 font-bold text-end">
-            Total: ${installmentData.totals.total}
+            Total: ${installment.totals.total}
           </p>
           <div className="col-start-1 text-sm text-mobbexTag-Light dark:text-mobbexTag-Dark">
             <div className="col-start-1 text-sm">
@@ -55,7 +57,24 @@ export default function InstallmentDetails({
 }
 
 interface InstallmentDetailsProps {
-  sources: any;
+  sources: string[];
   selectedCard: string;
   selectedInstallment: string;
+}
+
+interface InstallmentsProps {
+  count: number;
+  totals: {
+    installment: {
+      amount: number;
+    };
+    total: number;
+  };
+  tags: TagProps[];
+}
+
+interface TagProps {
+  CFT?: string;
+  TNA?: string;
+  TEA?: string;
 }

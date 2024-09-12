@@ -1,6 +1,8 @@
 import { stylizeText } from './functions';
 
-export default function FeaturedInstallmentDetails( {installment} : InstallmentDetailsProps) {
+export default function FeaturedInstallmentDetails({
+  installment,
+}: InstallmentDetailsProps) {
   const [boldNumber, coloredText] = stylizeText(installment.installments);
 
   return (
