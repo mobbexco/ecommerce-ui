@@ -1,13 +1,23 @@
 {
-  "name": "ecommerce-ui",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@mobbex/ecommerce-ui",
+  "private": false,
+  "version": "1.0.0",
+  "description": "UI component library for e-commerce",
   "type": "module",
+  "author": "luis.scarrone@mobbex.com",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mobbexco/ecommerce-ui.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b ./tsconfig.lib.json && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "react": "^18.3.1",
