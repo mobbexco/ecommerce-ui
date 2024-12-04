@@ -1,13 +1,16 @@
+import { FeaturedInstallment, PaymentSource } from "./Interfaces";
+import { Installment } from "./Interfaces";
+
 /**
  * Formats tags accumulating them in a new object
  */
 export function formatTags(tags: any) {
-  if (tags.length < 1) {
+  if (!tags || tags.length < 1) {
     return {};
   }
   const formattedTags = tags.reduce((OTags: any, tag: any) => {
     OTags[tag.label] = tag.value;
-    console.log('formatTags OTags', OTags);
+    console.log("formatTags OTags", OTags);
     return OTags;
   }, {});
 

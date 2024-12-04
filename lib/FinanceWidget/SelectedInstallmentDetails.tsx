@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { formatTags } from './functions';
+import { useEffect, useState } from "react";
+import { formatTags } from "./functions";
+import { PaymentSource } from "./Interfaces";
 
 export default function InstallmentDetails({
   sources,
@@ -23,7 +24,7 @@ export default function InstallmentDetails({
       const formattedTags: any = formatTags(selectedData.tags);
       setTags(formattedTags);
     } else {
-      console.log('No data found for the selected card and installment.');
+      console.log("No data found for the selected card and installment.");
     }
   }, [selectedCard, selectedInstallment]);
 
@@ -43,10 +44,10 @@ export default function InstallmentDetails({
           </p>
           <div className="col-start-1 text-sm text-mobbexTag-Light dark:text-mobbexTag-Dark">
             <div className="col-start-1 text-sm">
-              <p>CFT: {tags?.CFT ? tags.CFT : '0'}%</p>
+              <p>CFT: {tags?.CFT ? tags.CFT : "0"}%</p>
               <p>
-                TNA: {tags?.TNA ? tags.TNA : '0'}% TEA:{' '}
-                {tags?.TEA ? tags.TEA : '0'}%
+                TNA: {tags?.TNA ? tags.TNA : "0"}% TEA:{" "}
+                {tags?.TEA ? tags.TEA : "0"}%
               </p>
             </div>
           </div>
@@ -57,7 +58,7 @@ export default function InstallmentDetails({
 }
 
 interface InstallmentDetailsProps {
-  sources: string[];
+  sources: PaymentSource[];
   selectedCard: string;
   selectedInstallment: string;
 }
