@@ -17,38 +17,65 @@ export function formatTags(tags: any) {
   return formattedTags;
 }
 
-export function stylizeText(installments: string) {
-  // Sets text to colorize
-  const stringToColorize = /sin[ ]?inter[eé]s/i;
-  // Extract number in string
-  const numberMatch = installments.match(/\d+/);
-  const number = numberMatch ? numberMatch[0] : '';
-  let text = installments.replace(/^\d+/, '').trim();
+export function getFeaturedInstallments(sources: PaymentSource[]) {
+  const featuredIntallments: FeaturedInstallment[] = [];
 
-  // Set installment number with string style
-  const boldNumber = (
-    <span>
-      <strong>{number}</strong>
-    </span>
-  );
+  try {
+    if (!sources.length) return featuredIntallments;
 
-  // Add colour to stringToColorize if exists
-  const interestMatch = stringToColorize.test(text);
-  if (interestMatch) {
-    text = text.replace(
-      stringToColorize,
-      (match) =>
-        `<span class='text-mobbexGreen-light dark:text-mobbexGreen-dark'>${match}</span>`
-    );
+    //Get all installments list
+    const installmentList: Installment[] = sources
+      .map((source) => source?.installments?.list || [])
+      .flat();
+
+    //Return if empty
+    if (!installmentList.length) return featuredIntallments;
+
+    //Get only 2 featured installments
+    for (let i = 0; i < 2; i++) {
+      let best: any = { totals: { financial: { percentage: 10000 } } };
+
+      //Get best installment
+      (installmentList ?? []).map((inst) => {
+        const iPerc = inst?.totals?.financial?.percentage,
+          currPerc = best?.totals?.financial?.percentage;
+
+        if (
+          iPerc < currPerc ||
+          (iPerc == currPerc && inst?.count > best.count)
+        ) {
+          best = { ...inst };
+        }
+      });
+
+      //Get sources references for best installment
+      const instalmentSources = sources
+        .filter(
+          (item) =>
+            item.installments?.list &&
+            item.installments.list.some(
+              (installment) => installment.uid === best.uid
+            )
+        )
+        .map((item) => item.source.reference);
+
+      // Add featured installment to list
+      featuredIntallments.push({
+        amount: Number(best.totals.installment.amount),
+        count: Number(best.count),
+        percentage: Number(best.totals.financial.percentage),
+        sources: instalmentSources,
+        uid: best.uid,
+      });
+
+      //Delete best installment from installment list
+      installmentList.map((installment, i) => {
+        if (installment.uid == best.uid) installmentList.splice(i, 1);
+      });
+    }
+  } catch (e) {
+    console.log(e);
   }
 
-  const coloredText = (
-    <span
-      dangerouslySetInnerHTML={{
-        __html: interestMatch ? text : installments.replace(/^\d+/, '').trim(),
-      }}
-    />
-  );
-
-  return [boldNumber, coloredText];
+  return featuredIntallments;
 }

@@ -1,17 +1,23 @@
-import { useState } from 'react';
-import Button from './Button';
-import SelectCard from './SelectCard';
-import SelectInstallment from './SelectInstallment';
-import SelectedInstallmentDetails from './SelectedInstallmentDetails';
-import FeaturedInstallments from './FeaturedInstallments';
+import { useState } from "react";
+import Button from "./Button";
+import SelectCard from "./SelectCard";
+import SelectInstallment from "./SelectInstallment";
+import SelectedInstallmentDetails from "./SelectedInstallmentDetails";
+import FeaturedInstallments from "./FeaturedInstallments";
+import { FeaturedInstallment, PaymentSource } from "./Interfaces";
+import { getFeaturedInstallments } from "./functions";
 
 export default function FinanceWidget({
-  bestInstallments,
   sources,
-}: FinanceWidgetProps) {
+}: {
+  sources: PaymentSource[];
+}) {
   const [showSelects, setShowSelects] = useState(false);
-  const [selectedCard, setSelectedCard] = useState('');
-  const [selectedInstallment, setSelectedInstallment] = useState('');
+  const [selectedCard, setSelectedCard] = useState("");
+  const [selectedInstallment, setSelectedInstallment] = useState("");
+
+  //Get featured installments
+  const featured: FeaturedInstallment[] = getFeaturedInstallments(sources);
 
   const handleShowSelects = () => {
     setShowSelects((showSelects) => !showSelects);
@@ -20,7 +26,7 @@ export default function FinanceWidget({
   return (
     <>
       <div className="bg-mobbexGrey-Soft dark:bg-mobbexGrey-Dark shadow-md rounded-lg px-8 pt-6 pb-6 m-2 w-auto">
-        <FeaturedInstallments bestInstallments={bestInstallments} />
+        <FeaturedInstallments bestInstallments={featured} />
         <div className="text-center mt-4 max-w-sm mx-auto">
           <Button handleParentVariable={handleShowSelects} />
         </div>
@@ -53,15 +59,4 @@ export default function FinanceWidget({
       </div>
     </>
   );
-}
-
-interface FinanceWidgetProps {
-  bestInstallments: Array<{
-    installment: {
-      installments: string;
-      installmentValue: number | string;
-      img: string[];
-    };
-  }>;
-  sources: string[];
 }
