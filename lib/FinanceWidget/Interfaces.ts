@@ -41,6 +41,12 @@ export interface Tag {
   _id: string;
 }
 
+export interface FormattedTag {
+  CFT?: string;
+  TNA?: string;
+  TEA?: string;
+}
+
 export interface Totals {
   currency: Currency;
   installment: {

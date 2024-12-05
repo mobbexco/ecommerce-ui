@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import { PaymentSource } from "./Interfaces";
 
 export default function SelectInstallment({
   sources,
@@ -43,7 +44,7 @@ export default function SelectInstallment({
 }
 
 interface SelectInstallmentProps {
-  sources: any[];
+  sources: PaymentSource[];
   selectedInstallment: string;
   selectedCard: string;
   onSelectInstallment: (installment: string) => void;

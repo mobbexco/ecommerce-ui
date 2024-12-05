@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import { formatTags } from "./functions";
-import { PaymentSource } from "./Interfaces";
+import { FormattedTag, Installment, PaymentSource } from "./Interfaces";
 
 export default function InstallmentDetails({
   sources,
   selectedCard,
   selectedInstallment,
 }: InstallmentDetailsProps) {
-  const [installment, setInstallment] = useState<InstallmentsProps | null>(
-    null
-  );
-  const [tags, setTags] = useState<TagProps | null>(null);
+  const [installment, setInstallment] = useState<Installment | null>(null);
+  const [tags, setTags] = useState<FormattedTag | null>(null);
 
   useEffect(() => {
     const selectedData: any = sources
@@ -61,21 +59,4 @@ interface InstallmentDetailsProps {
   sources: PaymentSource[];
   selectedCard: string;
   selectedInstallment: string;
-}
-
-interface InstallmentsProps {
-  count: number;
-  totals: {
-    installment: {
-      amount: number;
-    };
-    total: number;
-  };
-  tags: TagProps[];
-}
-
-interface TagProps {
-  CFT?: string;
-  TNA?: string;
-  TEA?: string;
 }
