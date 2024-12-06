@@ -1,20 +1,31 @@
-import { stylizeText } from './functions';
+import { FeaturedInstallment } from "./Interfaces";
 
 export default function FeaturedInstallmentDetails({
   installment,
-}: InstallmentDetailsProps) {
-  const [boldNumber, coloredText] = stylizeText(installment.installments);
-
+}: {
+  installment: FeaturedInstallment;
+}) {
   return (
     <div className="mb-4">
       <p>
-        {boldNumber} {coloredText} de{' '}
-        <strong>${installment.installmentValue}</strong>
-        {installment.img.map((image: string, index: number) => (
-          <span>
+        <span>
+          <strong>{installment.count}</strong>
+        </span>
+        {installment.count > 1 ? " cuotas " : " pago "}
+        <span className="text-mobbexGreen-light dark:text-mobbexGreen-dark">
+          {installment.percentage < 1
+            ? installment.percentage < 0
+              ? "con descuento"
+              : "sin interés"
+            : ""}
+        </span>
+        {" de "}
+        <strong>${installment.amount}</strong>
+        {":"}
+        {installment.sources.map((ref: string) => (
+          <span key={ref}>
             <img
-              key={index}
-              src={image}
+              src={`https://res.mobbex.com/images/sources/original/${ref}.png`}
               alt="Card logo"
               className="inline-block bg-mobbexWhite rounded ml-2 p-1 w-10 h-8 object-contain"
             />
@@ -23,12 +34,4 @@ export default function FeaturedInstallmentDetails({
       </p>
     </div>
   );
-}
-
-interface InstallmentDetailsProps {
-  installment: {
-    installments: string;
-    installmentValue: number | string;
-    img: string[];
-  };
 }

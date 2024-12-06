@@ -1,31 +1,19 @@
-import FeaturedInstallmentDetails from './FeaturedInstallmentDetails';
+import FeaturedInstallmentDetails from "./FeaturedInstallmentDetails";
+import { FeaturedInstallment } from "./Interfaces";
 
 export default function FeaturedInstallments({
   bestInstallments,
-}: FeaturedInstallmentsProps) {
+}: {
+  bestInstallments: FeaturedInstallment[];
+}) {
   return (
     <div className="grid justify-center items-center font-sans text-left dark:text-white w-auto px-6">
-      {bestInstallments.map(({ installment }: InstallmentDetailsProps) => (
-        <FeaturedInstallmentDetails installment={installment} />
+      {bestInstallments.map((installment: FeaturedInstallment) => (
+        <FeaturedInstallmentDetails
+          installment={installment}
+          key={installment.uid}
+        />
       ))}
     </div>
   );
-}
-
-interface FeaturedInstallmentsProps {
-  bestInstallments: Array<{
-    installment: {
-      installments: string;
-      installmentValue: number | string;
-      img: string[];
-    };
-  }>;
-}
-
-interface InstallmentDetailsProps {
-  installment: {
-    installments: string;
-    installmentValue: number | string;
-    img: string[];
-  };
 }
