@@ -2,8 +2,10 @@ import { FeaturedInstallment } from "./Interfaces";
 
 export default function FeaturedInstallmentDetails({
   installment,
+  theme,
 }: {
   installment: FeaturedInstallment;
+  theme: "light" | "dark";
 }) {
   return (
     <div className="mb-4">
@@ -12,7 +14,7 @@ export default function FeaturedInstallmentDetails({
           <strong>{installment.count}</strong>
         </span>
         {installment.count > 1 ? " cuotas " : " pago "}
-        <span className="text-mobbexGreen-light dark:text-mobbexGreen-dark">
+        <span className={`${theme === "light" ? "" : "bg-mobbexGrey-Dark"} text-mobbexGreen-light`}>
           {installment.percentage < 1
             ? installment.percentage < 0
               ? "con descuento"
@@ -27,7 +29,7 @@ export default function FeaturedInstallmentDetails({
             <img
               src={`https://res.mobbex.com/images/sources/original/${ref}.png`}
               alt="Card logo"
-              className="inline-block bg-mobbexWhite rounded ml-2 p-1 w-10 h-8 object-contain"
+              className="inline-block rounded-[0.70rem] ml-2 w-10 h-8 object-contain"
             />
           </span>
         ))}
