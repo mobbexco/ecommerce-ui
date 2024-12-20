@@ -6,6 +6,7 @@ export default function SelectInstallment({
   selectedInstallment,
   selectedCard,
   onSelectInstallment,
+  theme,
 }: SelectInstallmentProps) {
   const installments = sources
     .filter((item: any) => item.source.name === selectedCard)
@@ -23,7 +24,7 @@ export default function SelectInstallment({
 
   return (
     <div className="mt-4">
-      <label className="block text-black dark:text-mobbexWhite text-base font-sans font-medium mb-2">
+      <label className={`${theme === 'light' ? '' : 'text-mobbexWhite'} block text-black text-base font-sans font-medium mb-2`}>
         Selecciona el método de pago:
       </label>
       <select
@@ -48,4 +49,5 @@ interface SelectInstallmentProps {
   selectedInstallment: string;
   selectedCard: string;
   onSelectInstallment: (installment: string) => void;
+  theme: 'light' | 'dark';
 }

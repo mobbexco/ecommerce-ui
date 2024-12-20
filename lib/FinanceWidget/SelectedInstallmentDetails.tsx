@@ -6,6 +6,7 @@ export default function InstallmentDetails({
   sources,
   selectedCard,
   selectedInstallment,
+  theme,
 }: InstallmentDetailsProps) {
   const [installment, setInstallment] = useState<Installment | null>(null);
   const [tags, setTags] = useState<FormattedTag | null>(null);
@@ -28,7 +29,7 @@ export default function InstallmentDetails({
 
   return (
     installment && (
-      <div className="font-sans dark:text-mobbexWhite border-t-2 border-solid border-mobbexGrey-Medium mt-6">
+      <div className={`${theme === 'light' ? '' : 'text-mobbexWhite'} font-sans border-t-2 border-solid border-mobbexGrey-Medium mt-6`}>
         <div className="grid grid-cols-2 gap-2 mt-1">
           <div className="col-start-1 font-bold">
             <p>{selectedCard}</p>
@@ -40,7 +41,7 @@ export default function InstallmentDetails({
           <p className="col-start-2 font-bold text-end">
             Total: ${installment.totals.total}
           </p>
-          <div className="col-start-1 text-sm text-mobbexTag-Light dark:text-mobbexTag-Dark">
+          <div className={`col-start-1 text-sm ${theme === 'light' ? 'text-mobbexTag-Light' : 'text-mobbexTag-Dark'}`}>
             <div className="col-start-1 text-sm">
               <p>CFT: {tags?.CFT ? tags.CFT : "0"}%</p>
               <p>
@@ -59,4 +60,5 @@ interface InstallmentDetailsProps {
   sources: PaymentSource[];
   selectedCard: string;
   selectedInstallment: string;
+  theme?: 'light' | 'dark';
 }
