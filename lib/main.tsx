@@ -5,6 +5,6 @@ import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <FinanceWidget sources={[]} />
+    <FinanceWidget sources={[]} theme="light"/>
   </StrictMode>
 );
