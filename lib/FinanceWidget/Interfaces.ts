@@ -6,6 +6,11 @@ export interface FeaturedInstallment {
   uid: string;
 }
 
+export interface FinanceWidgetProps {
+  sources: PaymentSource[];
+  theme?: 'light' | 'dark';
+}
+
 export interface PaymentSource {
   installments: {
     enabled: boolean;
