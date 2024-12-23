@@ -5,7 +5,7 @@ export default function FeaturedInstallmentDetails({
   theme,
 }: {
   installment: FeaturedInstallment;
-  theme: "light" | "dark";
+  theme?: "light" | "dark";
 }) {
   return (
     <div className="mb-4">
@@ -14,7 +14,11 @@ export default function FeaturedInstallmentDetails({
           <strong>{installment.count}</strong>
         </span>
         {installment.count > 1 ? " cuotas " : " pago "}
-        <span className={`${theme === "light" ? "" : "bg-mobbexGrey-Dark"} text-mobbexGreen-light`}>
+        <span
+          className={`${
+            theme === "light" ? "" : "bg-mobbexGrey-Dark"
+          } text-mobbexGreen-light`}
+        >
           {installment.percentage < 1
             ? installment.percentage < 0
               ? "con descuento"
