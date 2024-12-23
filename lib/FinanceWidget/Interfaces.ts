@@ -8,7 +8,7 @@ export interface FeaturedInstallment {
 
 export interface FinanceWidgetProps {
   sources: PaymentSource[];
-  theme?: 'light' | 'dark';
+  theme: 'light' | 'dark';
 }
 
 export interface PaymentSource {
