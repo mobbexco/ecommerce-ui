@@ -6,7 +6,7 @@ export default function FeaturedInstallments({
   theme,
 }: {
   bestInstallments: FeaturedInstallment[];
-  theme?: 'light' | 'dark';
+  theme: 'light' | 'dark';
 }) {
   return (
     <div className={`${theme === "light" ? "" : "text-white"} grid justify-center items-center font-sans text-left w-auto px-6"`}>
