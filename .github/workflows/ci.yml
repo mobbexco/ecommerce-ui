@@ -15,9 +15,8 @@ jobs:
         with:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm i @rollup/rollup-linux-x64-gnu --force
-      - run: npm list @rollup/rollup-linux-x64-gnu # Verificar la instalación de rollup
       - run: npm ci
+      - run: npm i @rollup/rollup-linux-x64-gnu --force
       - run: npm run build
       - run: npm publish --provenance --access public
         env:
