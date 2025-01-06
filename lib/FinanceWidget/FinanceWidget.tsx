@@ -9,7 +9,7 @@ import { getFeaturedInstallments } from "./functions";
 
 export default function FinanceWidget({
   sources,
-  theme,
+  theme = 'light', 
 }: FinanceWidgetProps) {
   const [showSelects, setShowSelects] = useState(false);
   const [selectedCard, setSelectedCard] = useState("");
