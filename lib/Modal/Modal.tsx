@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import css from "./styles.module.css";
 
 interface ModalProps {
   children: ReactNode;
@@ -8,6 +7,8 @@ interface ModalProps {
   padding?: string;
   background?: string;
   shadow?: string;
+  border?: string;
+  overflow?: string;
 }
 
 export default function Modal({ 
@@ -16,17 +17,20 @@ export default function Modal({
     width = "auto", 
     padding="2px", 
     background= "rgb(255, 255, 255)",
-    shadow="0 2px 10px rgba(0, 0, 0, 0.1)"
+    shadow="0 2px 10px rgba(0, 0, 0, 0.1)",
+    border="8px",
+    overflow="auto"
 }: ModalProps) {
   return (
-    <div 
-        className={css.modalContent}
+    <div
         style={{ 
         height, 
         width,
         padding,
         background,
         boxShadow: shadow,
+        borderRadius: border,
+        overflow: overflow,
         maxWidth: '95vw',
         maxHeight: '95vh'
         }}
