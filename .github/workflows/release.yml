@@ -1,4 +1,4 @@
-name: ecommerce-ui
+name: Release Workflow
 on:
   release:
     types: [published]
@@ -20,4 +20,3 @@ jobs:
       - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
