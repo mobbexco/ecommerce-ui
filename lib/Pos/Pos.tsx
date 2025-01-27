@@ -4,7 +4,7 @@ import {
   cancelOperation,
 } from './functions';
 
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loading, slideTopAnimation, ToastError } from '../components';
 import GlobalProvider, { GlobalContext } from '../context';
