@@ -16,6 +16,6 @@ export function getPosSampleData() {
     ],
     opUrl: 'http://your-url/',
     isSellerView: false,
-    handleResetTransaction: (a: any) => {},
+    handleResetTransaction: (_a: any) => {},
   };
 }
