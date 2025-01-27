@@ -1,0 +1,129 @@
+.posWrapper {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    padding: 10px;
+    gap: 10px;
+    position: relative;
+  }
+  
+  .posList {
+    display: grid;
+    gap: 10px;
+    background: white;
+    overflow: scroll;
+    margin-bottom: auto;
+    scrollbar-width: none;
+  }
+  
+  .pos {
+    border: 2px solid #d4b2ff6b;
+    background: #c495ff17;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: .1s background ease-in-out;
+    color: #7000ffe8;
+  
+    small {
+      color: #7000ff94;
+    }
+  }
+  
+  .pos:hover {
+    background: #7000ff17;
+  }
+  
+  .posSelected {
+    border: 2px solid #7000ff6b;
+    background: #7000ff17;
+  }
+  
+  .posActions {
+    display: flex;
+    place-content: center;
+  }
+  
+  .posButton {
+    width: 200px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    color: white;
+    background: #7000ff;
+    border: none;
+  }
+  
+  .posButtonDisabled {
+    cursor: default;
+    background: #7000ff6b;
+  }
+  
+  .posTitle {
+    display: flex;
+    place-content: center;
+    margin: 10px;
+    color: #7000ffe8;
+    font-weight: normal;
+  }
+  
+  .smallLegend {
+    align-self: end;
+    position: absolute;
+    font-size: 10px;
+    color: #6f6f6f;
+  }
+  
+  .successWrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: white;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    z-index: 999;
+  }
+  
+  .successContainer {
+    position: relative;
+    top: -30px;
+    display: grid;
+    place-items: center;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ff4444;
+    color: white;
+    padding: 1rem;
+    border-radius: 4px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease-in-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+  
+  .slideOut {
+    animation: slideOut 0.3s ease-in-out forwards;
+  }
