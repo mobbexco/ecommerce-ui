@@ -7,7 +7,7 @@ interface GlobalContextValue {
 
 const defaultValue: GlobalContextValue = {
   state: {},
-  setState: (newState: GlobalContextValue['state']) => {},
+  setState: (_newState: GlobalContextValue['state']) => {},
 };
 
 export const GlobalContext = createContext(defaultValue);

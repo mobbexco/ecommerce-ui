@@ -10,8 +10,9 @@ let sampleData = getPosSampleData();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <FinanceWidget sources={[]} theme="light"/>
-    <PosCheckout posList={sampleData.posList} opUrl={sampleData.opUrl} handleResetTransaction={sampleData.handleResetTransaction} />
+    <Modal>
+      <PosCheckout posList={sampleData.posList} opUrl={sampleData.opUrl} handleResetTransaction={sampleData.handleResetTransaction} />
+    </Modal>
     <Modal>
       <FinanceWidget sources={[]} theme="light"/>
     </Modal>
