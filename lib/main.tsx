@@ -4,7 +4,6 @@ import FinanceWidget from "./FinanceWidget/FinanceWidget.tsx";
 import PosCheckout from "./Pos/Pos.tsx";
 import {getPosSampleData} from "./Pos/sampleFunction.ts";
 import Modal from "./Modal/Modal.tsx";
-import "./index.css";
 
 let sampleData = getPosSampleData();
 
