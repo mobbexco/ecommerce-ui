@@ -6,6 +6,8 @@ import SelectedInstallmentDetails from "./SelectedInstallmentDetails";
 import FeaturedInstallments from "./FeaturedInstallments";
 import { FeaturedInstallment, FinanceWidgetProps } from "./Interfaces";
 import { getFeaturedInstallments } from "./functions";
+import root from "react-shadow";
+import styles from "../index.css?inline"
 
 export default function FinanceWidget({
   sources,
@@ -23,7 +25,10 @@ export default function FinanceWidget({
   };
 
   return (
-    <>
+    <root.div className="mobbex-finance-widget">
+      <style type="text/css">
+        {styles}
+      </style>
       <div className={`${theme === "light" ? "bg-mobbexGrey-Soft" : "bg-mobbexGrey-Dark"} shadow-md rounded-lg px-8 pt-6 pb-6 m-2 w-auto`}>
         <FeaturedInstallments bestInstallments={featured} theme={theme} />
         <div className="text-center mt-4 max-w-sm mx-auto">
@@ -59,6 +64,6 @@ export default function FinanceWidget({
           </form>
         )}
       </div>
-    </>
+    </root.div>
   );
 }
