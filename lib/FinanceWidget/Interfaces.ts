@@ -11,6 +11,10 @@ export interface FinanceWidgetProps {
   theme: 'light' | 'dark';
 }
 
+export interface IButton {
+  handleParentVariable: () => void;
+}
+
 export interface PaymentSource {
   installments: {
     enabled: boolean;
@@ -27,6 +31,17 @@ export interface PaymentSource {
     name: string;
   };
 }
+export interface SelectCardProps {
+  sources: any[];
+  selectedCard: string;
+  onSelectCard: (card: string) => void;
+}
+export interface SelectInstallmentProps {
+  sources: PaymentSource[];
+  selectedInstallment: string;
+  selectedCard: string;
+  onSelectInstallment: (installment: string) => void;
+}
 
 export interface Installment {
   uid: string;
@@ -36,6 +51,12 @@ export interface Installment {
   reference: string;
   tags?: Tag[];
   totals: Totals;
+}
+
+export interface InstallmentDetailsProps {
+  sources: PaymentSource[];
+  selectedCard: string;
+  selectedInstallment: string;
 }
 
 export interface Tag {
