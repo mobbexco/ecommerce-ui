@@ -1,0 +1,157 @@
+:root {
+    --mobbex-tag : #6A6969;
+    --mobbex-grey : #6a6969;
+    --mobbex-green : #0a8a4a;
+    --mobbex-white : #FFFFFF;
+    --mobbex-black : #000000;
+    --mobbex-violet : #7000FF;
+    --mobbex-grey-soft : #E2E2E1;
+    --mobbex-background : #F9F9F9;
+    --mobbex-grey-medium : #D1DAE6;
+    --mobbex-text-color : var(--mobbex-black);
+  }
+  
+  [color-scheme="dark"] {
+    --mobbex-tag: #B5B5B5;
+    --mobbex-green: #00A64D;
+    --mobbex-violet: #9B4DFF;
+    --mobbex-grey-soft: #2B2A2A;
+    --mobbex-text-color: var(--mobbex-white);
+  }
+
+.financeWidget-wrapper {
+    background-color: var(--mobbex-grey-soft);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 0.5rem;
+    padding: 2rem 2rem 1.5rem 2rem;
+    margin: 0.5rem;
+    width: auto;
+  }
+  .financeWidget-form {
+    text-align: center;
+    margin-top: 1rem;
+    max-width: 24rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* FeaturedInstallments */
+.financeWidget-featuredInstallments {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    text-align: left;
+    width: auto;
+    padding: 0rem;
+  }
+
+  /* FeaturedInstallmentDetails */
+.financeWidget-featuredInstallmentDetails{
+    color: var(--mobbex-text-color);
+    margin-bottom: 1rem;
+}
+
+.financeWidget-featuredInstallmentDetails .discount {
+    color: var(--mobbex-green);
+}
+.card-logo-span {
+    display: contents;
+    align-items: center;
+}
+.card-logo {
+    display: inline-block;
+    border-radius: 0.8rem;
+    width: 2.5rem;
+    height: 2rem;
+    object-fit: contain;
+    margin: 0 0.25rem;
+    vertical-align: middle;
+}
+
+  /* Button */
+.financeWidget-button {
+    background-color: var(--mobbex-background);
+    color: var(--mobbex-black);
+    font-family: sans-serif;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: 1px solid;
+    width: 100%;
+    transition: background-color 0.3s;
+    font-size: 0.95rem;
+    line-height: 0.95rem;
+  }
+  .financeWidget-button:hover {
+    background-color: var(--mobbex-black);
+    color: var(--mobbex-white);
+  }
+  .financeWidget-buttonWrapper {
+    margin-top: 1rem;
+    max-width: 24rem;
+    margin-left: auto;
+    text-align: center;
+    margin-right: auto;
+  }
+
+  /* Select */
+  .financeWidget-select {
+    margin-top: 1rem;
+  }
+  .financeWidget-select label {
+    display: block;
+    font-size: 1rem;
+    font-family: sans-serif;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--mobbex-text-color);
+  }
+  .financeWidget-select select {
+    padding: 0.5rem;
+    background-color: var(--mobbex-background);
+    font-size: 0.875rem;
+    font-family: sans-serif;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    width: 100%;
+  }
+
+/* SelectedInstallmentDetails */
+.financeWidget-selectedInstallmentDetails {
+    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    border-top: 1rem solid var(--mobbex-grey-soft);
+    color : var(--mobbex-text-color);
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .financeWidget-selectedInstallmentDetails .column-1{
+    grid-column-start: 1;
+    font-weight: 700;
+    text-align: start;
+    color: var(--mobbex-text-color);
+  }
+  .financeWidget-selectedInstallmentDetails .column-1 p{
+    margin : 0;
+    padding: 0;
+  }
+  .financeWidget-selectedInstallmentDetails .column-2{
+    grid-column-start: 2;
+    font-weight: 700;
+    text-align: end;
+    color : var(--mobbex-text-color);
+  }
+  .financeWidget-selectedInstallmentDetails .column-2 p{
+    margin-top : 0;
+    padding: 0;
+  }
+  .financeWidget-selectedInstallmentDetails .tags{
+    color : var(--mobbex-tag);
+    text-align:start;
+    margin-top: 0.5rem;
+  }
+  .financeWidget-selectedInstallmentDetails .tags p{
+    margin : 0;
+    padding: 0;
+  }
