@@ -8,16 +8,13 @@ export default function FeaturedInstallmentDetails({
   theme?: "light" | "dark";
 }) {
   return (
-    <div className="mb-4">
-      <p>
+    <div className="financeWidget-featuredInstallmentDetails">
         <span>
           <strong>{installment.count}</strong>
         </span>
         {installment.count > 1 ? " cuotas " : " pago "}
         <span
-          className={`${
-            theme === "light" ? "" : "bg-mobbexGrey-Dark"
-          } text-mobbexGreen-light`}
+          className={`${theme === "light" ? "" : "financeWidget-featuredInstallmentDetails.dark" } discount`}
         >
           {installment.percentage < 1
             ? installment.percentage < 0
@@ -27,17 +24,15 @@ export default function FeaturedInstallmentDetails({
         </span>
         {" de "}
         <strong>${installment.amount}</strong>
-        {":"}
         {installment.sources.map((ref: string) => (
-          <span key={ref}>
+          <span className="card-logo-span" key={ref}>
             <img
               src={`https://res.mobbex.com/images/sources/original/${ref}.png`}
               alt="Card logo"
-              className="inline-block rounded-[0.70rem] ml-2 w-10 h-8 object-contain"
+              className="card-logo"
             />
           </span>
         ))}
-      </p>
     </div>
   );
 }

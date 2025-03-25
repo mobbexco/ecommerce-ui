@@ -9,7 +9,7 @@ export default function FeaturedInstallments({
   theme: 'light' | 'dark';
 }) {
   return (
-    <div className={`${theme === "light" ? "" : "text-white"} grid justify-center items-center font-sans text-left w-auto px-6"`}>
+    <div className="financeWidget-featuredInstallments">
       {bestInstallments.map((installment: FeaturedInstallment) => (
         <FeaturedInstallmentDetails
           installment={installment}

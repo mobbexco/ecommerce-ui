@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { formatTags } from "./functions";
-import { FormattedTag, Installment, PaymentSource } from "./Interfaces";
+import { FormattedTag, Installment, InstallmentDetailsProps } from "./Interfaces";
 
 export default function InstallmentDetails({
   sources,
   selectedCard,
   selectedInstallment,
-  theme,
 }: InstallmentDetailsProps) {
   const [installment, setInstallment] = useState<Installment | null>(null);
   const [tags, setTags] = useState<FormattedTag | null>(null);
@@ -29,36 +28,27 @@ export default function InstallmentDetails({
 
   return (
     installment && (
-      <div className={`${theme === 'light' ? '' : 'text-mobbexWhite'} font-sans border-t-2 border-solid border-mobbexGrey-Medium mt-6`}>
-        <div className="grid grid-cols-2 gap-2 mt-1">
-          <div className="col-start-1 font-bold">
+      <div className="financeWidget-selectedInstallmentDetails">
+        <div className="grid">
+          <div className="column-1">
             <p>{selectedCard}</p>
-            <p className="text-xl">
+            <p>
               {installment.count} Cuotas de $
               {installment.totals.installment.amount}
             </p>
           </div>
-          <p className="col-start-2 font-bold text-end">
-            Total: ${installment.totals.total}
-          </p>
-          <div className={`col-start-1 text-sm ${theme === 'light' ? 'text-mobbexTag-Light' : 'text-mobbexTag-Dark'}`}>
-            <div className="col-start-1 text-sm">
-              <p>CFT: {tags?.CFT ? tags.CFT : "0"}%</p>
-              <p>
-                TNA: {tags?.TNA ? tags.TNA : "0"}% TEA:{" "}
-                {tags?.TEA ? tags.TEA : "0"}%
-              </p>
-            </div>
+          <div className="tags">
+            <p>CFT: {tags?.CFT ? tags.CFT : "0"}%</p>
+            <p>
+              TNA: {tags?.TNA ? tags.TNA : "0"}% TEA:{" "}
+              {tags?.TEA ? tags.TEA : "0"}%
+            </p>
           </div>
+        </div>
+        <div className="column-2">
+          <p>Total: ${installment.totals.total}</p>
         </div>
       </div>
     )
   );
-}
-
-interface InstallmentDetailsProps {
-  sources: PaymentSource[];
-  selectedCard: string;
-  selectedInstallment: string;
-  theme?: 'light' | 'dark';
 }
