@@ -32,7 +32,7 @@ export interface PaymentSource {
   };
 }
 export interface SelectCardProps {
-  sources: any[];
+  sources: PaymentSource[];
   selectedCard: string;
   onSelectCard: (card: string) => void;
 }
