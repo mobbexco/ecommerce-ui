@@ -9,30 +9,30 @@ export default function FeaturedInstallmentDetails({
 }) {
   return (
     <div className="financeWidget-featuredInstallmentDetails">
-        <span>
-          <strong>{installment.count}</strong>
-        </span>
-        {installment.count > 1 ? " cuotas " : " pago "}
-        <span
-          className={`${theme === "light" ? "" : "financeWidget-featuredInstallmentDetails.dark" } discount`}
-        >
-          {installment.percentage < 1
-            ? installment.percentage < 0
-              ? "con descuento"
-              : "sin interés"
-            : ""}
-        </span>
-        {" de "}
-        <strong>${installment.amount}</strong>
-        {installment.sources.map((ref: string) => (
-          <span className="card-logo-span" key={ref}>
-            <img
-              src={`https://res.mobbex.com/images/sources/original/${ref}.png`}
-              alt="Card logo"
-              className="card-logo"
-            />
-          </span>
-        ))}
+      <span>
+        Hasta <strong>{installment.count}</strong>
+      </span>
+      {installment.count > 1 ? " cuotas " : " pago "}
+      <span
+        className={`${theme === "light" ? "" : "financeWidget-featuredInstallmentDetails.dark" } discount`}
+      >
+        {installment.percentage < 1
+          ? installment.percentage < 0
+            ? "con descuento"
+            : "sin interés"
+          : ""}
+      </span>
+      {" de "}
+      <strong>${installment.amount}</strong>
+      {installment.sources.map((ref: string) => (
+      <span className="card-logo-span" key={ref}>
+        <img
+          src={`https://res.mobbex.com/images/sources/original/${ref}.png`}
+          alt="Card logo"
+          className="card-logo"
+        />
+      </span>
+      ))}
     </div>
   );
 }

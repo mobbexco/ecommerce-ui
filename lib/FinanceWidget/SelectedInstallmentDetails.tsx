@@ -6,11 +6,34 @@ export default function InstallmentDetails({
   sources,
   selectedCard,
   selectedInstallment,
+  onSelectInstallment,
 }: InstallmentDetailsProps) {
   const [installment, setInstallment] = useState<Installment | null>(null);
   const [tags, setTags] = useState<FormattedTag | null>(null);
+  const [previousCard, setPreviousCard] = useState<string>(selectedCard);
 
   useEffect(() => {
+    // Manage selected data
+    if (selectedCard !== previousCard) {
+      setInstallment(null);
+      setPreviousCard(selectedCard);
+
+      const availablePlans = sources
+        .filter((option: any) => option.source.name === selectedCard)
+        .flatMap((option: any) => option.installments.list || []);
+
+      // Verifies if selectedCard has only one plan
+      if (availablePlans.length === 1) {
+        onSelectInstallment(availablePlans[0].name);
+        setInstallment(availablePlans[0]);
+        const formattedTags: any = formatTags(availablePlans[0].tags);
+        setTags(formattedTags);
+      } else {
+        onSelectInstallment("Cantidad de cuotas");
+      }
+      return;
+    }
+
     const selectedData: any = sources
       .filter((option: any) => option.source.name === selectedCard)
       .flatMap((option: any) => option.installments.list || [])
@@ -18,37 +41,39 @@ export default function InstallmentDetails({
 
     if (selectedData) {
       setInstallment(selectedData);
-
       const formattedTags: any = formatTags(selectedData.tags);
       setTags(formattedTags);
     } else {
       console.log("No data found for the selected card and installment.");
     }
-  }, [selectedCard, selectedInstallment]);
+  }, [selectedCard, selectedInstallment, previousCard, onSelectInstallment]);
+
+  // Render bypass
+  if (!installment || (selectedInstallment === "Cantidad de cuotas" && !selectedCard)) {
+    return null;
+  }
 
   return (
-    installment && (
-      <div className="financeWidget-selectedInstallmentDetails">
-        <div className="grid">
-          <div className="column-1">
-            <p>{selectedCard}</p>
-            <p>
-              {installment.count} Cuotas de $
-              {installment.totals.installment.amount}
-            </p>
-          </div>
-          <div className="tags">
-            <p>CFT: {tags?.CFT ? tags.CFT : "0"}%</p>
-            <p>
-              TNA: {tags?.TNA ? tags.TNA : "0"}% TEA:{" "}
-              {tags?.TEA ? tags.TEA : "0"}%
-            </p>
-          </div>
+    <div className="financeWidget-selectedInstallmentDetails">
+      <div className="grid">
+        <div className="column-1">
+          <p>{selectedCard}</p>
+          <p>
+            {installment.count} Cuota/s de $
+            {installment.totals.installment.amount}
+          </p>
         </div>
-        <div className="column-2">
-          <p>Total: ${installment.totals.total}</p>
+        <div className="tags">
+          <p>CFT: {tags?.CFT ? tags.CFT : "0"}%</p>
+          <p>
+            TNA: {tags?.TNA ? tags.TNA : "0"}% TEA:{" "}
+            {tags?.TEA ? tags.TEA : "0"}%
+          </p>
         </div>
       </div>
-    )
+      <div className="column-2">
+        <p>Total: ${installment.totals.total}</p>
+      </div>
+    </div>
   );
 }

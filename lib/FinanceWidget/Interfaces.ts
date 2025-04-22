@@ -57,6 +57,7 @@ export interface InstallmentDetailsProps {
   sources: PaymentSource[];
   selectedCard: string;
   selectedInstallment: string;
+  onSelectInstallment: (installment: string) => void
 }
 
 export interface Tag {

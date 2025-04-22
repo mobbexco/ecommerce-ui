@@ -56,7 +56,7 @@ export default function FinanceWidget({
                     sources={sources}
                     selectedCard={selectedCard}
                     selectedInstallment={selectedInstallment}
-
+                    onSelectInstallment={setSelectedInstallment}
                   />
                 </div>
               )}

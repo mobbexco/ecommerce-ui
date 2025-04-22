@@ -15,7 +15,7 @@ export default function Button({ handleParentVariable }: IButton) {
       onClick={handleClick}
       className="financeWidget-button"
     >
-      {isToggled ? 'Mostrar menos' : 'Ver Financiación'}
+      {isToggled ? 'Mostrar menos' : 'Ver financiación'}
     </button>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SelectInstallmentProps } from "./Interfaces";
 
 export default function SelectInstallment({
@@ -16,6 +16,13 @@ export default function SelectInstallment({
     )
     .flat();
 
+  // Manages automatic selection when there is only one plan when selectedCard is changed
+  useEffect(() => {
+    if (installments.length === 1) {
+      onSelectInstallment(installments[0]);
+    }
+  }, [selectedCard]);
+
   const handleSelectInstallment = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const targetInstallment = e.target.value;
     onSelectInstallment(targetInstallment);
@@ -24,14 +31,15 @@ export default function SelectInstallment({
   return (
     <div className="financeWidget-select">
       <label>
-        Selecciona el método de pago:
+        Selecciona las cuotas
       </label>
       <select
         value={selectedInstallment}
-        disabled={!selectedCard}
         onChange={handleSelectInstallment}
       >
-        <option value="">Selecciona un método de pago</option>
+        {installments.length > 1 && (
+          <option value="Cantidad de cuotas">Cantidad de cuotas</option>
+        )}
         {installments.map((installment: any, index: any) => (
           <option key={index} value={installment}>
             {installment}
