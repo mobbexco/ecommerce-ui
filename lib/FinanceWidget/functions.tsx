@@ -17,65 +17,74 @@ export function formatTags(tags: any) {
   return formattedTags;
 }
 
+/**
+ * Gets featured installments references
+ * 
+ * @param sources 
+ * @returns sorted installments 
+ */
 export function getFeaturedInstallments(sources: PaymentSource[]) {
   const featuredIntallments: FeaturedInstallment[] = [];
+  const processedInstallments = new Set();
 
   try {
     if (!sources.length) return featuredIntallments;
 
-    //Get all installments list
     const installmentList: Installment[] = sources
       .map((source) => source?.installments?.list || [])
       .flat();
 
-    //Return if empty
     if (!installmentList.length) return featuredIntallments;
 
-    //Get only 2 featured installments
-    for (let i = 0; i < 2; i++) {
-      let best: any = { totals: { financial: { percentage: 10000 } } };
+    const groupedInstallments = installmentList.reduce((acc: any[], inst) => {
+      const key = `${inst.count}-${inst.totals.financial.percentage}-${inst.totals.installment.amount}`;
+      
+      if (!processedInstallments.has(key)) {
+        const similarInstallments = installmentList.filter(item => 
+          item.count === inst.count &&
+          item.totals.financial.percentage === inst.totals.financial.percentage &&
+          item.totals.installment.amount === inst.totals.installment.amount
+        );
 
-      //Get best installment
-      (installmentList ?? []).map((inst) => {
-        const iPerc = inst?.totals?.financial?.percentage,
-          currPerc = best?.totals?.financial?.percentage;
-
-        if (
-          iPerc < currPerc ||
-          (iPerc == currPerc && inst?.count > best.count)
-        ) {
-          best = { ...inst };
-        }
-      });
-
-      //Get sources references for best installment
-      const instalmentSources = sources
-        .filter(
-          (item) =>
-            item.installments?.list &&
-            item.installments.list.some(
-              (installment) => installment.uid === best.uid
+        if (similarInstallments.length > 0) {
+          // Gets all similar installments references
+          const installmentSources = sources
+            .filter(source =>
+              source.installments?.list &&
+              source.installments.list.some(installment => 
+                similarInstallments.some(similar => 
+                  similar.uid === installment.uid
+                )
+              )
             )
-        )
-        .map((item) => item.source.reference);
+            .map(source => source.source.reference);
 
-      // Add featured installment to list
-      featuredIntallments.push({
-        amount: Number(best.totals.installment.amount),
-        count: Number(best.count),
-        percentage: Number(best.totals.financial.percentage),
-        sources: instalmentSources,
-        uid: best.uid,
-      });
+          acc.push({
+            amount: Number(inst.totals.installment.amount),
+            count: Number(inst.count),
+            percentage: Number(inst.totals.financial.percentage),
+            sources: installmentSources,
+            uid: inst.uid
+          });
 
-      //Delete best installment from installment list
-      installmentList.map((installment, i) => {
-        if (installment.uid == best.uid) installmentList.splice(i, 1);
-      });
-    }
+          processedInstallments.add(key);
+        }
+      }
+      return acc;
+    }, []);
+
+    const sortedInstallments = groupedInstallments.sort((a, b) => {
+      if (a.percentage !== b.percentage) {
+        return a.percentage - b.percentage;
+      }
+      return b.count - a.count;
+    });
+
+    // Gets two best installments
+    return sortedInstallments.slice(0, 2);
+
   } catch (e) {
     console.log(e);
+    return featuredIntallments;
   }
-
-  return featuredIntallments;
 }
