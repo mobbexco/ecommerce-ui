@@ -1,12 +1,11 @@
-import React from "react";
-import { PaymentSource } from "./Interfaces";
+import React, { useEffect } from "react";
+import { SelectInstallmentProps } from "./Interfaces";
 
 export default function SelectInstallment({
   sources,
   selectedInstallment,
   selectedCard,
   onSelectInstallment,
-  theme,
 }: SelectInstallmentProps) {
   const installments = sources
     .filter((item: any) => item.source.name === selectedCard)
@@ -17,23 +16,30 @@ export default function SelectInstallment({
     )
     .flat();
 
+  // Manages automatic selection when there is only one plan when selectedCard is changed
+  useEffect(() => {
+    if (installments.length === 1) {
+      onSelectInstallment(installments[0]);
+    }
+  }, [selectedCard]);
+
   const handleSelectInstallment = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const targetInstallment = e.target.value;
     onSelectInstallment(targetInstallment);
   };
 
   return (
-    <div className="mt-4">
-      <label className={`${theme === 'light' ? '' : 'text-mobbexWhite'} block text-black text-base font-sans font-medium mb-2`}>
-        Selecciona el método de pago:
+    <div className="financeWidget-select">
+      <label>
+        Selecciona las cuotas
       </label>
       <select
         value={selectedInstallment}
-        disabled={!selectedCard}
         onChange={handleSelectInstallment}
-        className="p-2 bg-mobbexWhite text-black text-sm font-sans rounded-lg shadow w-full"
       >
-        <option value="">Selecciona un método de pago</option>
+        {installments.length > 1 && (
+          <option value="Cantidad de cuotas">Cantidad de cuotas</option>
+        )}
         {installments.map((installment: any, index: any) => (
           <option key={index} value={installment}>
             {installment}
@@ -42,12 +48,4 @@ export default function SelectInstallment({
       </select>
     </div>
   );
-}
-
-interface SelectInstallmentProps {
-  sources: PaymentSource[];
-  selectedInstallment: string;
-  selectedCard: string;
-  onSelectInstallment: (installment: string) => void;
-  theme: 'light' | 'dark';
 }

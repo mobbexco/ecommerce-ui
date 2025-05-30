@@ -1,31 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { SelectCardProps } from './Interfaces';
 
 export default function SelectCard({
   sources,
   selectedCard,
   onSelectCard,
-  theme,
 }: SelectCardProps) {
+  const cards: any = sources
+    .filter((item: any) => item.view.group === 'card')
+    .map((item: any) => item.source.name);
+
+  useEffect(() => {
+    if (cards.length > 0 && !selectedCard) {
+      onSelectCard(cards[0]);
+    }
+  }, [cards, selectedCard, onSelectCard]);
+
   const handleSelectCard = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const targetCard = e.target.value;
     onSelectCard(targetCard);
   };
 
-  const cards: any = sources
-    .filter((item: any) => item.view.group === 'card')
-    .map((item: any) => item.source.name);
-
   return (
-    <div className="mt-4 ">
-      <label className={`${theme === "light" ? "" : "text-mobbexWhite"} block text-black text-base font-sans font-medium mb-2`}>
-        Selecciona la tarjeta:
+    <div className="financeWidget-select">
+      <label>
+        Selecciona la tarjeta
       </label>
-      <select
-        value={selectedCard}
+      <select 
+        value={selectedCard} 
         onChange={handleSelectCard}
-        className="p-2 bg-mobbexWhite text-black text-sm font-sans rounded-lg shadow w-full"
       >
-        <option value="">Selecciona una tarjeta</option>
         {cards.map((card: any) => (
           <option key={card} value={card}>
             {card}
@@ -34,11 +38,4 @@ export default function SelectCard({
       </select>
     </div>
   );
-}
-
-interface SelectCardProps {
-  sources: any[];
-  selectedCard: string;
-  onSelectCard: (card: string) => void;
-  theme: 'light' | 'dark';
 }

@@ -6,12 +6,12 @@ import SelectedInstallmentDetails from "./SelectedInstallmentDetails";
 import FeaturedInstallments from "./FeaturedInstallments";
 import { FeaturedInstallment, FinanceWidgetProps } from "./Interfaces";
 import { getFeaturedInstallments } from "./functions";
-import root from "react-shadow";
-import styles from "../index.css?inline"
+import ReactShadowRoot from 'react-shadow-root';
+import styles from './styles.css?inline';
 
 export default function FinanceWidget({
   sources,
-  theme = 'light', 
+  theme 
 }: FinanceWidgetProps) {
   const [showSelects, setShowSelects] = useState(false);
   const [selectedCard, setSelectedCard] = useState("");
@@ -25,45 +25,45 @@ export default function FinanceWidget({
   };
 
   return (
-    <root.div className="mobbex-finance-widget">
-      <style type="text/css">
-        {styles}
-      </style>
-      <div className={`${theme === "light" ? "bg-mobbexGrey-Soft" : "bg-mobbexGrey-Dark"} shadow-md rounded-lg px-8 pt-6 pb-6 m-2 w-auto`}>
-        <FeaturedInstallments bestInstallments={featured} theme={theme} />
-        <div className="text-center mt-4 max-w-sm mx-auto">
-          <Button handleParentVariable={handleShowSelects} />
-        </div>
-        {showSelects && (
-          <form className="max-w-sm mx-auto">
-            <div key="selectInstallment">
-              <SelectCard
-                sources={sources}
-                selectedCard={selectedCard}
-                onSelectCard={setSelectedCard}
-                theme={theme}
-              />
-              <SelectInstallment
-                sources={sources}
-                selectedInstallment={selectedInstallment}
-                selectedCard={selectedCard}
-                onSelectInstallment={setSelectedInstallment}
-                theme={theme}
-              />
-            </div>
-            {selectedInstallment && (
-              <div key="installmentDetail">
-                <SelectedInstallmentDetails
+    <div className="mbbx-finance-widget-container" color-scheme={theme}>
+      <ReactShadowRoot>
+        <style>
+          {styles}
+        </style>
+        <div className="financeWidget-wrapper">
+          <FeaturedInstallments bestInstallments={featured}/>
+          <div className="financeWidget-buttonWrapper">
+            <Button handleParentVariable={handleShowSelects} />
+          </div>
+          {showSelects && (
+            <form className="financeWidget-form">
+              <div key="selectInstallment">
+                <SelectCard
                   sources={sources}
                   selectedCard={selectedCard}
+                  onSelectCard={setSelectedCard}
+                />
+                <SelectInstallment
+                  sources={sources}
                   selectedInstallment={selectedInstallment}
-                  theme={theme}
+                  selectedCard={selectedCard}
+                  onSelectInstallment={setSelectedInstallment}
                 />
               </div>
-            )}
-          </form>
-        )}
-      </div>
-    </root.div>
+              {selectedInstallment && (
+                <div key="installmentDetail">
+                  <SelectedInstallmentDetails
+                    sources={sources}
+                    selectedCard={selectedCard}
+                    selectedInstallment={selectedInstallment}
+                    onSelectInstallment={setSelectedInstallment}
+                  />
+                </div>
+              )}
+            </form>
+          )}
+        </div>
+      </ReactShadowRoot>
+    </div>
   );
 }

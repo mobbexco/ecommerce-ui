@@ -1,0 +1,163 @@
+/* Variables base */
+:host {
+  --mobbex-tag : #6A6969;
+  --mobbex-grey : #6a6969;
+  --mobbex-green : #0a8a4a;
+  --mobbex-white : #FFFFFF;
+  --mobbex-black : #000000;
+  --mobbex-violet : #7000FF;
+  --mobbex-grey-soft : #E2E2E1;
+  --mobbex-background : #F9F9F9;
+  --mobbex-grey-medium : #D1DAE6;
+  --mobbex-text-color : var(--mobbex-black);
+}
+
+/* Variables para tema oscuro */
+:host([color-scheme="dark"]) {
+  --mobbex-tag: #B5B5B5;
+  --mobbex-green: #00A64D;
+  --mobbex-violet: #9B4DFF;
+  --mobbex-grey-soft: #2B2A2A;
+  --mobbex-text-color: var(--mobbex-white);
+}
+
+:host .financeWidget-wrapper {
+  background-color: var(--mobbex-grey-soft);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 32px 32px 24px 32px;
+  margin: 8px;
+  width: auto;
+  min-width: 200px;
+  max-width: 320px;
+}
+:host .financeWidget-form {
+  text-align: center;
+  margin-top: 16px;
+  max-width: 384px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* FeaturedInstallments */
+:host .financeWidget-featuredInstallments {
+  display: grid;
+  justify-content: start;
+  align-items: center;
+  font-family: sans-serif;
+  font-size: 14px;
+  text-align: left;
+  width: auto;
+  padding: 0rem;
+  margin-bottom: 16px;
+}
+
+/* FeaturedInstallmentDetails */
+:host .financeWidget-featuredInstallmentDetails{
+  color: var(--mobbex-text-color);
+  margin-bottom: 1rem;
+}
+
+:host .financeWidget-featuredInstallmentDetails .discount {
+  color: var(--mobbex-green);
+}
+:host .card-logo-span {
+  display: contents;
+  align-items: center;
+}
+:host .card-logo {
+  display: inline-block;
+  border-radius: 0.8rem;
+  width: 2.5rem;
+  height: 2rem;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+/* Button */
+:host .financeWidget-button {
+  background-color: var(--mobbex-background);
+  color: var(--mobbex-black);
+  font-family: sans-serif;
+  padding: 8px 16px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid black;
+  width: 100%;
+  transition: background-color 0.1s;
+  font-size: 14px;
+  line-height: inherit;
+  cursor: pointer;
+}
+:host .financeWidget-button:hover {
+  background-color: var(--mobbex-black);
+  color: var(--mobbex-white);
+}
+:host .financeWidget-buttonWrapper {
+  max-width: 384px;
+  margin-left: auto;
+  text-align: center;
+  margin-right: auto;
+}
+
+/* Select */
+:host .financeWidget-select {
+  margin-top: 16px;
+}
+:host .financeWidget-select label {
+  display: flex;
+  font-size: 13px;
+  font-family: sans-serif;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--mobbex-text-color);
+}
+:host .financeWidget-select select {
+  padding: 8px;
+  background-color: var(--mobbex-background);
+  font-size: 14px;
+  font-family: sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  width: 100%;
+}
+
+/* SelectedInstallmentDetails */
+:host .financeWidget-selectedInstallmentDetails {
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  border-top: 16px solid var(--mobbex-grey-soft);
+  color : var(--mobbex-text-color);
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  font-size: 16px;
+}
+:host .financeWidget-selectedInstallmentDetails .column-1{
+  grid-column-start: 1;
+  font-weight: 700;
+  text-align: start;
+  color: var(--mobbex-text-color);
+}
+:host .financeWidget-selectedInstallmentDetails .column-1 p{
+  margin : 0;
+  padding: 0;
+}
+:host .financeWidget-selectedInstallmentDetails .column-2{
+  grid-column-start: 2;
+  font-weight: 700;
+  text-align: end;
+  color : var(--mobbex-text-color);
+}
+:host .financeWidget-selectedInstallmentDetails .column-2 p{
+  margin-top : 0;
+  padding: 0;
+}
+:host .financeWidget-selectedInstallmentDetails .tags{
+  color : var(--mobbex-tag);
+  text-align:start;
+  margin-top: 8px;
+}
+:host .financeWidget-selectedInstallmentDetails .tags p{
+  margin : 0;
+  padding: 0;
+}
