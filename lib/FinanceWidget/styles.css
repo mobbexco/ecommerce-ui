@@ -49,6 +49,7 @@
   text-align: left;
   width: auto;
   padding: 0rem;
+  margin-bottom: 16px;
 }
 
 /* FeaturedInstallmentDetails */
@@ -93,7 +94,6 @@
   color: var(--mobbex-white);
 }
 :host .financeWidget-buttonWrapper {
-  margin-top: 16px;
   max-width: 384px;
   margin-left: auto;
   text-align: center;
