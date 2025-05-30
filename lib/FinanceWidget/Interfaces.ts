@@ -9,6 +9,7 @@ export interface FeaturedInstallment {
 export interface FinanceWidgetProps {
   sources: PaymentSource[];
   theme: 'light' | 'dark';
+  showFeaturedInstallments?: boolean;
 }
 
 export interface IButton {

@@ -1,11 +1,13 @@
 import FeaturedInstallmentDetails from "./FeaturedInstallmentDetails";
-import { FeaturedInstallment } from "./Interfaces";
+import { PaymentSource, FeaturedInstallment } from "./Interfaces";
+import { getFeaturedInstallments } from "./functions";
 
 export default function FeaturedInstallments({
-  bestInstallments
-}: {
-  bestInstallments: FeaturedInstallment[];
-}) {
+  sources
+}: { sources: PaymentSource[] }){
+
+  const bestInstallments: FeaturedInstallment[] = getFeaturedInstallments(sources);
+
   return (
     <div className="financeWidget-featuredInstallments">
       {bestInstallments.map((installment: FeaturedInstallment) => (

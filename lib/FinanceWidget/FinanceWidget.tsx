@@ -4,21 +4,18 @@ import SelectCard from "./SelectCard";
 import SelectInstallment from "./SelectInstallment";
 import SelectedInstallmentDetails from "./SelectedInstallmentDetails";
 import FeaturedInstallments from "./FeaturedInstallments";
-import { FeaturedInstallment, FinanceWidgetProps } from "./Interfaces";
-import { getFeaturedInstallments } from "./functions";
+import {FinanceWidgetProps } from "./Interfaces";
 import ReactShadowRoot from 'react-shadow-root';
 import styles from './styles.css?inline';
 
 export default function FinanceWidget({
   sources,
-  theme 
+  theme,
+  showFeaturedInstallments = true
 }: FinanceWidgetProps) {
   const [showSelects, setShowSelects] = useState(false);
   const [selectedCard, setSelectedCard] = useState("");
   const [selectedInstallment, setSelectedInstallment] = useState("");
-
-  //Get featured installments
-  const featured: FeaturedInstallment[] = getFeaturedInstallments(sources);
 
   const handleShowSelects = () => {
     setShowSelects((showSelects) => !showSelects);
@@ -31,7 +28,10 @@ export default function FinanceWidget({
           {styles}
         </style>
         <div className="financeWidget-wrapper">
-          <FeaturedInstallments bestInstallments={featured}/>
+        {
+          showFeaturedInstallments &&
+          <FeaturedInstallments sources={sources}/>
+        }
           <div className="financeWidget-buttonWrapper">
             <Button handleParentVariable={handleShowSelects} />
           </div>
