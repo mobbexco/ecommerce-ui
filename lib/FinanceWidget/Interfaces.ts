@@ -7,15 +7,21 @@ export interface FeaturedInstallment {
 }
 
 export interface FinanceWidgetProps {
-  sources: PaymentSource[];
+  sourcesUrl: string;
   theme: 'light' | 'dark';
   showFeaturedInstallments?: boolean;
 }
 
+export interface FinanceWidgetState {
+  theme: 'light' | 'dark';
+  isLoading: any;
+}
 export interface IButton {
   handleParentVariable: () => void;
+  isLoading?: boolean;
+  error? : Error;
 }
-
+// Sources interface
 export interface PaymentSource {
   installments: {
     enabled: boolean;
