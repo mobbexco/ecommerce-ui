@@ -1,5 +1,6 @@
-/* Variables base */
+/* Base vars */
 :host {
+  --mobbex-font : product-sans, sans-serif;
   --mobbex-tag : #6A6969;
   --mobbex-grey : #6a6969;
   --mobbex-green : #0a8a4a;
@@ -12,13 +13,17 @@
   --mobbex-text-color : var(--mobbex-black);
 }
 
-/* Variables para tema oscuro */
+/* Dark mode vars */
 :host([color-scheme="dark"]) {
   --mobbex-tag: #B5B5B5;
   --mobbex-green: #00A64D;
   --mobbex-violet: #9B4DFF;
   --mobbex-grey-soft: #2B2A2A;
   --mobbex-text-color: var(--mobbex-white);
+}
+
+:host * {
+  font-family: var(--mobbex-font);
 }
 
 :host .financeWidget-wrapper {
@@ -29,27 +34,43 @@
   margin: 8px;
   width: auto;
   min-width: 200px;
-  max-width: 320px;
+  max-width: 360px;
 }
 :host .financeWidget-form {
   text-align: center;
   margin-top: 16px;
-  max-width: 384px;
+  max-width: 320px;
   margin-left: auto;
   margin-right: auto;
 }
 
 /* FeaturedInstallments */
 :host .financeWidget-featuredInstallments {
-  display: grid;
-  justify-content: start;
-  align-items: center;
+  /* display: grid; */
+  display: flex;
+  flex-direction: column;
   font-family: sans-serif;
   font-size: 14px;
   text-align: left;
   width: auto;
   padding: 0rem;
   margin-bottom: 16px;
+  min-height: 96px;
+}
+
+/* Loading */
+:host .spinner {
+  justify-self: center;
+  align-self: center;
+  height: 45px;
+  width: 45px
+}
+
+/* Error */
+:host .error-mssg {
+  text-align: center;
+  align-self: center;
+  align-content: center;
 }
 
 /* FeaturedInstallmentDetails */
@@ -61,6 +82,11 @@
 :host .financeWidget-featuredInstallmentDetails .discount {
   color: var(--mobbex-green);
 }
+
+:host .mbbx-cards-container{
+  width: auto;
+}
+
 :host .card-logo-span {
   display: contents;
   align-items: center;
@@ -89,10 +115,12 @@
   line-height: inherit;
   cursor: pointer;
 }
+
 :host .financeWidget-button:hover {
   background-color: var(--mobbex-black);
   color: var(--mobbex-white);
 }
+
 :host .financeWidget-buttonWrapper {
   max-width: 384px;
   margin-left: auto;
@@ -100,10 +128,25 @@
   margin-right: auto;
 }
 
+/* Loading */
+:host .button-loading {
+  cursor : not-allowed;
+  color: var(--mobbex-grey-medium);
+  background-color: var(--mobbex-grey);
+}
+
+/* Error */
+:host .button-error {
+  color: var(--mobbex-grey-medium);
+  cursor : not-allowed;
+  background-color: var(--mobbex-grey);
+}
+
 /* Select */
 :host .financeWidget-select {
   margin-top: 16px;
 }
+
 :host .financeWidget-select label {
   display: flex;
   font-size: 13px;
@@ -112,6 +155,7 @@
   margin-bottom: 8px;
   color: var(--mobbex-text-color);
 }
+
 :host .financeWidget-select select {
   padding: 8px;
   background-color: var(--mobbex-background);
