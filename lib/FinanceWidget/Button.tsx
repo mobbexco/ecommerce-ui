@@ -15,7 +15,7 @@ export default function Button({ handleParentVariable, isLoading, error }: IButt
     return <button className='financeWidget-button button-error'> Ver financiación </button>;
   }
 
-  if (isLoading)
+  if (!isToggled || isLoading)
     return <button className='financeWidget-button button-loading' disabled> Cargando.. </button>
 
 
