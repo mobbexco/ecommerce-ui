@@ -14,7 +14,11 @@ export default function FeaturedInstallmentDetails({
       </span>
       {installment.count > 1 ? " cuotas " : " pago "}
       <span
-        className={`${theme === "light" ? "" : "financeWidget-featuredInstallmentDetails.dark" } discount`}
+        className={`${
+          theme === "light"
+            ? ""
+            : "financeWidget-featuredInstallmentDetails.dark"
+        } discount`}
       >
         {installment.percentage < 1
           ? installment.percentage < 0
@@ -24,15 +28,17 @@ export default function FeaturedInstallmentDetails({
       </span>
       {" de "}
       <strong>${installment.amount}</strong>
-      {installment.sources.map((ref: string) => (
-      <span className="card-logo-span" key={ref}>
-        <img
-          src={`https://res.mobbex.com/images/sources/original/${ref}.png`}
-          alt="Card logo"
-          className="card-logo"
-        />
+      <span className="mbbx-cards-container">
+        {installment.sources.map((ref: string) => (
+          <span className="card-logo-span" key={ref}>
+            <img
+              src={`https://res.mobbex.com/images/sources/original/${ref}.png`}
+              alt="Card logo"
+              className="card-logo"
+            />
+          </span>
+        ))}
       </span>
-      ))}
     </div>
   );
 }
