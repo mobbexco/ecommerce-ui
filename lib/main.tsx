@@ -1,20 +1,46 @@
-import React, { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import FinanceWidget from "./FinanceWidget/FinanceWidget.tsx";
-import PosCheckout from "./Pos/Pos.tsx";
-import {getPosSampleData} from "./Pos/sampleFunction.ts";
-import Modal from "./Modal/Modal.tsx";
+import { createRoot } from 'react-dom/client';
+import FinanceWidget from './FinanceWidget/FinanceWidget';
 
-let sampleData = getPosSampleData();
+declare global {
+    interface Window {
+        mobbexSourcesUrl: string;
+        mobbexTheme : 'light' | 'dark';
+        showFeaturedInstallments : boolean;
+    }
+}
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Modal>
-      <PosCheckout posList={sampleData.posList} opUrl={sampleData.opUrl} handleResetTransaction={sampleData.handleResetTransaction} />
-    </Modal>
-    <Modal>
-      <FinanceWidget sources={[]} theme="light"/>
-    </Modal>
-  </StrictMode>
-);
+const WIDGET_ID = "mbbx-finance-widget";
+let root: ReturnType<typeof createRoot> | null = null;
 
+function renderWidget() {
+    const container = document.getElementById(WIDGET_ID);
+    if (container) {
+        // cleans root before render if exists
+        if (root) {
+            root.unmount();
+        }
+        root = createRoot(container);
+        root.render(
+            <FinanceWidget
+                sourcesUrl={window.mobbexSourcesUrl || ""}
+                theme={window.mobbexTheme}
+                showFeaturedInstallments={window.showFeaturedInstallments}
+            />
+        );
+    }
+}
+
+// Listen for DOM mutations
+const observer = new MutationObserver(() => {
+    const container = document.getElementById(WIDGET_ID);
+    // only renders if container exists and is clean (has no child nodes)
+    if (container && (!container.hasChildNodes() || !root)) {
+        renderWidget();
+    }
+});
+
+// configure observer for body childrens changes
+observer.observe(document.body, { childList: true, subtree: true });
+
+// initial render
+renderWidget();
