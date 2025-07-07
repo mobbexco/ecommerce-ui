@@ -17,82 +17,188 @@ export function formatTags(tags: any) {
   return formattedTags;
 }
 
-/**
- * Gets featured installments references
- * 
- * @param sources 
- * @returns sorted installments 
- */
-export function getFeaturedInstallments(sources: PaymentSource[]) {
-  const featuredIntallments: FeaturedInstallment[] = [];
-  const processedInstallments = new Set();
+  /**
+   * Gets the best installment options from available payment sources
+   *
+   * @param paymentSources - Array of payment sources to analyze
+   * @returns Sorted array of best installment options (max 2)
+   */
+  export function getFeaturedInstallments(
+    paymentSources: PaymentSource[]
+  ): FeaturedInstallment[] {
 
-  try {
-    if (!sources.length) return featuredIntallments;
+    if (!hasAvailableInstallments(paymentSources))
+      return [];
 
-    const installmentList: Installment[] = sources
-      .map((source) => source?.installments?.list || [])
+    const allInstallments = getAllInstallmentsFromSources(paymentSources);
+
+    if (allInstallments.length === 0)
+      return [];
+
+    const uniqueInstallments = getUniqueInstallmentsGrouped(
+      allInstallments,
+      paymentSources
+    );
+
+    const sortedInstallments = sortInstallmentsByBestOption(uniqueInstallments);
+
+    return getBestInstallments(sortedInstallments, 2);
+  }
+
+  /**
+   * Checks if any payment source has installments available
+   */
+  function hasAvailableInstallments(sources: PaymentSource[]): boolean {
+    return (
+      sources.length > 0 &&
+      sources.some(
+        (source : PaymentSource) =>
+          source.installments?.enabled && Array.isArray(source.installments?.list) && source.installments.list.length > 0
+      )
+    );
+  }
+
+  /**
+   * Extracts all installments from all payment sources
+   */
+  function getAllInstallmentsFromSources(
+    sources: PaymentSource[]
+  ): Installment[] {
+
+    // maps filtering available installments and uses flat to simplify the resulting array
+    const allInstallments = sources
+      .map((source) => source.installments?.list || [])
       .flat();
 
-    if (!installmentList.length) return featuredIntallments;
+    return allInstallments;
+  }
 
-    const groupedInstallments = installmentList.reduce((acc: any[], inst) => {
-      const key = `${inst.count}-${inst.totals.financial.percentage}-${inst.totals.installment.amount}`;
-      
-      if (!processedInstallments.has(key)) {
-        const similarInstallments = installmentList.filter(item => 
-          item.count === inst.count &&
-          item.totals.financial.percentage === inst.totals.financial.percentage &&
-          item.totals.installment.amount === inst.totals.installment.amount
+  /**
+   * Groups identical installments and gets their payment sources
+   */
+  function getUniqueInstallmentsGrouped(
+    installments: Installment[],
+    sources: PaymentSource[]
+  ): FeaturedInstallment[] {
+
+    const processedInstallments = new Set<string>(); // Set() structures data allowing only unique values.
+    const result: FeaturedInstallment[] = [];
+
+    for (const installment of installments) {
+      const installmentKey = createInstallmentKey(installment);
+
+      if (!processedInstallments.has(installmentKey)) {
+        const similarInstallments = findSimilarInstallments(
+          installment,
+          installments
+        );
+        
+        const installmentSources = findSourcesForInstallments(
+          similarInstallments,
+          sources
         );
 
-        if (similarInstallments.length > 0) {
-          // Gets all similar installments references
-          const installmentSources = sources
-            .filter(source =>
-              source.installments?.list &&
-              source.installments.list.some(installment => 
-                similarInstallments.some(similar => 
-                  similar.uid === installment.uid
-                )
-              )
-            )
-            .map(source => source.source.reference);
-
-          acc.push({
-            amount: Number(inst.totals.installment.amount),
-            count: Number(inst.count),
-            percentage: Number(inst.totals.financial.percentage),
-            sources: installmentSources,
-            uid: inst.uid
-          });
-
-          processedInstallments.add(key);
-        }
+        result.push(createFeaturedInstallment(installment, installmentSources));
+        processedInstallments.add(installmentKey);
       }
-      return acc;
-    }, []);
+    }
 
-    const sortedInstallments = groupedInstallments.sort((a, b) => {
-      if (a.percentage !== b.percentage) {
-        return a.percentage - b.percentage;
-      }
-      return b.count - a.count;
+    return result;
+  }
+
+  /**
+   * Creates a unique key for an installment based on its characteristics
+   * Its used to group and find similar installments
+   */
+  function createInstallmentKey(installment: Installment): string {
+    return `${installment.count}-${installment.totals.financial.percentage}-${installment.totals.installment.amount}`;
+  }
+
+  /**
+   * Finds all installments with identical characteristics
+   */
+  function findSimilarInstallments(
+    target: Installment,
+    allInstallments: Installment[]
+  ): Installment[] {
+    return allInstallments.filter(
+      (installment) =>
+        installment.count === target.count &&
+        installment.totals.financial.percentage === target.totals.financial.percentage &&
+        installment.totals.installment.amount === target.totals.installment.amount
+    );
+  }
+
+  /**
+   * Finds all payment sources that offer the given installments
+   */
+  function findSourcesForInstallments(
+    installments: Installment[],
+    sources: PaymentSource[]
+  ): string[] {
+    const installmentUids = new Set(installments.map((i) => i.uid));
+
+    return sources
+      .filter((source) =>
+        source.installments?.list?.some((installment) =>
+          installmentUids.has(installment.uid)
+        )
+      )
+      .map((source) => source.source.reference);
+  }
+
+  /**
+   * Creates a FeaturedInstallment object from base installment data
+   */
+  function createFeaturedInstallment(
+    installment: Installment,
+    sources: string[]
+  ): FeaturedInstallment {
+    return {
+      amount: Number(installment.totals.installment.amount),
+      count: Number(installment.count),
+      percentage: Number(installment.totals.financial.percentage),
+      sources,
+      uid: installment.uid,
+    };
+  }
+
+  /**
+   * Sorts installments by best financial option (lower percentage then more installments)
+   */
+  function sortInstallmentsByBestOption(
+    installments: FeaturedInstallment[]
+  ): FeaturedInstallment[] {
+
+    const installmentsCopy = [...installments];
+
+    installmentsCopy.sort((a, b) => {
+      const percentageDifference = a.percentage - b.percentage;
+      if (percentageDifference !== 0)
+        return percentageDifference;
+
+      const countDifference = b.count - a.count;
+
+      return countDifference;
     });
 
-    // Gets two best installments
-    return sortedInstallments.slice(0, 2);
-
-  } catch (e) {
-    console.log(e);
-    return featuredIntallments;
+    return installmentsCopy;
   }
-}
 
-export const fetcher = async (url: string) => {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error('Error en la petición');
+  /**
+   * Returns the top installment options
+   */
+  function getBestInstallments(
+    installments: FeaturedInstallment[],
+    quantity : number
+  ): FeaturedInstallment[] {
+    return installments.slice(0, quantity);
   }
-  return response.json();
-};
+
+  export async function fetcher(url: string) {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Error en la petición');
+    }
+    return response.json();
+  };
