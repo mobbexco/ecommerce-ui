@@ -7,7 +7,12 @@ export default function SelectCard({
   onSelectCard,
 }: SelectCardProps) {
   const cards: any = sources
-    .filter((item: any) => item.view.group === 'card')
+    .filter((item: any) => 
+      item.view.group === 'card' &&
+      item.installments.enabled === true &&
+      Array.isArray(item.installments.list) &&
+      item.installments.list.length !== 0
+  )
     .map((item: any) => item.source.name);
 
   useEffect(() => {
