@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
-import { formatTags } from "./functions";
-import { FormattedTag, Installment, InstallmentDetailsProps } from "./Interfaces";
+import { formatTags, formatCurrency } from "./functions";
+import {
+  FormattedTag,
+  Installment,
+  InstallmentDetailsProps,
+} from "./Interfaces";
 
 export default function InstallmentDetails({
   sources,
@@ -49,7 +53,10 @@ export default function InstallmentDetails({
   }, [selectedCard, selectedInstallment, previousCard, onSelectInstallment]);
 
   // Render bypass
-  if (!installment || (selectedInstallment === "Cantidad de cuotas" && !selectedCard)) {
+  if (
+    !installment ||
+    (selectedInstallment === "Cantidad de cuotas" && !selectedCard)
+  ) {
     return null;
   }
 
@@ -60,13 +67,13 @@ export default function InstallmentDetails({
           <p>{selectedCard}</p>
         </div>
         <div className="card-total">
-          <p>Total: ${installment.totals.total}</p>
+          <p>Total: {formatCurrency(installment.totals.total)}</p>
         </div>
       </div>
       <div className="row-2">
         <p>
-          {installment.count} Cuota/s de $
-          {installment.totals.installment.amount}
+          {installment.count} Cuota/s de{" "}
+          {formatCurrency(installment.totals.installment.amount)}
         </p>
       </div>
       <div className="tags">
