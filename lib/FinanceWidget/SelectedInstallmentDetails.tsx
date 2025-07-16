@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
-import { formatTags } from "./functions";
-import { FormattedTag, Installment, InstallmentDetailsProps } from "./Interfaces";
+import { formatTags, formatCurrency } from "./functions";
+import {
+  FormattedTag,
+  Installment,
+  InstallmentDetailsProps,
+} from "./Interfaces";
 
 export default function InstallmentDetails({
   sources,
@@ -49,30 +53,34 @@ export default function InstallmentDetails({
   }, [selectedCard, selectedInstallment, previousCard, onSelectInstallment]);
 
   // Render bypass
-  if (!installment || (selectedInstallment === "Cantidad de cuotas" && !selectedCard)) {
+  if (
+    !installment ||
+    (selectedInstallment === "Cantidad de cuotas" && !selectedCard)
+  ) {
     return null;
   }
 
   return (
     <div className="financeWidget-selectedInstallmentDetails">
-      <div className="grid">
-        <div className="column-1">
+      <div className="row-1">
+        <div className="card-title">
           <p>{selectedCard}</p>
-          <p>
-            {installment.count} Cuota/s de $
-            {installment.totals.installment.amount}
-          </p>
         </div>
-        <div className="tags">
-          <p>CFT: {tags?.CFT ? tags.CFT : "0"}%</p>
-          <p>
-            TNA: {tags?.TNA ? tags.TNA : "0"}% TEA:{" "}
-            {tags?.TEA ? tags.TEA : "0"}%
-          </p>
+        <div className="card-total">
+          <p>Total: {formatCurrency(installment.totals.total)}</p>
         </div>
       </div>
-      <div className="column-2">
-        <p>Total: ${installment.totals.total}</p>
+      <div className="row-2">
+        <p>
+          {installment.count} Cuota/s de{" "}
+          {formatCurrency(installment.totals.installment.amount)}
+        </p>
+      </div>
+      <div className="tags">
+        <p>CFT: {tags?.CFT ? tags.CFT : "0"}%</p>
+        <p>
+          TNA: {tags?.TNA ? tags.TNA : "0"}% TEA: {tags?.TEA ? tags.TEA : "0"}%
+        </p>
       </div>
     </div>
   );

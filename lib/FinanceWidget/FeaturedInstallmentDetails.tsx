@@ -1,3 +1,4 @@
+import { formatCurrency } from "./functions";
 import { FeaturedInstallment } from "./Interfaces";
 
 export default function FeaturedInstallmentDetails({
@@ -27,7 +28,7 @@ export default function FeaturedInstallmentDetails({
           : ""}
       </span>
       {" de "}
-      <strong>${installment.amount}</strong>
+      <strong>{formatCurrency(installment.amount)}</strong>
       <span className="mbbx-cards-container">
         {installment.sources.map((ref: string) => (
           <span className="card-logo-span" key={ref}>

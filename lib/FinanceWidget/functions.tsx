@@ -1,6 +1,18 @@
 import { FeaturedInstallment, PaymentSource } from "./Interfaces";
 import { Installment } from "./Interfaces";
 
+const currencyFormatter = new Intl.NumberFormat('es-AR', {
+  style: 'currency',
+  currency: 'ARS'
+})
+
+/**
+ * Formats a number to a currency string
+ */
+export function formatCurrency(value: number): string {
+  return currencyFormatter.format(value);
+}
+
 /**
  * Formats tags accumulating them in a new object
  */
