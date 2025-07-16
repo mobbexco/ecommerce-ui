@@ -175,22 +175,25 @@
 }
 
 :host .financeWidget-selectedInstallmentDetails .row-1{
-  font-weight: 700;;
+  font-weight: 500;;
   color: var(--mobbex-text-color);
   width: 100%;
   flex-direction: row;
+  display: flex;;
+  justify-content: space-between;
+  align-items: start;
 }
 
 :host .card-title {
   display: flex;
   align-items: start;
-  width: 50%;
+  text-align: start;
+  max-width: 60%;
 }
 
 :host .card-total {
   display: flex;
   align-items: end;
-  width: 50%;
 }
 
 :host .financeWidget-selectedInstallmentDetails .row-1 p{
@@ -206,14 +209,13 @@
 }
 
 :host .financeWidget-selectedInstallmentDetails .row-2 p{
-  margin-top : 0;
+  margin : 0;
   padding: 0;
 }
 
 :host .financeWidget-selectedInstallmentDetails .tags{
   color : var(--mobbex-tag);
   text-align:start;
-  margin-top: 8px;
 }
 :host .financeWidget-selectedInstallmentDetails .tags p{
   margin : 0;
