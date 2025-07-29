@@ -1,14 +1,16 @@
 import FeaturedInstallmentDetails from "./FeaturedInstallmentDetails";
 import { PaymentSource, FeaturedInstallment } from "./Interfaces";
-import { getFeaturedInstallments } from "./functions";
+import { getFeaturedInstallments, getCustomFeaturedInstallment } from "./functions";
 import spinner from "./img/ring-spinner.svg";
 
 export default function FeaturedInstallments({
   sources,
   error,
+  uids,
 }: {
   sources?: PaymentSource[];
   error: Error;
+  uids?: string[];
 }) {
   
   if (error)
@@ -21,12 +23,14 @@ export default function FeaturedInstallments({
     );
     
     if (sources?.length) {
-      const bestInstallments: FeaturedInstallment[] =
-        getFeaturedInstallments(sources);
+      const bestInstallments: FeaturedInstallment[] = 
+        !uids?.length ?
+        getFeaturedInstallments(sources) :
+        getCustomFeaturedInstallment(uids, sources);
 
       return (
         <>
-          {bestInstallments.map((installment: FeaturedInstallment) => (
+          {bestInstallments.slice(0, 3).map((installment: FeaturedInstallment) => (
             <FeaturedInstallmentDetails
               installment={installment}
               key={installment.uid}
