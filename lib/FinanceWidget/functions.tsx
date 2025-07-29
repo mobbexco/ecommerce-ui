@@ -164,13 +164,15 @@ export function formatTags(tags: any) {
    */
   function createFeaturedInstallment(
     installment: Installment,
-    sources: string[]
+    sources: string | string[]
   ): FeaturedInstallment {
+    const source = Array.isArray(sources) ? sources : [sources];
+
     return {
       amount: Number(installment.totals.installment.amount),
       count: Number(installment.count),
       percentage: Number(installment.totals.financial.percentage),
-      sources,
+      sources: source,
       uid: installment.uid,
     };
   }
@@ -214,3 +216,40 @@ export function formatTags(tags: any) {
     }
     return response.json();
   };
+
+/**
+ * Search for installments that match with given uids
+ * 
+ * @param uids uids to get
+ * @param sources sources where uids will be searched
+ * 
+ * @return formated installment with reference included
+ */
+export function getCustomFeaturedInstallment(
+  uids: string[],
+  sources: PaymentSource[]
+): FeaturedInstallment[] {
+  if (!Array.isArray(uids) || uids.length === 0 || !Array.isArray(sources)) {
+    return [];
+  }
+
+  return sources.flatMap(source => getCustomInstallmentsFromSource(uids, source));
+}
+
+/**
+ * Retrieve formated installments that match with given uids
+ * 
+ * @return FraturedInstallment[]
+ */
+function getCustomInstallmentsFromSource(
+  uids: string[],
+  source: PaymentSource
+): FeaturedInstallment[] {
+  const installmentsList = Array.isArray(source.installments?.list)
+    ? source.installments.list
+    : [];
+
+  return installmentsList
+    .filter(installment => uids.includes(installment.uid))
+    .map(installment => createFeaturedInstallment(installment, source.source.reference));
+}
