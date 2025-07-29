@@ -9,12 +9,12 @@ export interface FeaturedInstallment {
 export interface FinanceWidgetProps {
   sourcesUrl: string;
   theme: 'light' | 'dark';
-  showFeaturedInstallments?: boolean;
+  featuredInstallments?: string[] | null;
 }
 
 export interface FinanceWidgetState {
   theme: 'light' | 'dark';
-  isLoading: any;
+  isLoading: boolean;
 }
 export interface IButton {
   handleParentVariable: () => void;

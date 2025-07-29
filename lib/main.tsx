@@ -5,7 +5,7 @@ declare global {
     interface Window {
         mobbexSourcesUrl: string;
         mobbexTheme : 'light' | 'dark';
-        showFeaturedInstallments : boolean;
+        featuredInstallments : string[] | null;
     }
 }
 
@@ -24,7 +24,7 @@ function renderWidget() {
             <FinanceWidget
                 sourcesUrl={window.mobbexSourcesUrl || ""}
                 theme={window.mobbexTheme}
-                showFeaturedInstallments={window.showFeaturedInstallments}
+                featuredInstallments={window.featuredInstallments || [] || null}
             />
         );
     }
