@@ -24,7 +24,7 @@ function renderWidget() {
             <FinanceWidget
                 sourcesUrl={window.mobbexSourcesUrl || ""}
                 theme={window.mobbexTheme}
-                featuredInstallments={window.featuredInstallments || [] || null}
+                featuredInstallments={window.featuredInstallments}
             />
         );
     }
