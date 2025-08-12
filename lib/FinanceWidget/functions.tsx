@@ -169,13 +169,11 @@ export function formatTags(tags: any) {
     installment: Installment,
     sources: string | string[]
   ): FeaturedInstallment {
-    const source = Array.isArray(sources) ? sources : [sources];
-
     return {
       amount: Number(installment.totals.installment.amount),
       count: Number(installment.count),
       percentage: Number(installment.totals.financial.percentage),
-      sources: source,
+      sources: Array.isArray(sources) ? sources : [sources],
       uid: installment.uid,
     };
   }
