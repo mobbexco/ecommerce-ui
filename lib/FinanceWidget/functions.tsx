@@ -86,7 +86,9 @@ export function formatTags(tags: any) {
   }
 
   /**
-   * Groups identical installments and gets their payment sources
+   * Groups identical installments and gets their and payment sources
+   * 
+   * @return FeaturedInstallment[]
    */
   function getUniqueInstallmentsGrouped(
     installments: Installment[],
@@ -161,16 +163,17 @@ export function formatTags(tags: any) {
 
   /**
    * Creates a FeaturedInstallment object from base installment data
+   * a string or array of string can be passed
    */
   function createFeaturedInstallment(
     installment: Installment,
-    sources: string[]
+    sources: string | string[]
   ): FeaturedInstallment {
     return {
       amount: Number(installment.totals.installment.amount),
       count: Number(installment.count),
       percentage: Number(installment.totals.financial.percentage),
-      sources,
+      sources: Array.isArray(sources) ? sources : [sources],
       uid: installment.uid,
     };
   }
@@ -214,3 +217,59 @@ export function formatTags(tags: any) {
     }
     return response.json();
   };
+
+/**
+ * Search for installments that match with given uids
+ * 
+ * @param uids uids to get
+ * @param sources sources where uids will be searched
+ * 
+ * @return FeaturedInstallment[] formated installment with reference included
+ */
+export function getCustomFeaturedInstallment(
+  uids: string[],
+  sources: PaymentSource[]
+): FeaturedInstallment[] {
+  if (!Array.isArray(uids) || uids.length === 0 || !Array.isArray(sources))
+    return [];
+
+  const customFeaturedInstallments : Installment[] = sources.flatMap(
+    source => getCustomInstallmentsFromSource(uids, source)
+  );
+
+  if (customFeaturedInstallments.length == 0)
+    console.log("Error : Los IDs ingresados no coinciden con los disponibles. Verifica que se hallan ingresado correctamente");
+
+  if (uids.length != customFeaturedInstallments.length)
+    console.log('Error : Uno o mas ID ingresados no coinciden con los disponibles. Verifica que se hallan ingresado correctamente');
+
+  const groupedInstallments = getUniqueInstallmentsGrouped(
+    customFeaturedInstallments,
+    sources
+  );
+
+  return groupedInstallments;
+}
+
+/**
+ * Retrieve formated installments that match with given uids
+ * 
+ * @param uids
+ * @param source
+ * 
+ * @return Installment[]
+ */
+function getCustomInstallmentsFromSource(
+  uids: string[],
+  source: PaymentSource
+): Installment[] {
+  let installmentsList = Array.isArray(source.installments?.list)
+    ? source.installments.list
+    : [];
+
+  const customFeaturedInstallment : Installment[] = installmentsList.filter(
+    installment => uids.includes(installment.uid)
+  );
+
+  return customFeaturedInstallment;
+}

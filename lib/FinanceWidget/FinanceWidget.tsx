@@ -13,7 +13,7 @@ import useSWR from "swr";
 export default function FinanceWidget({
   sourcesUrl,
   theme,
-  showFeaturedInstallments = true,
+  featuredInstallments,
 }: FinanceWidgetProps) {
   // Fetch sources and gets state
   const { data, error, isLoading } = useSWR(sourcesUrl, fetcher);
@@ -32,9 +32,9 @@ export default function FinanceWidget({
           <style>{styles}</style>
 
           <div className="financeWidget-wrapper">
-            {showFeaturedInstallments && (
+            {featuredInstallments && (
               <div className="financeWidget-featuredInstallments">
-                <FeaturedInstallments sources={data?.sources} error={error} />
+                <FeaturedInstallments sources={data?.sources} error={error} uids={featuredInstallments} />
               </div>
             )}
             <div className="financeWidget-buttonWrapper">
