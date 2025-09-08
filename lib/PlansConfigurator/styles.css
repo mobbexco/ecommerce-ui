@@ -1,0 +1,94 @@
+.mobbex-pc-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobbex-pc-columns-container {
+    color: #000;
+    display: flex;
+    background-color: #fff;
+    font-family: sans-serif;
+}
+
+.mobbex-pc-payment-methods {
+    margin: 0 auto;
+    background: #fff;
+    height: 50%;
+    width: 50%;
+}
+
+.mobbex-pc-config {
+    margin: auto;
+    background: #fff;
+    height: auto;
+    width: 50%;
+}
+
+.mobbex-pc-title {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.mobbex-pc-config-radio {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobbex-pc-config-search-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobbex-pc-config-input-title {
+    margin: 1px 1px;
+}
+
+.mobbex-pc-config-input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #a39db7;
+    border-radius: 999px;
+    padding: 4px 8px;
+    width: 300px;
+    background: #fff;
+}
+
+.mobbex-pc-config-input:focus{
+    border:1px solid red;
+}
+
+.mobbex-pc-config-input {
+    align-items: center;
+    padding: 5px 0px 5px 16px;
+    color: #444;
+    gap: 8px;
+    width: 85%;
+    height: auto;
+    border-right: 1px solid #444;
+    border-top: 0px;
+    border-bottom: 0px;
+    border-left: 0px;
+    border-radius: 64px 0 0 64px;
+}
+
+.mobbex-pc-config-input-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #444;
+    padding: 0 6px;
+}
+
+.mobbex-pc-config-checkbox {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobbex-tool-tip {
+    font-size: 16px;
+    border-radius: 100%;
+    border: 1px solid;
+    padding: 0px 3px;
+    margin: 0px 0px 4px 4px;
+}
