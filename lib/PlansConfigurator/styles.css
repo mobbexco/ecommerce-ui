@@ -1,6 +1,8 @@
 .mobbex-pc-container {
     display: flex;
     flex-direction: column;
+    justify-self: center;
+    min-width: 90%;
 }
 
 .mobbex-pc-columns-container {
@@ -8,20 +10,88 @@
     display: flex;
     background-color: #fff;
     font-family: sans-serif;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 .mobbex-pc-payment-methods {
-    margin: 0 auto;
     background: #fff;
     height: 50%;
-    width: 50%;
+    width: 45%;
+    font-size: 18px;
+    font-weight: 400;
+    border: 0.5px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.mobbex-pc-payment-methods-sources {
+    border: 0;
+    border-radius: 8px;
+    display: flex;
+    background: #f9f8ff;
+    margin: 5px 0;
+    width: -webkit-fill-available;
+}
+
+.mobbex-source-selected{
+    background: lightgrey;
+}
+
+.mobbex-pc-payment-method-info{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.mobbex-card-logo {
+    height: 32px;
+    width: 36px;
+    margin: 5px 5px;
+    border-radius: 4px;
+    border: 1px solid #c1c1c1;
+}
+
+.mobbex-source-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.mobbex-source-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.mobbex-source-name {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.mobbex-source-description {
+    font-size: 10px;
+    font-weight: 400;
+    color: #6a6969;
+}
+
+.mobbex-arrow {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    font-size: x-large;
+    width: 15px;
+    font-family: monospace;
 }
 
 .mobbex-pc-config {
-    margin: auto;
     background: #fff;
     height: auto;
-    width: 50%;
+    width: 45%;
+    font-size: 18px;
+    font-weight: 400;
+    border: 0.5px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 16px;
 }
 
 .mobbex-pc-title {
@@ -53,8 +123,8 @@
     background: #fff;
 }
 
-.mobbex-pc-config-input:focus{
-    border:1px solid red;
+.mobbex-pc-config-input:focus {
+    border: 1px solid red;
 }
 
 .mobbex-pc-config-input {
@@ -91,4 +161,22 @@
     border: 1px solid;
     padding: 0px 3px;
     margin: 0px 0px 4px 4px;
+}
+
+.mobbex-button-container{
+    max-height: 48px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    margin: 32px 0px;
+}
+
+.mobbex-plans-save-button {
+    border-radius: 64px;
+    background: #d7dde3;
+    height: max-content;
+    width: max-content;
+    width: 334px;
+    padding: 16px;
 }
