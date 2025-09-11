@@ -1,11 +1,19 @@
 import { react } from "@vitejs/plugin-react";
+import { fetcher } from "../FinanceWidget/functions";
+import { sourcesExamples } from "../examples";
 import SourcesLayout from "./SourcesLayout";
 import RadioConfig from "./RadioConfig";
 import styles from "./styles.css?inline";
 import PlansSearcher from "./PlansSearcher";
 import PlansDisplay from "./PlansDisplay";
+import { sources } from 'C:/Mobbex/plugins/ecommerce-ui/examples.ts';
+import SaveButton from "./SaveButton";
 
 export default function PlansConfigurator(sourceUrl: string) {
+  // const { data, error, isLoading } = useSWR(sourcesUrl, fetcher)
+  const data = sourcesExamples;
+  // console.log(data);
+
   return (
     <>
       <style>{styles}</style>
@@ -13,11 +21,7 @@ export default function PlansConfigurator(sourceUrl: string) {
         <div className="mobbex-pc-columns-container">
           <div className="mobbex-pc-payment-methods">
             <span className="mobbex-pc-title">Medios de Pago</span>
-            <div className="mobbex-pc-sources-layout">
-              <ul>
-                <SourcesLayout sources={null} />
-              </ul>
-            </div>
+              <SourcesLayout sources={data} />
           </div>
           <div className="mobbex-pc-config">
             <span className="mobbex-pc-title">
@@ -31,9 +35,7 @@ export default function PlansConfigurator(sourceUrl: string) {
             <PlansDisplay />
           </div>
         </div>
-        <button type="submit" title="plans-search-button">
-          <span>Confirmar</span>
-        </button>
+        <SaveButton settings={[]}/>
       </div>
     </>
   );
