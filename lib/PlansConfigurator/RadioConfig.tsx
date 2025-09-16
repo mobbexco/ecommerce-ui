@@ -1,27 +1,50 @@
+import { useState } from "react";
+import { RadioGroup } from "./RadioGroup";
+
 export default function RadioConfig() {
+  const [showConfig, setShowConfig] = useState("not_show");
+  const [bestConfig, setBestConfig] = useState("best_three");
+
   return (
-    <div className="mobbex-pc-config-radio">
-      <div>
-        <input
-          type="radio"
-          name="pc-config-radio"
-          className="mobbex-pc-config-radio-not-show"
-          id="not_show"
-          value="not_show"
-          defaultChecked
+    <>
+      <RadioGroup
+        name="pc-config-radio-show"
+        defaultValue={showConfig}
+        onChange={setShowConfig}
+        options={[
+          {
+            id: "not_show",
+            value: "not_show",
+            label: "Ocultar planes destacados",
+          },
+          {
+            id: "show",
+            value: "show",
+            label: "Mostrar planes destacados",
+            defaultChecked : true,
+          },
+        ]}
+      />
+      {showConfig === "show" && (
+        <RadioGroup
+          name="pc-config-radio-best"
+          defaultValue={bestConfig}
+          onChange={setBestConfig}
+          options={[
+            {
+              id: "best_three",
+              value: "best_three",
+              label: "Mostrar los 3 mejores planes",
+              defaultChecked : true,
+            },
+            {
+              id: "manual",
+              value: "manual",
+              label: "Definir manualmente los planes destacados",
+            },
+          ]}
         />
-        <label htmlFor="not_show">No quiero mostrar planes destacados</label>
-      </div>
-      <div>
-        <input
-          type="radio"
-          name="pc-config-radio"
-          className="mobbex-pc-config-radio-show"
-          id="show"
-          value="show"
-        />
-        <label htmlFor="show">Quiero mostrar planes destacados</label>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
