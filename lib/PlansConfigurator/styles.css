@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     justify-self: center;
-    min-width: 90%;
 }
 
 .mobbex-pc-columns-container {
@@ -11,34 +10,42 @@
     background-color: #fff;
     font-family: sans-serif;
     flex-direction: row;
-    justify-content: space-evenly;
+    gap: 10px;
+}
+
+.mobbex-pc-title {
+    font-size: 20px;
+    font-weight: 400;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .mobbex-pc-payment-methods {
     background: #fff;
-    height: 50%;
-    width: 45%;
     font-size: 18px;
     font-weight: 400;
     border: 0.5px solid #d9d9d9;
     border-radius: 8px;
     padding: 16px;
+    width: 100%;
 }
 
 .mobbex-pc-payment-methods-sources {
     border: 0;
     border-radius: 8px;
     display: flex;
+    width: 100%;
     background: #f9f8ff;
     margin: 5px 0;
-    width: -webkit-fill-available;
 }
 
-.mobbex-source-selected{
+.mobbex-source-selected {
     background: lightgrey;
 }
 
-.mobbex-pc-payment-method-info{
+.mobbex-pc-payment-method-info {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -49,7 +56,7 @@
     width: 36px;
     margin: 5px 5px;
     border-radius: 4px;
-    border: 1px solid #c1c1c1;
+    border: 1px solid #d6dce5;
 }
 
 .mobbex-source-info {
@@ -86,22 +93,74 @@
 .mobbex-pc-config {
     background: #fff;
     height: auto;
-    width: 45%;
     font-size: 18px;
     font-weight: 400;
     border: 0.5px solid #d9d9d9;
     border-radius: 8px;
     padding: 16px;
+    width: 100%;
 }
 
-.mobbex-pc-title {
-    font-size: 18px;
-    font-weight: 400;
-}
-
-.mobbex-pc-config-radio {
+.mobbex-pc-config-radio-container {
     display: flex;
     flex-direction: column;
+    margin: 4px 0;
+}
+
+.mobbex-pc-radio {
+    display: flex;
+    margin: 4px 0;
+    flex-direction: row;
+    justify-content: flex-start;
+    max-height: 34px;
+}
+
+.mobbex-pc-radio input[type="radio"] {
+    display: none;
+}
+
+.mobbex-pc-radio-label {
+    cursor: pointer;
+    font-size: 16px;
+    color: #000;
+    margin: 8px 0;
+}
+
+.mobbex-pc-radio-label::before {
+    content: "";
+    border: 1px solid #000;
+    border-radius: 50%;
+    padding: 3px 12px;
+    margin: 0px 8px 0px 0;
+}
+
+.mobbex-pc-radio input[type="radio"]:checked+.mobbex-pc-radio-label::before {
+    content: "✓";
+    font-size: 14px;
+    padding: 4px 7px;
+    font-weight: 700;
+    color: #000;
+    text-align: center;
+    background: #d6b15f;
+    border: 1px solid #d6b15f;
+}
+
+.mobbex-radio-text {
+    align-self: center;
+    margin-left: 2px;
+}
+
+.mobbex-pc-config-radio-container-best {
+    margin: 4px 0 0 52px;
+}
+
+.mobbex-radio-text-best {
+    font-size: 12px;
+    margin: 8px 0 8px 36px
+}
+
+.mobbex-radio-text-best:before {
+    font-size: 16px;
 }
 
 .mobbex-pc-config-search-input {
@@ -110,7 +169,12 @@
 }
 
 .mobbex-pc-config-input-title {
-    margin: 1px 1px;
+    margin: 4px 0;
+}
+
+.mobbex-pc-config-checkbox-title {
+    margin: 8px 1px;
+    font-size: 14px;
 }
 
 .mobbex-pc-config-input-container {
@@ -121,10 +185,7 @@
     padding: 4px 8px;
     width: 300px;
     background: #fff;
-}
-
-.mobbex-pc-config-input:focus {
-    border: 1px solid red;
+    margin: 8px 0 ;
 }
 
 .mobbex-pc-config-input {
@@ -150,24 +211,54 @@
     padding: 0 6px;
 }
 
-.mobbex-pc-config-checkbox {
+.mobbex-pc-config-checkbox-container {
     display: flex;
     flex-direction: column;
 }
 
-.mobbex-tool-tip {
+.mobbex-pc-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
     font-size: 16px;
+}
+
+.mobbex-pc-config-checkbox {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    border: 1px solid #000;
+    text-align: center;
+    margin: 8px 4px;
+    content: "";
+}
+
+.mobbex-pc-config-checkbox:checked {
+    background: #d6b15f;
+    border: 1px solid #d6b15f;;
+}
+
+.mobbex-pc-config-checkbox:checked::after {
+    color: #000;
+    content: "✓";
+    font-weight: 700;
+}
+
+.mobbex-tool-tip {
+    font-size: 14px;
+    font-weight: 600;
     border-radius: 100%;
-    border: 1px solid;
+    border: 2px solid;
     padding: 0px 3px;
     margin: 0px 0px 4px 4px;
 }
 
-.mobbex-button-container{
+.mobbex-button-container {
     max-height: 48px;
     display: flex;
     flex-direction: row;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
     margin: 32px 0px;
 }
@@ -175,8 +266,7 @@
 .mobbex-plans-save-button {
     border-radius: 64px;
     background: #d7dde3;
-    height: max-content;
-    width: max-content;
+    font-size: 16px;
     width: 334px;
     padding: 16px;
 }

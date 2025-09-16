@@ -6,7 +6,6 @@ import RadioConfig from "./RadioConfig";
 import styles from "./styles.css?inline";
 import PlansSearcher from "./PlansSearcher";
 import PlansDisplay from "./PlansDisplay";
-import { sources } from 'C:/Mobbex/plugins/ecommerce-ui/examples.ts';
 import SaveButton from "./SaveButton";
 
 export default function PlansConfigurator(sourceUrl: string) {
@@ -20,7 +19,7 @@ export default function PlansConfigurator(sourceUrl: string) {
       <div className="mobbex-pc-container">
         <div className="mobbex-pc-columns-container">
           <div className="mobbex-pc-payment-methods">
-            <span className="mobbex-pc-title">Medios de Pago</span>
+            <span className="mobbex-pc-title">Medios de pago</span>
               <SourcesLayout sources={data} />
           </div>
           <div className="mobbex-pc-config">
