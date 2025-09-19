@@ -1,20 +1,16 @@
 import { useState } from "react";
 import { PaymentSource } from "../FinanceWidget/Interfaces";
-
-interface SourcesLayoutProps {
-  sources: PaymentSource[];
-  onSelect: (source: PaymentSource) => void; // callback hacia el padre
-}
+import { ISourcesLayout } from "./interface";
 
 export default function SourcesLayout({
   sources,
-  onSelect,
-}: SourcesLayoutProps) {
+  onSelectSource,
+}: ISourcesLayout) {
   const [selected, setSelected] = useState<string | null>(null);
 
-  const handleClick = (source: PaymentSource) => {
-    setSelected(source.source.reference);
-    onSelect(source); // le avisás al padre
+  const handleSelectSource = (source: PaymentSource) => {
+    setSelected(source.source.name);
+    onSelectSource(source.source.name); // le avisás al padre
   };
 
   return (
@@ -22,7 +18,7 @@ export default function SourcesLayout({
       {sources
         .filter((source) => source.installments.enabled)
         .map((source) => {
-          const isSelected = selected === source.source.reference;
+          const isSelected = selected === source.source.name;
 
           return (
             <button
@@ -31,7 +27,7 @@ export default function SourcesLayout({
               className={`mobbex-pc-payment-methods-sources ${
                 isSelected ? "mobbex-source-selected" : ""
               }`}
-              onClick={() => handleClick(source)}
+              onClick={() => handleSelectSource(source)}
             >
               <div className="mobbex-pc-payment-method-info">
                 <img
