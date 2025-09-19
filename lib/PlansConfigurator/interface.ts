@@ -2,7 +2,7 @@ import { PaymentSource } from "../FinanceWidget/Interfaces";
 
 export interface ISourcesLayout {
   sources: PaymentSource[];
-  onSelect: (source: PaymentSource) => void;
+  onSelectSource: (source: string) => void;
 }
 
 export  interface ISaveButton {
@@ -23,4 +23,15 @@ export interface IRadioGroup {
   options: { id: string; value: string; label: string, defaultChecked?:boolean }[];
   defaultValue?: string;
   onChange?: (value: string) => void;
+}
+
+export interface IPlansDisplay {
+  selectedSource : string,
+  sources : PaymentSource[]
+  manual : boolean,
+}
+
+export interface IPlansSearcher {
+  installments: string[];
+  onSearch?: (query: string) => void;
 }
