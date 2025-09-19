@@ -32,6 +32,5 @@ export interface IPlansDisplay {
 }
 
 export interface IPlansSearcher {
-  installments: string[];
   onSearch?: (query: string) => void;
 }
