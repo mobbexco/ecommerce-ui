@@ -2,6 +2,7 @@ import { useState } from "react";
 import { PaymentSource, Installment } from "../FinanceWidget/Interfaces";
 import { IPlansDisplay } from "./interface";
 import PlansSearcher from "./PlansSearcher";
+import FeaturedCheckbox from "./FeaturedCheckbox";
 
 export default function PlansDisplay({
   selectedSource,
@@ -53,12 +54,11 @@ export default function PlansDisplay({
     i.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-
   return (
     selectedSource &&
     installments?.length > 1 && (
       <>
-        <PlansSearcher installments={installments} onSearch={setSearchQuery}  />
+        <PlansSearcher installments={installments} onSearch={setSearchQuery} />
         <span className="mobbex-pc-config-checkbox-title">
           Selecciona uno de los planes
         </span>
@@ -70,18 +70,21 @@ export default function PlansDisplay({
               checked={sourceCheckedPlans.length === installments.length}
               onChange={() => activateAll(selectedSource)}
             />
-            Activar todos los planes
+           <span className="mobbex-pc-checkbox-text">Activar todos los planes</span>
           </label>
           {filteredInstallments.map((installment, i) => (
-            <label className="mobbex-pc-checkbox-label" key={i}>
-              <input
-                className="mobbex-pc-config-checkbox"
-                type="checkbox"
-                checked={sourceCheckedPlans.includes(installment)}
-                onChange={() => toggleCheckbox(selectedSource, installment)}
-              />
-              {installment}
-            </label>
+            <div className="mobbex-pc-checkbox-label-dinamic">
+              <label className="mobbex-pc-checkbox-label" key={i}>
+                <input
+                  className="mobbex-pc-config-checkbox"
+                  type="checkbox"
+                  checked={sourceCheckedPlans.includes(installment)}
+                  onChange={() => toggleCheckbox(selectedSource, installment)}
+                />
+                <span className="mobbex-pc-checkbox-text">{installment}</span>
+              </label>
+              <FeaturedCheckbox referenceTo={installment} />
+            </div>
           ))}
         </div>
       </>
