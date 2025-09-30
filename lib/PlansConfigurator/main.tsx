@@ -2,6 +2,19 @@ import { createRoot } from 'react-dom/client';
 
 import PlansConfigurator from './PlansConfigurator';
 
-const div = document.createElement("div")
-document.body.appendChild(div);
-createRoot(div).render(<PlansConfigurator sourceUrl={""}/>)
+const divId = "mbbx-plans-configurator";
+let root: ReturnType<typeof createRoot> | null = null;
+
+function renderPlansConfigurator() {
+    const container = document.getElementById(divId);
+    if (container) {
+        // cleans root before render if exists
+        if (root) {
+            root.unmount();
+        }
+        root = createRoot(container);
+        root.render(<PlansConfigurator />)
+    }
+}
+
+renderPlansConfigurator();
