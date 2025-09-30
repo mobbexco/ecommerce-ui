@@ -10,16 +10,25 @@ export default function PlansDisplay({
   manual,
 }: IPlansDisplay) {
   // Gets installments for selected source
-  const installments: string[] = sources
+  const installments: Array<{ name: string; uid: string }> = sources
     .filter((item: PaymentSource) => item.source.name === selectedSource)
     .flatMap((item: PaymentSource) =>
       item.installments.enabled
-        ? item.installments.list?.map(
-            (installment: Installment) => installment.name
-          ) ?? []
-        : [item.view.subgroup_title]
+        ? item.installments.list?.map((installment: Installment) => ({
+            name: installment.name,
+            uid: installment.uid,
+            key : new Date().getTime()
+          })) ?? []
+        : [
+            {
+              name: item.view.subgroup_title,
+              uid: item.view.subgroup_title,
+            },
+          ]
     )
-    .filter((i): i is string => Boolean(i));
+    .filter((i): i is { name: string; uid: string } =>
+      Boolean(i.name && i.uid)
+    );
 
   // Manages checked plans isolated by source
   const [checkedPlans, setCheckedPlans] = useState<Record<string, string[]>>(
@@ -42,7 +51,7 @@ export default function PlansDisplay({
       const allSelected = (prev[source]?.length || 0) === installments?.length;
       return {
         ...prev,
-        [source]: allSelected ? [] : installments,
+        [source]: allSelected ? [] : installments.map((i) => i.uid),
       };
     });
   };
@@ -51,14 +60,14 @@ export default function PlansDisplay({
 
   const [searchQuery, setSearchQuery] = useState("");
   const filteredInstallments = installments.filter((i) =>
-    i.toLowerCase().includes(searchQuery.toLowerCase())
+    i.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     selectedSource &&
     installments?.length > 1 && (
       <>
-        <PlansSearcher installments={installments} onSearch={setSearchQuery} />
+        <PlansSearcher onSearch={setSearchQuery} />
         <span className="mobbex-pc-config-checkbox-title">
           Selecciona uno de los planes
         </span>
@@ -67,23 +76,37 @@ export default function PlansDisplay({
             <input
               className="mobbex-pc-config-checkbox"
               type="checkbox"
+              name={`mobbex_plan_${selectedSource}_all`}
               checked={sourceCheckedPlans.length === installments.length}
               onChange={() => activateAll(selectedSource)}
             />
-           <span className="mobbex-pc-checkbox-text">Activar todos los planes</span>
+            <span className="mobbex-pc-checkbox-text">
+              Activar todos los planes
+            </span>
           </label>
           {filteredInstallments.map((installment, i) => (
             <div className="mobbex-pc-checkbox-label-dinamic">
-              <label className="mobbex-pc-checkbox-label" key={i}>
+              <label className="mobbex-pc-checkbox-label">
                 <input
                   className="mobbex-pc-config-checkbox"
                   type="checkbox"
-                  checked={sourceCheckedPlans.includes(installment)}
-                  onChange={() => toggleCheckbox(selectedSource, installment)}
+                  key={i}
+                  name={`mobbex_plan_${selectedSource}_${installment.uid}`}
+                  checked={sourceCheckedPlans.includes(installment.uid)}
+                  onChange={() =>
+                    toggleCheckbox(selectedSource, installment.uid)
+                  }
                 />
-                <span className="mobbex-pc-checkbox-text">{installment}</span>
+                <span className="mobbex-pc-checkbox-text">
+                  {installment.name}
+                </span>
               </label>
-              <FeaturedCheckbox referenceTo={installment} />
+              {manual && (
+                <FeaturedCheckbox
+                  referenceTo={installment.uid}
+                  planChecked={sourceCheckedPlans.includes(installment.uid)}
+                />
+              )}
             </div>
           ))}
         </div>
