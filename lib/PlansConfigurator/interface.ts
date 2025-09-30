@@ -25,6 +25,10 @@ export interface IRadioGroup {
   onChange?: (value: string) => void;
 }
 
+export interface IRadioConfig {
+  onCustomFeatured: (value:boolean) => void;
+}
+
 export interface IPlansDisplay {
   selectedSource : string,
   sources : PaymentSource[]
@@ -33,4 +37,9 @@ export interface IPlansDisplay {
 
 export interface IPlansSearcher {
   onSearch?: (query: string) => void;
+}
+
+export interface IFeaturedCheckbox {
+  referenceTo : string,
+  planChecked : boolean
 }
