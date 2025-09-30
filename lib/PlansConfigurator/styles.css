@@ -1,7 +1,9 @@
-.mobbex-pc-container {
+.mobbex-pc-form {
     display: flex;
     flex-direction: column;
     justify-self: center;
+    width: auto;
+    height: auto;
 }
 
 .mobbex-pc-columns-container {
@@ -284,6 +286,11 @@
     flex-direction: row;
     align-items: center;
     gap: 8px;
+    transition: color 0.15s ease
+}
+
+.mobbex-pc-featured-checkbox-label-disabled{
+    color: #a39db7;
 }
 
 .mobbex-pc-checkbox-text {
@@ -299,12 +306,24 @@
     width: 13px;
     cursor: pointer;
     fill: none;
-    transition: fill 0.3s ease, stroke 0.3s ease;
+    transition: fill 0.15s ease, stroke 0.15s ease;
+    stroke: #000;
+}
+
+.rounded-star-disabled {
+    stroke: #a39db7;
+    cursor: not-allowed;
 }
 
 .mobbex-pc-featured-checkbox:checked + .rounded-star {
     fill: #d6b15f;
     stroke: #d6b15f;
+}
+
+.mobbex-pc-featured-checkbox:disabled + .rounded-star {
+    fill: none;
+    stroke: #a39db7;
+    cursor: not-allowed;
 }
 
 .mobbex-button-container {
