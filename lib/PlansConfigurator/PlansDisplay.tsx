@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PaymentSource, Installment } from "../FinanceWidget/Interfaces";
 import { IPlansDisplay } from "./interface";
 import PlansSearcher from "./PlansSearcher";
-import FeaturedCheckbox from "./FeaturedCheckbox";
+import FeaturedPlanCheckbox from "./FeaturedPlanCheckbox";
 
 export default function PlansDisplay({
   selectedSource,
   sources,
   manual,
+  onSelectPlan,
+  onSetFeaturedPlans,
 }: IPlansDisplay) {
   // Gets installments for selected source
   const installments: Array<{ name: string; uid: string }> = sources
@@ -17,7 +19,7 @@ export default function PlansDisplay({
         ? item.installments.list?.map((installment: Installment) => ({
             name: installment.name,
             uid: installment.uid,
-            key : new Date().getTime()
+            key: new Date().getTime(),
           })) ?? []
         : [
             {
@@ -31,9 +33,7 @@ export default function PlansDisplay({
     );
 
   // Manages checked plans isolated by source
-  const [checkedPlans, setCheckedPlans] = useState<Record<string, string[]>>(
-    {}
-  );
+  const [checkedPlans, setCheckedPlans] = useState<Record<string, string[]>>({});
   const toggleCheckbox = (source: string, value: string) => {
     setCheckedPlans((prev) => {
       const prevForSource = prev[source] || [];
@@ -63,6 +63,20 @@ export default function PlansDisplay({
     i.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  useEffect(() => {
+    if (onSelectPlan) {
+      onSelectPlan(Object.values(checkedPlans).flat());
+    }
+  }, [checkedPlans, onSelectPlan]);
+
+    const [featuredPlans, setFeaturedPlans] = useState<string[]>([]);
+
+    useEffect(() => {
+      if (onSetFeaturedPlans) {
+        onSetFeaturedPlans(featuredPlans);
+      }
+    }, [featuredPlans, onSetFeaturedPlans]);
+
   return (
     selectedSource &&
     installments?.length > 1 && (
@@ -77,6 +91,7 @@ export default function PlansDisplay({
               className="mobbex-pc-config-checkbox"
               type="checkbox"
               name={`mobbex_plan_${selectedSource}_all`}
+              id={`mobbex_plan_${selectedSource}_all`}
               checked={sourceCheckedPlans.length === installments.length}
               onChange={() => activateAll(selectedSource)}
             />
@@ -86,13 +101,20 @@ export default function PlansDisplay({
           </label>
           {filteredInstallments.map((installment, i) => (
             <div className="mobbex-pc-checkbox-label-dinamic">
-              <label className="mobbex-pc-checkbox-label">
+              <label
+                className="mobbex-pc-checkbox-label"
+                htmlFor={`mobbex_plan_${selectedSource}_${installment.uid}`}
+              >
                 <input
                   className="mobbex-pc-config-checkbox"
                   type="checkbox"
                   key={i}
                   name={`mobbex_plan_${selectedSource}_${installment.uid}`}
+                  id={`mobbex_plan_${selectedSource}_${installment.uid}`}
                   checked={sourceCheckedPlans.includes(installment.uid)}
+                  value={
+                    sourceCheckedPlans.includes(installment.uid) ? "yes" : "no"
+                  }
                   onChange={() =>
                     toggleCheckbox(selectedSource, installment.uid)
                   }
@@ -102,9 +124,11 @@ export default function PlansDisplay({
                 </span>
               </label>
               {manual && (
-                <FeaturedCheckbox
+                <FeaturedPlanCheckbox
                   referenceTo={installment.uid}
                   planChecked={sourceCheckedPlans.includes(installment.uid)}
+                  featuredPlans={featuredPlans} 
+                  onPlanChecked={setFeaturedPlans}
                 />
               )}
             </div>
