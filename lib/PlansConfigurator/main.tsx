@@ -1,19 +1,25 @@
 import { createRoot } from 'react-dom/client';
-
 import PlansConfigurator from './PlansConfigurator';
+import { PaymentSource } from "../FinanceWidget/Interfaces";
+
+declare global {
+    interface Window {
+        mobbexSources: PaymentSource[]
+    }
+}
 
 const divId = "mbbx-plans-configurator";
 let root: ReturnType<typeof createRoot> | null = null;
+console.log("mobbex sources:", window.mobbexSources)
 
 function renderPlansConfigurator() {
     const container = document.getElementById(divId);
     if (container) {
-        // cleans root before render if exists
         if (root) {
             root.unmount();
         }
         root = createRoot(container);
-        root.render(<PlansConfigurator />)
+        root.render(<PlansConfigurator mobbexSources={window.mobbexSources || []}/>)
     }
 }
 
