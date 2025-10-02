@@ -1,5 +1,9 @@
 import { PaymentSource } from "../FinanceWidget/Interfaces";
 
+export interface IPlansConfigurator {
+  mobbexSources : PaymentSource[]
+}
+
 export interface ISourcesLayout {
   sources: PaymentSource[];
   onSelectSource: (source: string) => void;
@@ -33,13 +37,16 @@ export interface IPlansDisplay {
   selectedSource : string,
   sources : PaymentSource[]
   manual : boolean,
+  onSelectPlan: (value: string[]) => void;
+  onSetFeaturedPlans: (value: string[]) => void;
 }
 
 export interface IPlansSearcher {
   onSearch?: (query: string) => void;
 }
 
-export interface IFeaturedCheckbox {
+export interface IFeaturedPlanCheckbox {
   referenceTo : string,
-  planChecked : boolean
+  planChecked : boolean,
+  onPlanChecked?: (value: string[]) => void;
 }
