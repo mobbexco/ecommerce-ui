@@ -1,7 +1,10 @@
 import { PaymentSource } from "../FinanceWidget/Interfaces";
 
 export interface IPlansConfigurator {
-  mobbexSources : PaymentSource[]
+  mobbexSources: PaymentSource[];
+  featuredPlans: string[];
+  selectedPlans: string[];
+  showFeaturedPlans: "yes" | "no";
 }
 
 export interface ISourcesLayout {
@@ -31,6 +34,7 @@ export interface IRadioGroup {
 
 export interface IRadioConfig {
   onCustomFeatured: (value:boolean) => void;
+  showFeaturedPlans: string
 }
 
 export interface IPlansDisplay {
