@@ -6,7 +6,7 @@ export function RadioGroup({ name, options, defaultValue, onChange }: IRadioGrou
   const [selected, setSelected] = useState(defaultValue);
 
   const handleChange = (value: string) => {
-    setSelected(value);
+    setSelected(selected);
     onChange?.(value);
   };
 
