@@ -4,24 +4,27 @@ import RadioConfig from "./RadioConfig";
 import styles from "./styles.css?inline";
 import PlansDisplay from "./PlansDisplay";
 import ReactShadowRoot from "react-shadow-root";
-import {IPlansConfigurator} from "./interface"
+import { IPlansConfigurator } from "./interface";
 
-export default function PlansConfigurator({mobbexSources} : IPlansConfigurator) {
+export default function PlansConfigurator({
+  mobbexSources,
+  featuredPlans,
+  selectedPlans,
+  showFeaturedPlans,
+}: IPlansConfigurator) {
   if (mobbexSources.length < 1) {
     console.log("sources not found", mobbexSources);
-    return
-    }
-
-  const data = mobbexSources;
-
-  const [checkedPlans, setCheckedPlans] = useState<string[]>([]);
-  const [featuredPlans, setFeaturedPlans] = useState<string[]>([]);
+    return;
+  }
   const [selectedSource, setSelectedSource] = useState<string>("");
   const [customFeatured, setCustomFeatured] = useState<boolean>(false);
+  const [checkedPlans, setCheckedPlans] = useState<string[]>(selectedPlans);
+  const [featuredInstallments, setFeaturedInstallments] =
+    useState<string[]>(featuredPlans);
 
-  console.log('checked', checkedPlans)
-  console.log('custom', customFeatured)
-  console.log('feat', featuredPlans)
+  console.log("checked", checkedPlans);
+  console.log("custom", customFeatured);
+  console.log("feat", featuredInstallments);
 
   return (
     <>
@@ -32,7 +35,7 @@ export default function PlansConfigurator({mobbexSources} : IPlansConfigurator) 
             <div className="mobbex-pc-payment-methods">
               <span className="mobbex-pc-title">Medios de pago</span>
               <SourcesLayout
-                sources={data}
+                sources={mobbexSources}
                 onSelectSource={setSelectedSource}
               />
             </div>
@@ -43,21 +46,36 @@ export default function PlansConfigurator({mobbexSources} : IPlansConfigurator) 
                   ?
                 </span>
               </span>
-              <RadioConfig onCustomFeatured={setCustomFeatured}/>
+              <RadioConfig
+                onCustomFeatured={setCustomFeatured}
+                showFeaturedPlans={showFeaturedPlans}
+              />
               <PlansDisplay
                 selectedSource={selectedSource}
-                sources={data}
+                sources={mobbexSources}
                 manual={customFeatured}
                 onSelectPlan={setCheckedPlans}
-                onSetFeaturedPlans={setFeaturedPlans}
+                onSetFeaturedPlans={setFeaturedInstallments}
               />
             </div>
           </div>
         </div>
       </ReactShadowRoot>
-      <input type="hidden" name="mobbex_plans" value={JSON.stringify(checkedPlans)}/>
-      <input type="hidden" name="mobbex_featured_plans" value={JSON.stringify(featuredPlans)}/>
-      <input type="hidden" name="mobbex_show_featured_plans" value={customFeatured ? "yes" : "no"}/>
+      <input
+        type="hidden"
+        name="mobbex_plans"
+        value={JSON.stringify(checkedPlans)}
+      />
+      <input
+        type="hidden"
+        name="mobbex_featured_plans"
+        value={JSON.stringify(featuredInstallments)}
+      />
+      <input
+        type="hidden"
+        name="mobbex_show_featured_plans"
+        value={customFeatured ? "yes" : "no"}
+      />
     </>
   );
 }
