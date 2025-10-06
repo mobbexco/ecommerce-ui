@@ -41,8 +41,6 @@ export interface IPlansDisplay {
   selectedSource : string,
   sources : PaymentSource[]
   manual : boolean,
-  onSelectPlan: (value: string[]) => void;
-  onSetFeaturedPlans: (value: string[]) => void;
 }
 
 export interface IPlansSearcher {
