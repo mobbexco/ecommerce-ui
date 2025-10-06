@@ -5,7 +5,7 @@ export default function FeaturedPlanCheckbox({
   planChecked,
   featuredPlans = [],
   onPlanChecked,
-}: IFeaturedPlanCheckbox & { featuredPlans?: string[] }) {
+}: IFeaturedPlanCheckbox) {
   const toggleFeaturedPlan = (id: string) => {
     if (!planChecked) {
       const updated = featuredPlans.filter((item) => item !== id);
