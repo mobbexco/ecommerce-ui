@@ -1,36 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { RadioGroup } from "./RadioGroup";
 import { IRadioConfig } from "./interface";
-// import { GlobalContext } from '../context';
 
-export default function RadioConfig({ onCustomFeatured }: IRadioConfig) {
-  const [showConfig, setShowConfig] = useState("not_show");
+export default function RadioConfig({
+  onCustomFeatured,
+  showFeaturedPlans,
+}: IRadioConfig) {
+  // TODO: manejar el estado de configuracion manual globalmente
+  const [showConfig, setShowConfig] = useState(
+    showFeaturedPlans === "yes" ? "show" : "not_show"
+  );
   const [bestConfig, setBestConfig] = useState("best_three");
-  // const { state, setState } = useContext(GlobalContext);
+
+  useEffect(() => {
+    setShowConfig(showFeaturedPlans === "yes" ? "show" : "not_show");
+  }, [showFeaturedPlans]);
 
   const handleCustomFeatured = (selectedConfig: string) => {
     setBestConfig(selectedConfig);
-    // setState({manual : selectedConfig === 'manual' })
-    onCustomFeatured(selectedConfig === 'manual');
-  }
+    onCustomFeatured(selectedConfig === "manual");
+  };
 
   return (
     <>
       <RadioGroup
         name="pc-config-radio-show"
-        defaultValue={showConfig}
+        defaultValue={showFeaturedPlans === "yes" ? "show" : "not_show"}
         onChange={setShowConfig}
         options={[
           {
             id: "not_show",
             value: "not_show",
             label: "Ocultar planes destacados",
-            defaultChecked: true,
+            defaultChecked: showFeaturedPlans == "no"
           },
           {
             id: "show",
             value: "show",
             label: "Mostrar planes destacados",
+            defaultChecked: showFeaturedPlans == "yes"
           },
         ]}
       />
@@ -44,12 +52,13 @@ export default function RadioConfig({ onCustomFeatured }: IRadioConfig) {
               id: "best_three",
               value: "best_three",
               label: "Mostrar los 3 mejores planes",
-              defaultChecked: true,
+              defaultChecked: bestConfig !== "manual"
             },
             {
               id: "manual",
               value: "manual",
               label: "Definir manualmente los planes destacados",
+              defaultChecked: bestConfig === "manual"
             },
           ]}
         />
