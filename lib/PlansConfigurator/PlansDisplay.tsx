@@ -1,17 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { PaymentSource, Installment } from "../FinanceWidget/Interfaces";
 import { IPlansDisplay } from "./interface";
 import PlansSearcher from "./PlansSearcher";
 import FeaturedPlanCheckbox from "./FeaturedPlanCheckbox";
+import { GlobalContext } from "../context";
 
 export default function PlansDisplay({
   selectedSource,
   sources,
   manual,
-  onSelectPlan,
-  onSetFeaturedPlans,
 }: IPlansDisplay) {
-  // Gets installments for selected source
+  const { state, setState } = useContext(GlobalContext);
+
+  // Gets plans from selected source
   const installments: Array<{ name: string; uid: string }> = sources
     .filter((item: PaymentSource) => item.source.name === selectedSource)
     .flatMap((item: PaymentSource) =>
@@ -32,59 +33,45 @@ export default function PlansDisplay({
       Boolean(i.name && i.uid)
     );
 
-  // Manages checked plans isolated by source
-  const [checkedPlans, setCheckedPlans] = useState<Record<string, string[]>>({});
-  const toggleCheckbox = (source: string, value: string) => {
-    setCheckedPlans((prev) => {
-      const prevForSource = prev[source] || [];
-      return {
-        ...prev,
-        [source]: prevForSource.includes(value)
-          ? prevForSource.filter((v) => v !== value)
-          : [...prevForSource, value],
-      };
-    });
-  };
-
-  const activateAll = (source: string) => {
-    setCheckedPlans((prev) => {
-      const allSelected = (prev[source]?.length || 0) === installments?.length;
-      return {
-        ...prev,
-        [source]: allSelected ? [] : installments.map((i) => i.uid),
-      };
-    });
-  };
-
-  const sourceCheckedPlans = checkedPlans[selectedSource] || [];
-
   const [searchQuery, setSearchQuery] = useState("");
   const filteredInstallments = installments.filter((i) =>
     i.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  useEffect(() => {
-    if (onSelectPlan) {
-      onSelectPlan(Object.values(checkedPlans).flat());
-    }
-  }, [checkedPlans, onSelectPlan]);
+  // togglePlanCheckbox handles individual checkbox plans states
+  const togglePlanCheckbox = (uid: string) => {
+    const { selectedPlans } = state;
+    setState({
+      selectedPlans: selectedPlans.includes(uid)
+        ? selectedPlans.filter((id: any) => id !== uid)
+        : [...selectedPlans, uid],
+    });
+  };
 
-    const [featuredPlans, setFeaturedPlans] = useState<string[]>([]);
+  // activateAllCheckboxes handles bulk plans activation
+  const activateAllCheckboxes = (): void => {
+    const allSelected = state.selectedPlans.length === installments.length;
+    setState({
+      selectedPlans: allSelected ? [] : installments.map((i: any) => i.uid),
+    });
+  };
 
-    useEffect(() => {
-      if (onSetFeaturedPlans) {
-        onSetFeaturedPlans(featuredPlans);
-      }
-    }, [featuredPlans, onSetFeaturedPlans]);
+  // handleFeaturedPlansUpdate manages featured plans activation
+  const handleFeaturedPlansUpdate = (updatedFeaturedPlans: string[]): void => {
+    setState({
+      featuredPlans: updatedFeaturedPlans,
+    });
+  };
 
   return (
     selectedSource &&
-    installments?.length > 1 && (
+    installments.length > 0 && (
       <>
         <PlansSearcher onSearch={setSearchQuery} />
         <span className="mobbex-pc-config-checkbox-title">
           Selecciona uno de los planes
         </span>
+
         <div className="mobbex-pc-config-checkbox-container">
           <label className="mobbex-pc-checkbox-label">
             <input
@@ -92,15 +79,19 @@ export default function PlansDisplay({
               type="checkbox"
               name={`mobbex_plan_${selectedSource}_all`}
               id={`mobbex_plan_${selectedSource}_all`}
-              checked={sourceCheckedPlans.length === installments.length}
-              onChange={() => activateAll(selectedSource)}
+              checked={state.selectedPlans.length === installments.length}
+              onChange={activateAllCheckboxes}
             />
             <span className="mobbex-pc-checkbox-text">
               Activar todos los planes
             </span>
           </label>
-          {filteredInstallments.map((installment, i) => (
-            <div className="mobbex-pc-checkbox-label-dinamic">
+
+          {filteredInstallments.map((installment) => (
+            <div
+              key={installment.uid}
+              className="mobbex-pc-checkbox-label-dinamic"
+            >
               <label
                 className="mobbex-pc-checkbox-label"
                 htmlFor={`mobbex_plan_${selectedSource}_${installment.uid}`}
@@ -108,27 +99,22 @@ export default function PlansDisplay({
                 <input
                   className="mobbex-pc-config-checkbox"
                   type="checkbox"
-                  key={i}
                   name={`mobbex_plan_${selectedSource}_${installment.uid}`}
                   id={`mobbex_plan_${selectedSource}_${installment.uid}`}
-                  checked={sourceCheckedPlans.includes(installment.uid)}
-                  value={
-                    sourceCheckedPlans.includes(installment.uid) ? "yes" : "no"
-                  }
-                  onChange={() =>
-                    toggleCheckbox(selectedSource, installment.uid)
-                  }
+                  checked={state.selectedPlans.includes(installment.uid)}
+                  onChange={() => togglePlanCheckbox(installment.uid)}
                 />
                 <span className="mobbex-pc-checkbox-text">
                   {installment.name}
                 </span>
               </label>
+
               {manual && (
                 <FeaturedPlanCheckbox
                   referenceTo={installment.uid}
-                  planChecked={sourceCheckedPlans.includes(installment.uid)}
-                  featuredPlans={featuredPlans} 
-                  onPlanChecked={setFeaturedPlans}
+                  planChecked={state.selectedPlans.includes(installment.uid)}
+                  featuredPlans={state.featuredPlans || []}
+                  onPlanChecked={handleFeaturedPlansUpdate}
                 />
               )}
             </div>

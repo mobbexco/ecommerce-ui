@@ -5,6 +5,7 @@ import styles from "./styles.css?inline";
 import PlansDisplay from "./PlansDisplay";
 import ReactShadowRoot from "react-shadow-root";
 import { IPlansConfigurator } from "./interface";
+import GlobalProvider from "../context";
 
 export default function PlansConfigurator({
   mobbexSources,
@@ -12,22 +13,20 @@ export default function PlansConfigurator({
   selectedPlans,
   showFeaturedPlans,
 }: IPlansConfigurator) {
-  if (mobbexSources.length < 1) {
-    console.log("sources not found", mobbexSources);
-    return;
-  }
   const [selectedSource, setSelectedSource] = useState<string>("");
   const [customFeatured, setCustomFeatured] = useState<boolean>(false);
-  const [checkedPlans, setCheckedPlans] = useState<string[]>(selectedPlans);
-  const [featuredInstallments, setFeaturedInstallments] =
-    useState<string[]>(featuredPlans);
+  const [state, setState] = useState({
+      featuredPlans: featuredPlans,
+      selectedPlans: selectedPlans,
+      showFeaturedPlans: showFeaturedPlans
+  });
 
-  console.log("checked", checkedPlans);
-  console.log("custom", customFeatured);
-  console.log("feat", featuredInstallments);
+  console.log('featuredPlans:' + state.featuredPlans);
+  console.log('selectedPlans:' + state.selectedPlans);
+  console.log('showFeaturedPlans:' + state.showFeaturedPlans);
 
   return (
-    <>
+    <GlobalProvider state={state} setState={setState}>
       <ReactShadowRoot mode="open">
         <style>{styles}</style>
         <div className="mobbex-pc-form">
@@ -48,14 +47,12 @@ export default function PlansConfigurator({
               </span>
               <RadioConfig
                 onCustomFeatured={setCustomFeatured}
-                showFeaturedPlans={showFeaturedPlans}
+                showFeaturedPlans={state.showFeaturedPlans}
               />
               <PlansDisplay
                 selectedSource={selectedSource}
                 sources={mobbexSources}
                 manual={customFeatured}
-                onSelectPlan={setCheckedPlans}
-                onSetFeaturedPlans={setFeaturedInstallments}
               />
             </div>
           </div>
@@ -64,18 +61,18 @@ export default function PlansConfigurator({
       <input
         type="hidden"
         name="mobbex_plans"
-        value={JSON.stringify(checkedPlans)}
+        value={JSON.stringify(state.selectedPlans)}
       />
       <input
         type="hidden"
         name="mobbex_featured_plans"
-        value={JSON.stringify(featuredInstallments)}
+        value={JSON.stringify(state.featuredPlans)}
       />
       <input
         type="hidden"
         name="mobbex_show_featured_plans"
-        value={customFeatured ? "yes" : "no"}
+        value={state.showFeaturedPlans}
       />
-    </>
+    </GlobalProvider>
   );
 }
