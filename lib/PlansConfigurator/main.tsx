@@ -4,10 +4,11 @@ import { PaymentSource } from "../FinanceWidget/Interfaces";
 
 declare global {
     interface Window {
+        mobbexManual: boolean
+        mobbexFeaturedPlans: string[],
+        mobbexSelectedPlans: string[],
         mobbexSources: PaymentSource[],
-        featuredPlans: string[],
-        selectedPlans: string[],
-        showFeaturedPlans: "yes" | "no"
+        mobbexShowFeaturedPlans: boolean,
     }
 }
 
@@ -22,12 +23,15 @@ function renderPlansConfigurator() {
             root.unmount();
         }
         root = createRoot(container);
-        root.render(<PlansConfigurator 
-            mobbexSources={window.mobbexSources || []}
-            featuredPlans={window.featuredPlans || []}
-            selectedPlans={window.selectedPlans || []}
-            showFeaturedPlans={window.showFeaturedPlans}
-            />)
+        root.render(
+          <PlansConfigurator
+            sources={window.mobbexSources || []}
+            manual={window.mobbexManual || false}
+            featuredPlans={window.mobbexFeaturedPlans || []}
+            selectedPlans={window.mobbexSelectedPlans || []}
+            showFeaturedPlans={window.mobbexShowFeaturedPlans || false}
+          />
+        );
     }
 }
 
