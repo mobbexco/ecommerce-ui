@@ -8,22 +8,24 @@ import { IPlansConfigurator } from "./interface";
 import GlobalProvider from "../context";
 
 export default function PlansConfigurator({
-  mobbexSources,
+  sources,
   featuredPlans,
   selectedPlans,
   showFeaturedPlans,
+  manual,
 }: IPlansConfigurator) {
   const [selectedSource, setSelectedSource] = useState<string>("");
-  const [customFeatured, setCustomFeatured] = useState<boolean>(false);
   const [state, setState] = useState({
-      featuredPlans: featuredPlans,
-      selectedPlans: selectedPlans,
-      showFeaturedPlans: showFeaturedPlans
+    featuredPlans: featuredPlans,
+    selectedPlans: selectedPlans,
+    showFeaturedPlans: showFeaturedPlans,
+    manual: manual,
   });
 
-  console.log('featuredPlans:' + state.featuredPlans);
-  console.log('selectedPlans:' + state.selectedPlans);
-  console.log('showFeaturedPlans:' + state.showFeaturedPlans);
+  console.log("manual:", state.manual);
+  console.log("featuredPlans:", state.featuredPlans);
+  console.log("selectedPlans:", state.selectedPlans);
+  console.log("showFeaturedPlans:", state.showFeaturedPlans);
 
   return (
     <GlobalProvider state={state} setState={setState}>
@@ -34,7 +36,7 @@ export default function PlansConfigurator({
             <div className="mobbex-pc-payment-methods">
               <span className="mobbex-pc-title">Medios de pago</span>
               <SourcesLayout
-                sources={mobbexSources}
+                sources={sources}
                 onSelectSource={setSelectedSource}
               />
             </div>
@@ -45,14 +47,10 @@ export default function PlansConfigurator({
                   ?
                 </span>
               </span>
-              <RadioConfig
-                onCustomFeatured={setCustomFeatured}
-                showFeaturedPlans={state.showFeaturedPlans}
-              />
+              <RadioConfig />
               <PlansDisplay
                 selectedSource={selectedSource}
-                sources={mobbexSources}
-                manual={customFeatured}
+                sources={sources}
               />
             </div>
           </div>
@@ -71,7 +69,12 @@ export default function PlansConfigurator({
       <input
         type="hidden"
         name="mobbex_show_featured_plans"
-        value={state.showFeaturedPlans}
+        value={state.showFeaturedPlans ? "yes" : "no"}
+      />
+      <input
+        type="hidden"
+        name="mobbex_manual_config"
+        value={state.manual ? "yes" : "no"}
       />
     </GlobalProvider>
   );
