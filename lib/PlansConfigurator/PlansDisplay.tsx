@@ -8,7 +8,6 @@ import { GlobalContext } from "../context";
 export default function PlansDisplay({
   selectedSource,
   sources,
-  manual,
 }: IPlansDisplay) {
   const { state, setState } = useContext(GlobalContext);
 
@@ -48,11 +47,26 @@ export default function PlansDisplay({
     });
   };
 
-  // activateAllCheckboxes handles bulk plans activation
+  // activateAllCheckboxes handles bulk activation only for current source
   const activateAllCheckboxes = (): void => {
-    const allSelected = state.selectedPlans.length === installments.length;
+    // gets actual source uids
+    const sourceUids = installments.map((i) => i.uid);
+
+    // keep selected plans from other source
+    const currentSelected = state.selectedPlans.filter(
+      (id: string) => !sourceUids.includes(id)
+    );
+
+    // verify actual source plans state
+    const allSelectedInSource = sourceUids.every((uid) =>
+      state.selectedPlans.includes(uid)
+    );
+
+    // updates global state
     setState({
-      selectedPlans: allSelected ? [] : installments.map((i: any) => i.uid),
+      selectedPlans: allSelectedInSource
+        ? currentSelected
+        : [...currentSelected, ...sourceUids],
     });
   };
 
@@ -79,7 +93,9 @@ export default function PlansDisplay({
               type="checkbox"
               name={`mobbex_plan_${selectedSource}_all`}
               id={`mobbex_plan_${selectedSource}_all`}
-              checked={state.selectedPlans.length === installments.length}
+              checked={installments.every((i) =>
+                state.selectedPlans.includes(i.uid)
+              )}
               onChange={activateAllCheckboxes}
             />
             <span className="mobbex-pc-checkbox-text">
@@ -109,7 +125,7 @@ export default function PlansDisplay({
                 </span>
               </label>
 
-              {manual && (
+              {state.manual && (
                 <FeaturedPlanCheckbox
                   referenceTo={installment.uid}
                   planChecked={state.selectedPlans.includes(installment.uid)}
