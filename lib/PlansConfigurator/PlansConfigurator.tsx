@@ -14,17 +14,18 @@ export default function PlansConfigurator({
   showFeaturedPlans,
   manual,
 }: IPlansConfigurator) {
-  const [selectedSource, setSelectedSource] = useState<string>("");
   const [state, setState] = useState({
+    manual: manual,
+    selectedSource: '',
     featuredPlans: featuredPlans,
     selectedPlans: selectedPlans,
     showFeaturedPlans: showFeaturedPlans,
-    manual: manual,
   });
 
   console.log("manual:", state.manual);
   console.log("featuredPlans:", state.featuredPlans);
   console.log("selectedPlans:", state.selectedPlans);
+  console.log("selectedSource:", state.selectedSource);
   console.log("showFeaturedPlans:", state.showFeaturedPlans);
 
   return (
@@ -36,22 +37,22 @@ export default function PlansConfigurator({
             <div className="mobbex-pc-payment-methods">
               <span className="mobbex-pc-title">Medios de pago</span>
               <SourcesLayout
-                sources={sources}
-                onSelectSource={setSelectedSource}
+                sourceNames={sources.sourceNames}
               />
             </div>
             <div className="mobbex-pc-config">
-              <span className="mobbex-pc-title">
-                Configurar preferencia de planes destacados
-                <span className="mobbex-tool-tip" title="ayuda">
-                  ?
+              <div className="mobbex-pc-config-top-section">
+                <span className="mobbex-pc-title">
+                  Configurar preferencia de planes destacados
+                  <span className="mobbex-tool-tip" title="ayuda">
+                    ?
+                  </span>
                 </span>
-              </span>
-              <RadioConfig />
-              <PlansDisplay
-                selectedSource={selectedSource}
-                sources={sources}
-              />
+                <RadioConfig />
+              </div>
+                <PlansDisplay
+                  sources={sources}
+                />
             </div>
           </div>
         </div>

@@ -1,7 +1,27 @@
-import { PaymentSource } from "../FinanceWidget/Interfaces";
+export interface IPlanField {
+  id: string;
+  value: boolean;
+  label: string;
+  description: string;
+}
+
+export interface ISources {
+  commonFields: {
+    [key: string]: IPlanField;
+  };
+  advancedFields: {
+    [reference: string]: IPlanField[];
+  };
+  sourceNames: {
+    [reference: string]: string;
+  };
+  sourceGroups: {
+    [groupName: string]: string[];
+  };
+}
 
 export interface IPlansConfigurator {
-  sources: PaymentSource[];
+  sources: ISources;
   featuredPlans: string[];
   selectedPlans: string[];
   showFeaturedPlans: boolean;
@@ -9,8 +29,7 @@ export interface IPlansConfigurator {
 }
 
 export interface ISourcesLayout {
-  sources: PaymentSource[];
-  onSelectSource: (source: string) => void;
+  sourceNames: ISources["sourceNames"];
 }
 
 export  interface ISaveButton {
@@ -38,8 +57,7 @@ export interface IRadioConfig {
 }
 
 export interface IPlansDisplay {
-  selectedSource : string,
-  sources : PaymentSource[]
+  sources : ISources;
 }
 
 export interface IPlansSearcher {

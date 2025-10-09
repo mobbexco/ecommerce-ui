@@ -1,41 +1,29 @@
 import { useState, useContext } from "react";
-import { PaymentSource, Installment } from "../FinanceWidget/Interfaces";
-import { IPlansDisplay } from "./interface";
+import { IPlanField, IPlansDisplay, ISources } from "./interface";
 import PlansSearcher from "./PlansSearcher";
 import FeaturedPlanCheckbox from "./FeaturedPlanCheckbox";
 import { GlobalContext } from "../context";
 
 export default function PlansDisplay({
-  selectedSource,
   sources,
 }: IPlansDisplay) {
   const { state, setState } = useContext(GlobalContext);
+  const commonPlans: ISources["commonFields"] = sources.commonFields
+  const advancedPlans: ISources["advancedFields"] = sources.advancedFields
+  var filteredInstallments: IPlanField[] = [];
+
+  const checkedCommonPlans: string[] = Object.values(sources.commonFields)?.map((i) => 
+    i.id
+  );
+  console.log("checked common plans:", checkedCommonPlans);
+  state.selectedPlans.push(...checkedCommonPlans)
 
   // Gets plans from selected source
-  const installments: Array<{ name: string; uid: string }> = sources
-    .filter((item: PaymentSource) => item.source.name === selectedSource)
-    .flatMap((item: PaymentSource) =>
-      item.installments.enabled
-        ? item.installments.list?.map((installment: Installment) => ({
-            name: installment.name,
-            uid: installment.uid,
-            key: new Date().getTime(),
-          })) ?? []
-        : [
-            {
-              name: item.view.subgroup_title,
-              uid: item.view.subgroup_title,
-            },
-          ]
-    )
-    .filter((i): i is { name: string; uid: string } =>
-      Boolean(i.name && i.uid)
-    );
-
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredInstallments = installments.filter((i) =>
-    i.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  if (state.selectedSource.length > 0 && advancedPlans[state.selectedSource])
+    filteredInstallments = advancedPlans[state.selectedSource]?.filter((i) =>
+      i.label.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
   // togglePlanCheckbox handles individual checkbox plans states
   const togglePlanCheckbox = (uid: string) => {
@@ -50,7 +38,7 @@ export default function PlansDisplay({
   // activateAllCheckboxes handles bulk activation only for current source
   const activateAllCheckboxes = (): void => {
     // gets actual source uids
-    const sourceUids = installments.map((i) => i.uid);
+    const sourceUids = filteredInstallments.map((i) => i.id);
 
     // keep selected plans from other source
     const currentSelected = state.selectedPlans.filter(
@@ -58,8 +46,8 @@ export default function PlansDisplay({
     );
 
     // verify actual source plans state
-    const allSelectedInSource = sourceUids.every((uid) =>
-      state.selectedPlans.includes(uid)
+    const allSelectedInSource = sourceUids.every((id) =>
+      state.selectedPlans.includes(id)
     );
 
     // updates global state
@@ -78,23 +66,24 @@ export default function PlansDisplay({
   };
 
   return (
-    selectedSource &&
-    installments.length > 0 && (
-      <>
+    state.selectedSource &&
+    (
+      <div className="mobbex-pc-config-bottom-section">
         <PlansSearcher onSearch={setSearchQuery} />
         <span className="mobbex-pc-config-checkbox-title">
           Selecciona uno de los planes
         </span>
-
+        
         <div className="mobbex-pc-config-checkbox-container">
+          {filteredInstallments.length > 0 && 
           <label className="mobbex-pc-checkbox-label">
             <input
               className="mobbex-pc-config-checkbox"
               type="checkbox"
-              name={`mobbex_plan_${selectedSource}_all`}
-              id={`mobbex_plan_${selectedSource}_all`}
-              checked={installments.every((i) =>
-                state.selectedPlans.includes(i.uid)
+              name={`mobbex_plan_${state.selectedSource}_all`}
+              id={`mobbex_plan_${state.selectedSource}_all`}
+              checked={filteredInstallments.every((i) =>
+                state.selectedPlans.includes(i.id)
               )}
               onChange={activateAllCheckboxes}
             />
@@ -102,33 +91,65 @@ export default function PlansDisplay({
               Activar todos los planes
             </span>
           </label>
+          }
 
-          {filteredInstallments.map((installment) => (
+          {Object.values(commonPlans).map((commonPlan) => (
             <div
-              key={installment.uid}
+              key={commonPlan.id}
               className="mobbex-pc-checkbox-label-dinamic"
             >
               <label
                 className="mobbex-pc-checkbox-label"
-                htmlFor={`mobbex_plan_${selectedSource}_${installment.uid}`}
+                htmlFor={`mobbex_common_plan_${commonPlan.id}`}
+              >
+                <input
+                  className="mobbex-pc-config-checkbox mobbex-pc-config-cp-checkbox"
+                  type="checkbox"
+                  name={`mobbex_common_plan_${commonPlan.id}`}
+                  id={`mobbex_common_plan_${commonPlan.id}`}
+                  checked={true}
+                  disabled={true}
+                />
+                <span className="mobbex-pc-checkbox-text">
+                  {commonPlan.label}
+                </span>
+              </label>
+              {state.manual && (
+                <FeaturedPlanCheckbox
+                  referenceTo={commonPlan.id}
+                  planChecked={state.selectedPlans.includes(commonPlan.id)}
+                  featuredPlans={state.featuredPlans || []}
+                  onPlanChecked={handleFeaturedPlansUpdate}
+                />
+              )}
+             </div>
+          ))} 
+          {filteredInstallments.map((advancedPlan) => (
+            <div
+              key={advancedPlan.id}
+              className="mobbex-pc-checkbox-label-dinamic"
+            >
+              <label
+                className="mobbex-pc-checkbox-label"
+                htmlFor={`mobbex_plan_${state.selectedSource}_${advancedPlan.id}`}
               >
                 <input
                   className="mobbex-pc-config-checkbox"
                   type="checkbox"
-                  name={`mobbex_plan_${selectedSource}_${installment.uid}`}
-                  id={`mobbex_plan_${selectedSource}_${installment.uid}`}
-                  checked={state.selectedPlans.includes(installment.uid)}
-                  onChange={() => togglePlanCheckbox(installment.uid)}
+                  name={`mobbex_plan_${state.selectedSource}_${advancedPlan.id}`}
+                  id={`mobbex_plan_${state.selectedSource}_${advancedPlan.id}`}
+                  checked={state.selectedPlans.includes(advancedPlan.id)}
+                  onChange={() => togglePlanCheckbox(advancedPlan.id)}
                 />
-                <span className="mobbex-pc-checkbox-text">
-                  {installment.name}
+                <span className="mobbex-pc-checkbox-text" title={advancedPlan.description}>
+                  {advancedPlan.label}
                 </span>
               </label>
 
               {state.manual && (
                 <FeaturedPlanCheckbox
-                  referenceTo={installment.uid}
-                  planChecked={state.selectedPlans.includes(installment.uid)}
+                  referenceTo={advancedPlan.id}
+                  planChecked={state.selectedPlans.includes(advancedPlan.id)}
                   featuredPlans={state.featuredPlans || []}
                   onPlanChecked={handleFeaturedPlansUpdate}
                 />
@@ -136,7 +157,7 @@ export default function PlansDisplay({
             </div>
           ))}
         </div>
-      </>
+      </div>
     )
   );
 }

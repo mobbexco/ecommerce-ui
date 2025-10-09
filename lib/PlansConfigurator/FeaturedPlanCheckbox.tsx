@@ -1,21 +1,24 @@
 import { IFeaturedPlanCheckbox } from "./interface";
+import { GlobalContext } from "../context";
+import { useContext } from "react";
 
 export default function FeaturedPlanCheckbox({
   referenceTo,
   planChecked,
-  featuredPlans = [],
   onPlanChecked,
 }: IFeaturedPlanCheckbox) {
+  const { state } = useContext(GlobalContext)
+
   const toggleFeaturedPlan = (id: string) => {
     if (!planChecked) {
-      const updated = featuredPlans.filter((item) => item !== id);
+      const updated = state.featuredPlans.filter((item) => item !== id);
       onPlanChecked?.(updated);
       return;
     }
 
-    const updated = featuredPlans.includes(id)
-      ? featuredPlans.filter((item) => item !== id)
-      : [...featuredPlans, id];
+    const updated = state.featuredPlans.includes(id)
+      ? state.featuredPlans.filter((item: string) => item !== id)
+      : [...state.featuredPlans, id];
 
     onPlanChecked?.(updated);
   };
@@ -32,7 +35,7 @@ export default function FeaturedPlanCheckbox({
           className="mobbex-pc-featured-checkbox"
           type="checkbox"
           disabled={!planChecked}
-          checked={(featuredPlans ?? []).includes(referenceTo)}
+          checked={(state.featuredPlans ?? []).includes(referenceTo)}
           onChange={() => toggleFeaturedPlan(referenceTo)}
         />
         <svg
