@@ -28,7 +28,10 @@ export default function PlansConfigurator({
   console.log("selectedSource:", state.selectedSource);
   console.log("showFeaturedPlans:", state.showFeaturedPlans);
 
-  return (
+  if (!sources)
+    console.log("Sources not found. Please check your Mobbex credentials.", sources)
+
+  return sources && (
     <GlobalProvider state={state} setState={setState}>
       <ReactShadowRoot mode="open">
         <style>{styles}</style>
