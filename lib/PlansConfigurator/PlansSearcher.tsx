@@ -1,6 +1,6 @@
 import { IPlansSearcher } from './interface'
 
-export default function PlansSearcher({ onSearch}: IPlansSearcher) {
+export default function PlansSearcher({ onSearch }: IPlansSearcher) {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearch?.(e.target.value);
