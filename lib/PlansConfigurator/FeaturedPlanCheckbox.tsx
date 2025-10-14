@@ -7,17 +7,17 @@ export default function FeaturedPlanCheckbox({
   planChecked,
   onPlanChecked,
 }: IFeaturedPlanCheckbox) {
-  const { state } = useContext(GlobalContext)
+  const { state } = useContext(GlobalContext);
 
   const toggleFeaturedPlan = (id: string) => {
     if (!planChecked) {
-      const updated = state.featuredPlans.filter((item) => item !== id);
+      const updated = state.featuredPlans.filter((plan: string) => plan !== id);
       onPlanChecked?.(updated);
       return;
     }
 
     const updated = state.featuredPlans.includes(id)
-      ? state.featuredPlans.filter((item: string) => item !== id)
+      ? state.featuredPlans.filter((plan: string) => plan !== id)
       : [...state.featuredPlans, id];
 
     onPlanChecked?.(updated);
