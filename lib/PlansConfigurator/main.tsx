@@ -1,6 +1,5 @@
 import { createRoot } from 'react-dom/client';
 import PlansConfigurator from './PlansConfigurator';
-import { allPlansExample } from './allPlansExample';
 import { ISources } from './interface';
 
 declare global {
@@ -15,7 +14,7 @@ declare global {
 
 const divId = "mbbx-plans-configurator";
 let root: ReturnType<typeof createRoot> | null = null;
-console.log("mobbex sources:", allPlansExample)
+console.log("mobbex sources:", window.sources)
 
 function renderPlansConfigurator() {
     const container = document.getElementById(divId);
@@ -26,12 +25,11 @@ function renderPlansConfigurator() {
         root = createRoot(container);
         root.render(
           <PlansConfigurator
-            // sources={window.sources || allPlansExample}
-            sources={allPlansExample}
-            featuredPlans={["G36OJ9OOAR0GC6HCC0"]}
-            selectedPlans={["G36OJ9OOAR0GC6HCC0", "XUUT89T9I4LQABSPYB", "05LB86590EAWJ0DP41", "Z7HIEEYMND1NTKCH87"]}
-            showFeaturedPlans={true}
-            manual={true}
+            sources={window.sources || undefined}
+            featuredPlans={window.featuredPlans || []}
+            selectedPlans={window.selectedPlans || []}
+            showFeaturedPlans={window.showFeaturedPlans || false}
+            manual={window.manual || false}
           />
         );
     }
