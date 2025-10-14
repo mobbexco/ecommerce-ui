@@ -4,17 +4,17 @@ import { ISources } from './interface';
 
 declare global {
     interface Window {
-        sources: ISources,
-        featuredPlans: string[],
-        selectedPlans: string[],
-        showFeaturedPlans: boolean,
-        manual: boolean
+        mobbexManual: boolean
+        mobbexSources: ISources,
+        mobbexFeaturedPlans: string[],
+        mobbexSelectedPlans: string[],
+        mobbexShowFeaturedPlans: boolean,
     }
 }
 
 const divId = "mbbx-plans-configurator";
 let root: ReturnType<typeof createRoot> | null = null;
-console.log("mobbex sources:", window.sources)
+console.log("mobbex sources:", window.mobbexSources)
 
 function renderPlansConfigurator() {
     const container = document.getElementById(divId);
@@ -25,11 +25,11 @@ function renderPlansConfigurator() {
         root = createRoot(container);
         root.render(
           <PlansConfigurator
-            sources={window.sources || undefined}
-            featuredPlans={window.featuredPlans || []}
-            selectedPlans={window.selectedPlans || []}
-            showFeaturedPlans={window.showFeaturedPlans || false}
-            manual={window.manual || false}
+            manual={window.mobbexManual || false}
+            sources={window.mobbexSources || undefined}
+            featuredPlans={window.mobbexFeaturedPlans || []}
+            selectedPlans={window.mobbexSelectedPlans || []}
+            showFeaturedPlans={window.mobbexShowFeaturedPlans || false}
           />
         );
     }
