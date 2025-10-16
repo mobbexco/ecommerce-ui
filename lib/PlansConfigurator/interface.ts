@@ -5,6 +5,16 @@ export interface IPlanField {
   description: string;
 }
 
+export interface IState {
+  manual: boolean;
+  commonPlans: string[];
+  advancedPlans: string[];
+  selectedSource: string;
+  featuredPlans: any[];
+  showFeaturedPlans: boolean;
+  selectedPlans: string[];
+}
+
 export interface ISources {
   commonFields: {
     [key: string]: IPlanField;
@@ -22,10 +32,12 @@ export interface ISources {
 
 export interface IPlansConfigurator {
   sources: ISources;
-  featuredPlans: string[];
-  selectedPlans: string[];
-  showFeaturedPlans: boolean;
   manual : boolean
+  commonPlans: string[];
+  selectedPlans: string[];
+  advancedPlans: string[];
+  featuredPlans: string[];
+  showFeaturedPlans: boolean;
 }
 
 export interface ISourcesLayout {
