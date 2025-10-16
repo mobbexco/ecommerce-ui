@@ -12,12 +12,6 @@ export default function PlansDisplay({
   const advancedPlans: ISources["advancedFields"] = sources.advancedFields
   var filteredInstallments: IPlanField[] = [];
 
-  const checkedCommonPlans: string[] = Object.values(sources.commonFields)?.map((i) => 
-    i.id
-  );
-  console.log("checked common plans:", checkedCommonPlans);
-  state.selectedPlans.push(...checkedCommonPlans)
-
   // Gets plans from selected source
   const [searchQuery, setSearchQuery] = useState("");
   if (state.selectedSource.length > 0 && advancedPlans[state.selectedSource])
@@ -27,11 +21,21 @@ export default function PlansDisplay({
 
   // togglePlanCheckbox handles individual checkbox plans states
   const togglePlanCheckbox = (uid: string) => {
-    const { selectedPlans } = state;
+    const { selectedPlans, advancedPlans} = state;
+
+    // set selected plans
+    const selectedPlansNew = selectedPlans.includes(uid)
+      ? selectedPlans.filter((id: string) => id !== uid)
+      : [...new Set([...selectedPlans, uid])];
+
+    // set advanced plans
+    const advancedPlansNew = advancedPlans.includes(uid)
+      ? advancedPlans.filter((id: string) => id !== uid)
+      : [...new Set([...advancedPlans, uid])];
+
     setState({
-      selectedPlans: selectedPlans.includes(uid)
-        ? selectedPlans.filter((id: any) => id !== uid)
-        : [...selectedPlans, uid],
+      selectedPlans: selectedPlansNew,
+      advancedPlans: advancedPlansNew,
     });
   };
 
@@ -54,7 +58,10 @@ export default function PlansDisplay({
     setState({
       selectedPlans: allSelectedInSource
         ? currentSelected
-        : [...currentSelected, ...sourceUids],
+        : [...new Set([...currentSelected, ...sourceUids])],
+      advancedPlans: allSelectedInSource
+        ? currentSelected
+        : [...new Set([...currentSelected, ...sourceUids])],
     });
   };
 
@@ -110,7 +117,7 @@ export default function PlansDisplay({
                   checked={true}
                   disabled={true}
                 />
-                <span className="mobbex-pc-checkbox-text">
+                <span className="mobbex-pc-checkbox-text" title={commonPlan.description}>
                   {commonPlan.label}
                 </span>
               </label>
