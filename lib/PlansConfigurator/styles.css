@@ -114,14 +114,14 @@
     border: 0.5px solid #d9d9d9;
     border-radius: 8px;
     margin: 0 0 16px 0;
-    width: 100%;
+    width: fit-content;
 }
 
 .mobbex-pc-config-bottom-section {
     border: 0.5px solid #d9d9d9;
     border-radius: 8px;
     padding: 16px;
-    width: 100%;
+    width: fit-content;
 }
 
 .mobbex-pc-config-radio-container {
