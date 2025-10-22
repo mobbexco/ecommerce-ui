@@ -13,14 +13,16 @@ export default function FeaturedInstallments({
   uids?: string[];
 }) {
   
-  if (error)
-    return (
+  if (error){
+    return console.log("error", error),
+    (
       <span className="error-mssg">
         Ocurrió un error obteniendo los planes de financiación
         <br />
         Por favor, comuníquese con soporte
       </span>
     );
+  }
     
     if (sources?.length) {
       const bestInstallments: FeaturedInstallment[] = 
