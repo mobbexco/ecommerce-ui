@@ -268,7 +268,7 @@ function getCustomInstallmentsFromSource(
     : [];
 
   const customFeaturedInstallment : Installment[] = installmentsList.filter(
-    installment => uids.includes(installment.uid)
+    installment => uids.includes(installment.uid) || uids.includes(installment.reference)
   );
 
   return customFeaturedInstallment;
