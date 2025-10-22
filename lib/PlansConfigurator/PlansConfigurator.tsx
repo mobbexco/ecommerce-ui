@@ -10,7 +10,6 @@ import GlobalProvider from "../context";
 export default function PlansConfigurator({
   manual,
   sources,
-  commonPlans,
   featuredPlans,
   selectedPlans,
   advancedPlans,
@@ -19,7 +18,6 @@ export default function PlansConfigurator({
   const [state, setState] = useState<IState>({
     manual: manual,
     selectedSource: "",
-    commonPlans: commonPlans,
     advancedPlans: advancedPlans,
     featuredPlans: featuredPlans,
     showFeaturedPlans: showFeaturedPlans,
@@ -32,7 +30,6 @@ export default function PlansConfigurator({
 
       setState((prevState) => ({
         ...prevState,
-        commonPlans: newCommonPlans,
         selectedPlans: [...new Set([...prevState.selectedPlans, ...newCommonPlans])],
         advancedPlans: advancedPlans
       }));
@@ -44,7 +41,6 @@ export default function PlansConfigurator({
   console.log("selectedPlans:", state.selectedPlans);
   console.log("selectedSource:", state.selectedSource);
   console.log("showFeaturedPlans:", state.showFeaturedPlans);
-  console.log("commonPlans", state.commonPlans);
   console.log("advancedPlans", state.advancedPlans);
 
   if (!sources)
@@ -79,11 +75,6 @@ export default function PlansConfigurator({
             </div>
           </div>
         </ReactShadowRoot>
-        <input
-          type="hidden"
-          name="common_plans"
-          value={JSON.stringify(state.commonPlans)}
-        />
         <input
           type="hidden"
           name="advanced_plans"

@@ -7,7 +7,6 @@ export interface IPlanField {
 
 export interface IState {
   manual: boolean;
-  commonPlans: string[];
   advancedPlans: string[];
   selectedSource: string;
   featuredPlans: any[];
@@ -33,7 +32,6 @@ export interface ISources {
 export interface IPlansConfigurator {
   sources: ISources;
   manual : boolean
-  commonPlans: string[];
   selectedPlans: string[];
   advancedPlans: string[];
   featuredPlans: string[];

@@ -54,14 +54,19 @@ export default function PlansDisplay({
       state.selectedPlans.includes(id)
     );
 
+    const newSelectedPlans = allSelectedInSource
+      ? currentSelected
+      : [...new Set([...currentSelected, ...sourceUids])];
+
+    const newAdvancedPlans = allSelectedInSource
+      ? state.advancedPlans.filter((id: string) => !sourceUids.includes(id))
+      : [...new Set([...state.advancedPlans, ...sourceUids])];
+
     // updates global state
     setState({
-      selectedPlans: allSelectedInSource
-        ? currentSelected
-        : [...new Set([...currentSelected, ...sourceUids])],
-      advancedPlans: allSelectedInSource
-        ? currentSelected
-        : [...new Set([...currentSelected, ...sourceUids])],
+        ...state,
+        selectedPlans: newSelectedPlans,
+        advancedPlans: newAdvancedPlans,
     });
   };
 
