@@ -31,7 +31,8 @@ export interface ISources {
 
 export interface IPlansConfigurator {
   sources: ISources;
-  manual : boolean
+  manual : boolean;
+  formName: string,
   selectedPlans: string[];
   advancedPlans: string[];
   featuredPlans: string[];

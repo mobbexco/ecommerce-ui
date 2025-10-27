@@ -6,9 +6,10 @@ declare global {
     interface Window {
         mobbexManual: boolean
         mobbexSources: ISources,
+        platformFormName: string,
         mobbexFeaturedPlans: string[],
         mobbexSelectedPlans: string[],
-        mobbexAdvancedPlans : string[],
+        mobbexAdvancedPlans: string[],
         mobbexShowFeaturedPlans: boolean,
     }
 }
@@ -27,6 +28,7 @@ function renderPlansConfigurator() {
         root.render(
           <PlansConfigurator
             manual={window.mobbexManual || false}
+            formName={window.platformFormName || ''}
             sources={window.mobbexSources || undefined}
             featuredPlans={window.mobbexFeaturedPlans || []}
             selectedPlans={window.mobbexSelectedPlans || []}
