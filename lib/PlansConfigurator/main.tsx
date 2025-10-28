@@ -1,7 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import PlansConfigurator from './PlansConfigurator';
 import { ISources } from './interface';
-import { allPlansExample } from '../examples';
 
 declare global {
     interface Window {
@@ -29,7 +28,7 @@ function renderPlansConfigurator() {
           <PlansConfigurator
             manual={window.mobbexManual || false}
             formName={window.platformFormName || ''}
-            sources={window.mobbexSources || allPlansExample}
+            sources={window.mobbexSources || undefined}
             featuredPlans={window.mobbexFeaturedPlans || []}
             selectedPlans={window.mobbexSelectedPlans || []}
             advancedPlans={window.mobbexAdvancedPlans || []}
