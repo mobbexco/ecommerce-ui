@@ -8,5 +8,4 @@ dist
 .DS_Store
 *.sh
 examples.ts
-allPlansExample.ts
 lib/static/img-dev
