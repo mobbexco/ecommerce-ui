@@ -2,10 +2,6 @@ import { IPlansSearcher } from './interface'
 
 export default function PlansSearcher({ onSearch }: IPlansSearcher) {
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onSearch?.(e.target.value);
-  };
-
   return (
     <div className="mobbex-pc-config-search-input">
       <span className="mobbex-pc-config-input-title">Seleccionar planes</span>
@@ -17,7 +13,7 @@ export default function PlansSearcher({ onSearch }: IPlansSearcher) {
           autoComplete="off"
           placeholder="Buscar"
           aria-label="Buscar planes"
-          onChange={handleInputChange}
+          onChange={(e) => { onSearch?.(e.target.value) }}
         />
         <button type="button" title="plans-search-button">
           <svg

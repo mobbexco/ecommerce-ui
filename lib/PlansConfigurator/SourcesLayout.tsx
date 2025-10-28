@@ -4,11 +4,6 @@ import { GlobalContext } from "../context";
 
 export default function SourcesLayout({ sourceNames }: ISourcesLayout) {
   const { state, setState } = useContext(GlobalContext);
-
-  const handleSelectSource = (source: string) => {
-    setState({ selectedSource: source });
-  };
-  
   const sourceList = Object.entries(sourceNames);
 
   return (
@@ -22,7 +17,7 @@ export default function SourcesLayout({ sourceNames }: ISourcesLayout) {
             className={`mobbex-pc-payment-methods-sources ${
               isSelected ? "mobbex-source-selected" : ""
             }`}
-            onClick={() => handleSelectSource(sourceReference)}
+            onClick={() => setState({ selectedSource: sourceReference })}
           >
             <div className="mobbex-pc-payment-method-info">
               <img
