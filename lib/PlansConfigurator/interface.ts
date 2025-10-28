@@ -29,7 +29,7 @@ export interface ISources {
   };
 }
 
-export interface IPlansConfigurator {
+export interface IPlansConfiguratorProps {
   sources: ISources;
   manual : boolean;
   formName: string,
@@ -52,13 +52,14 @@ export interface IRadioOption {
   name: string;
   value: string;
   label: string;
+  title: string;
   defaultChecked?: boolean;
   onChange?: (value: string) => void;
 }
 
 export interface IRadioGroup {
   name: string;
-  options: { id: string; value: string; label: string, defaultChecked?:boolean }[];
+  options: { id: string; value: string; label: string, title?:string, defaultChecked?:boolean }[];
   defaultValue?: string;
   onChange?: (value: string) => void;
 }

@@ -19,6 +19,7 @@ export function RadioGroup({ name, options, defaultValue, onChange }: IRadioGrou
           name={name}
           value={o.value}
           label={o.label}
+          title={o.title}
           defaultChecked={o.defaultChecked}
           onChange={handleChange}
         />

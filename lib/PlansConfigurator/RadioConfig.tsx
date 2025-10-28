@@ -43,13 +43,14 @@ export default function RadioConfig() {
             {
               id: "best_three",
               value: "best_three",
-              label: "Mostrar los 3 mejores planes",
+              label: "Mostrar los 2 mejores planes",
               defaultChecked: !state.manual
             },
             {
               id: "manual",
               value: "manual",
               label: "Definir manualmente los planes destacados",
+              title: "Se mostrarán hasta 3 filas de planes con los medios de pago que compartan cada",
               defaultChecked: state.manual
             },
           ]}

@@ -4,7 +4,7 @@ import RadioConfig from "./RadioConfig";
 import styles from "./styles.css?inline";
 import PlansDisplay from "./PlansDisplay";
 import ReactShadowRoot from "react-shadow-root";
-import { IPlansConfigurator, IState } from "./interface";
+import { IPlansConfiguratorProps, IState } from "./interface";
 import GlobalProvider from "../context";
 
 export default function PlansConfigurator({
@@ -15,19 +15,21 @@ export default function PlansConfigurator({
   selectedPlans,
   advancedPlans,
   showFeaturedPlans,
-}: IPlansConfigurator) {
+}: IPlansConfiguratorProps) {
   const [state, setState] = useState<IState>({
-    manual: manual,
+    manual,
+    advancedPlans,
+    featuredPlans,
+    showFeaturedPlans,
     selectedSource: "",
-    advancedPlans: advancedPlans,
-    featuredPlans: featuredPlans,
-    showFeaturedPlans: showFeaturedPlans,
     selectedPlans: [...new Set(selectedPlans)],
   });
 
+  // Merges common plans with selected advanced plans  
+  // Common plans from console appear pre-checked
   useEffect(() => {
     if (sources?.commonFields) {
-      const newCommonPlans = Object.values(sources.commonFields).map((i) => i.id) || [];
+      const newCommonPlans = Object.values(sources.commonFields).map((i) => i.id);
 
       setState((prevState) => ({
         ...prevState,
@@ -35,17 +37,10 @@ export default function PlansConfigurator({
         advancedPlans: advancedPlans
       }));
     }
-  }, [sources?.commonFields]);
-
-  console.log("manual:", state.manual);
-  console.log("featuredPlans:", state.featuredPlans);
-  console.log("selectedPlans:", state.selectedPlans);
-  console.log("selectedSource:", state.selectedSource);
-  console.log("showFeaturedPlans:", state.showFeaturedPlans);
-  console.log("advancedPlans", state.advancedPlans);
+  }, [sources?.commonFields, advancedPlans]);
 
   if (!sources)
-    console.log(
+    console.error(
       "Sources not found. Please check your Mobbex credentials.",
       sources
     );
@@ -78,13 +73,13 @@ export default function PlansConfigurator({
         </ReactShadowRoot>
         <input
           type="hidden"
-          name="advanced_plans"
+          name="mobbex_advanced_plans"
           data-form-part={formName}
           value={JSON.stringify(state.advancedPlans)}
         />
         <input
           type="hidden"
-          name="selected_plans"
+          name="mobbex_selected_plans"
           data-form-part={formName}
           value={JSON.stringify(state.selectedPlans)}
         />

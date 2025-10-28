@@ -5,6 +5,7 @@ export function RadioOption({
   name,
   value,
   label,
+  title,
   defaultChecked,
   onChange,
 }: IRadioOption) {
@@ -23,6 +24,7 @@ export function RadioOption({
           id === "best_three" || id === "manual" ? "mobbex-radio-text-best" : ""
         }`}
         htmlFor={id}
+        title={title}
       >
         <span className={`mobbex-radio-text`}>{label}</span>
       </label>
