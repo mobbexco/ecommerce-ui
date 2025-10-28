@@ -52,7 +52,7 @@ export interface IRadioOption {
   name: string;
   value: string;
   label: string;
-  title: string;
+  title: string | undefined;
   defaultChecked?: boolean;
   onChange?: (value: string) => void;
 }
