@@ -23,6 +23,11 @@
     align-items: flex-start;
 }
 
+.tool-tip-container {
+  position: relative;
+  display: inline-block;
+}
+
 .mobbex-tool-tip {
     font-size: 14px;
     font-weight: 600;
@@ -30,6 +35,44 @@
     border: 2px solid;
     padding: 0px 3px;
     margin: 0px 0px 4px 4px;
+}
+
+.mobbex-tooltip-image {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-100%);
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 1000;
+  padding: 16px;
+  max-width: 397px;
+}
+
+.mobbex-tooltip-image img {
+  border-radius: 6px;
+}
+
+.tool-tip-container:hover .mobbex-tooltip-image {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tooltip-header-text, .tooltip-footer-text {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.tooltip-text {
+    font-size: 10px;
+    text-align: start;
+    font-family: sans-serif;
+    line-height: 14px;
 }
 
 .mobbex-pc-payment-methods {

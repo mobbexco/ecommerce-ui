@@ -6,6 +6,7 @@ import PlansDisplay from "./PlansDisplay";
 import ReactShadowRoot from "react-shadow-root";
 import { IPlansConfiguratorProps, IState } from "./interface";
 import GlobalProvider from "../context";
+import tooltipImg from "./img/tooltip_img.png";
 
 export default function PlansConfigurator({
   manual,
@@ -25,16 +26,18 @@ export default function PlansConfigurator({
     selectedPlans: [...new Set(selectedPlans)],
   });
 
-  // Merges common plans with selected advanced plans  
+  // Merges common plans with selected advanced plans
   // Common plans from console appear pre-checked
   useEffect(() => {
     if (sources?.commonFields) {
-      const newCommonPlans = Object.values(sources.commonFields).map((i) => i.id);
+      const newCommonPlans = Object.values(sources.commonFields).map(
+        (i) => i.id
+      );
 
       setState((prevState) => ({
         ...prevState,
-        selectedPlans: [...new Set([...prevState.selectedPlans, ...newCommonPlans])],
-        advancedPlans: advancedPlans
+        selectedPlans: [ ...new Set([...prevState.selectedPlans, ...newCommonPlans]),],
+        advancedPlans: advancedPlans,
       }));
     }
   }, [sources?.commonFields, advancedPlans]);
@@ -60,9 +63,20 @@ export default function PlansConfigurator({
                 <div className="mobbex-pc-config-top-section">
                   <span className="mobbex-pc-title">
                     Configurar preferencia de planes destacados
-                    <span className="mobbex-tool-tip" title="ayuda">
-                      ?
-                    </span>
+                    <div className="tool-tip-container">
+                      <span className="mobbex-tool-tip">
+                        ?
+                      </span>
+                      <div className="mobbex-tooltip-image">
+                        <span className="tooltip-header-text">¿Qué es un plan destacado?</span>
+                        <span className="tooltip-text">
+                          Los planes destacados son los que tu cliente verá primero en la página del producto.
+                          Puedes elegir destacarlos de forma automática (según cantidad de cuotas, interés y descuentos) o de forma manual, seleccionando vos mismo cuáles quieres resaltar.
+                        </span>
+                        <span className="tooltip-footer-text">Asi se verán los planes destacados:</span>
+                        <img src={tooltipImg} alt="imagen_ejemplo"/>
+                      </div>
+                    </div>
                   </span>
                   <RadioConfig />
                 </div>
