@@ -5,9 +5,10 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   build: {
+    assetsInlineLimit: Infinity,
     rollupOptions: {
       input: {
-        "finance-widget": "./lib/main.tsx",
+        "plans-configurator": "./lib/PlansConfigurator/main.tsx",
       },
       output: {
         format: "iife",
