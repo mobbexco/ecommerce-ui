@@ -50,7 +50,8 @@
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   z-index: 1000;
   padding: 16px;
-  max-width: 397px;
+  max-width: 350px;
+  font-family: sans-serif;
 }
 
 .mobbex-tooltip-image img {
@@ -64,14 +65,13 @@
 }
 
 .tooltip-header-text, .tooltip-footer-text {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
 }
 
 .tooltip-text {
-    font-size: 10px;
+    font-size: 12px;
     text-align: start;
-    font-family: sans-serif;
     line-height: 14px;
 }
 
