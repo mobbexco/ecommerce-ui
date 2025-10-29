@@ -23,7 +23,7 @@ export default function FeaturedPlanCheckbox({
     onPlanChecked?.(updated);
   };
 
-  return (
+  return ( state.showFeaturedPlans && 
     <div className="mobbex-pc-featured-checkbox-container">
       <label
         className={`mobbex-pc-featured-checkbox-label ${

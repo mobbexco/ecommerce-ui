@@ -71,7 +71,8 @@ export default function PlansConfigurator({
                         <span className="tooltip-header-text">¿Qué es un plan destacado?</span>
                         <span className="tooltip-text">
                           Los planes destacados son los que tu cliente verá primero en la página del producto.
-                          Puedes elegir destacarlos de forma automática (según cantidad de cuotas, interés y descuentos) o de forma manual, seleccionando vos mismo cuáles quieres resaltar.
+                          Puedes elegir destacarlos de forma automática (según cantidad de cuotas, interés y descuentos) 
+                          o de forma manual, seleccionando vos mismo cuáles quieres resaltar.
                         </span>
                         <span className="tooltip-footer-text">Asi se verán los planes destacados:</span>
                         <img src={tooltipImg} alt="imagen_ejemplo"/>
