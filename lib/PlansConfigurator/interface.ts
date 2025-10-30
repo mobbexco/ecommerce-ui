@@ -78,7 +78,6 @@ export interface IPlansSearcher {
 
 export interface IFeaturedPlanCheckbox {
   referenceTo : string,
-  planChecked : boolean,
   featuredPlans?: string[] 
   onPlanChecked?: (value: string[]) => void;
 }

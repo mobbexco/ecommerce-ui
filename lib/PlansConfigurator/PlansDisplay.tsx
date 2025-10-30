@@ -129,7 +129,6 @@ export default function PlansDisplay({
               {state.manual && (
                 <FeaturedPlanCheckbox
                   referenceTo={commonPlan.id}
-                  planChecked={state.selectedPlans.includes(commonPlan.id)}
                   featuredPlans={state.featuredPlans || []}
                   onPlanChecked={handleFeaturedPlansUpdate}
                 />
@@ -161,7 +160,6 @@ export default function PlansDisplay({
               {state.manual && (
                 <FeaturedPlanCheckbox
                   referenceTo={advancedPlan.id}
-                  planChecked={state.selectedPlans.includes(advancedPlan.id)}
                   featuredPlans={state.featuredPlans || []}
                   onPlanChecked={handleFeaturedPlansUpdate}
                 />
