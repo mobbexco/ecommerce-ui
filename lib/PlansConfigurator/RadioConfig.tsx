@@ -44,13 +44,14 @@ export default function RadioConfig() {
               id: "best_three",
               value: "best_three",
               label: "Mostrar los 2 mejores planes",
+              title: "Calcula automáticamente y muestra hasta 2 planes de financiación más convenientes según precio y cuotas. ",
               defaultChecked: !state.manual
             },
             {
               id: "manual",
               value: "manual",
               label: "Definir manualmente los planes destacados",
-              title: "Se mostrarán hasta 3 filas de planes con los medios de pago que compartan cada",
+              title: "Se mostrarán los planes seleccionados en hasta 3 filas con los medios de pago que compartan precio y cantidad de cuotas",
               defaultChecked: state.manual
             },
           ]}
