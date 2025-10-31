@@ -1,0 +1,406 @@
+.mobbex-pc-form {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    width: auto;
+    height: auto;
+}
+
+.mobbex-pc-columns-container {
+    color: #000;
+    display: flex;
+    font-family: sans-serif;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.mobbex-pc-title {
+    font-size: 20px;
+    font-weight: 400;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.tool-tip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.mobbex-tool-tip {
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 100%;
+    border: 2px solid;
+    padding: 0px 3px;
+    margin: 0px 0px 4px 4px;
+}
+
+.mobbex-tooltip-image {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-100%);
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 1000;
+  padding: 16px;
+  max-width: 350px;
+  font-family: sans-serif;
+}
+
+.mobbex-tooltip-image img {
+  border-radius: 6px;
+}
+
+.tool-tip-container:hover .mobbex-tooltip-image {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tooltip-header-text, .tooltip-footer-text {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.tooltip-text {
+    font-size: 12px;
+    text-align: start;
+    line-height: 14px;
+}
+
+.mobbex-pc-payment-methods {
+    background: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    border: 0.5px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 16px;
+    width: 100%;
+}
+
+.mobbex-pc-payment-methods-sources {
+    border: 0;
+    border-radius: 8px;
+    display: flex;
+    width: 100%;
+    background: #f9f8ff;
+    margin: 5px 0;
+}
+
+.mobbex-source-selected {
+    background: lightgrey;
+}
+
+.mobbex-pc-payment-method-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.mobbex-card-logo {
+    height: 32px;
+    width: 36px;
+    margin: 5px 5px;
+    border-radius: 4px;
+    border: 1px solid #d6dce5;
+}
+
+.mobbex-source-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.mobbex-source-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.mobbex-source-name {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.mobbex-source-description {
+    font-size: 10px;
+    font-weight: 400;
+    color: #6a6969;
+}
+
+.mobbex-arrow {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    font-size: x-large;
+    width: 15px;
+    font-family: monospace;
+}
+
+.mobbex-pc-config {
+    height: auto;
+    font-size: 18px;
+    font-weight: 400;
+    width: 100%;
+}
+
+.mobbex-pc-config-top-section {
+    background-color: #fff;
+    padding: 16px;
+    border: 0.5px solid #d9d9d9;
+    border-radius: 8px;
+    margin: 0 0 16px 0;
+    width: fit-content;
+}
+
+.mobbex-pc-config-bottom-section {
+    background-color: #fff;
+    border: 0.5px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 16px;
+    width: fit-content;
+}
+
+.mobbex-pc-config-radio-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobbex-pc-radio {
+    display: flex;
+    margin: 4px 0;
+    flex-direction: row;
+    justify-content: flex-start;
+    max-height: 34px;
+}
+
+.mobbex-pc-radio input[type="radio"] {
+    display: none;
+}
+
+.mobbex-pc-radio-label {
+    cursor: pointer;
+    font-size: 16px;
+    color: #000;
+    margin: 8px 0;
+}
+
+.mobbex-pc-radio-label::before {
+    content: "";
+    border: 1px solid #000;
+    border-radius: 50%;
+    padding: 3px 12px;
+    margin: 0px 8px 0px 0;
+}
+
+.mobbex-pc-radio input[type="radio"]:checked+.mobbex-pc-radio-label::before {
+    content: "✓";
+    font-size: 14px;
+    padding: 4px 7px;
+    font-weight: 700;
+    color: #000;
+    text-align: center;
+    background: #d6b15f;
+    border: 1px solid #d6b15f;
+}
+
+.mobbex-radio-text {
+    align-self: center;
+    margin-left: 2px;
+}
+
+.mobbex-pc-config-radio-container-best {
+    margin: 4px 0 0 52px;
+}
+
+.mobbex-radio-text-best {
+    font-size: 12px;
+    margin: 8px 0 8px 36px
+}
+
+.mobbex-radio-text-best:before {
+    font-size: 16px;
+}
+
+.mobbex-pc-config-search-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobbex-pc-config-input-title {
+    margin: 4px 0;
+}
+
+.mobbex-pc-config-checkbox-title {
+    margin: 8px 1px;
+    font-size: 14px;
+}
+
+.mobbex-pc-config-input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #a39db7;
+    border-radius: 999px;
+    width: 300px;
+    background: #fff;
+    margin: 8px 0;
+}
+
+.mobbex-pc-config-input {
+    align-items: center;
+    padding: 5px 0px 5px 16px;
+    color: #444;
+    gap: 8px;
+    width: 85%;
+    height: auto;
+    border-right: 1px solid #444;
+    border-top: 0px;
+    border-bottom: 0px;
+    border-left: 0px;
+    border-radius: 64px 0 0 64px;
+}
+
+.mobbex-pc-config-input-container button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #444;
+    padding: 0 6px;
+}
+
+.mobbex-pc-config-checkbox-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobbex-pc-checkbox-label-dinamic {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.mobbex-pc-checkbox-label {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    font-size: 16px;
+    align-items: center;
+    width: 100%;
+}
+
+.mobbex-pc-config-checkbox {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    border: 1px solid #000;
+    text-align: center;
+    margin: 8px 4px;
+    content: "";
+}
+
+.mobbex-pc-config-checkbox:checked {
+    background: #d6b15f;
+    border: 1px solid #d6b15f;
+}
+
+.mobbex-pc-config-cp-checkbox:checked {
+    background: #B5B5B5;
+    border: 1px solid #B5B5B5;
+    cursor: not-allowed;
+}
+
+.mobbex-pc-config-checkbox:checked::after {
+    color: #000;
+    content: "✓";
+    font-weight: 700;
+}
+
+.mobbex-pc-config-cp-checkbox:checked::after {
+    color: #fff;
+}
+
+.mobbex-pc-featured-separation-line {
+    font-weight: 500;
+    color: #000;
+    font-size: 24px;
+}
+
+.mobbex-pc-featured-checkbox-container {
+    font-size: 14px;
+    color: #000;
+    display: flex;
+    flex-direction: row;
+    text-align: start;
+    justify-items: center;
+    margin: auto;
+    width: max-content;
+}
+
+.mobbex-pc-featured-checkbox-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.15s ease
+}
+
+.mobbex-pc-featured-checkbox-label-disabled{
+    color: #a39db7;
+}
+
+.mobbex-pc-checkbox-text {
+    width: max-content;
+}
+
+.mobbex-pc-featured-checkbox {
+    display: none;
+}
+
+.rounded-star {
+    height: 15px;
+    width: 13px;
+    cursor: pointer;
+    fill: none;
+    transition: fill 0.15s ease, stroke 0.15s ease;
+    stroke: #000;
+}
+
+.rounded-star-disabled {
+    stroke: #a39db7;
+    cursor: not-allowed;
+}
+
+.mobbex-pc-featured-checkbox:checked + .rounded-star {
+    fill: #d6b15f;
+    stroke: #d6b15f;
+}
+
+.mobbex-pc-featured-checkbox:disabled + .rounded-star {
+    fill: none;
+    stroke: #a39db7;
+    cursor: not-allowed;
+}
+
+.mobbex-button-container {
+    max-height: 48px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 32px 0px;
+}
+
+.mobbex-plans-save-button {
+    border-radius: 64px;
+    background: #d7dde3;
+    font-size: 16px;
+    width: 334px;
+    padding: 16px;
+}
