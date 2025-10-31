@@ -12,13 +12,13 @@ export default function FeaturedPlanCheckbox({
   // auto sync states
   useEffect(() => {
     // remove plan from featuredPlans if its not checked
-    if (state.featuredPlans.includes(referenceTo)) {
+    if (!state.featuredPlans.includes(referenceTo)) {
       const updated = state.featuredPlans.filter(
         (plan: string) => plan !== referenceTo
       );
       onPlanChecked?.(updated);
     }
-  }, [planChecked, state.showFeaturedPlans, state.manual]);
+  }, planChecked);
 
   // handles featured plan merge
   const toggleFeaturedPlan = (id: string) => {
