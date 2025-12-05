@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { RadioOption } from "./RadioOption";
-import { IRadioGroup } from "./interface";
+import { IRadioGroup } from "./interfaces";
 
-export function RadioGroup({ name, options, defaultValue, onChange }: IRadioGroup) {
+export function RadioGroup({
+  name,
+  options,
+  defaultValue,
+  onChange,
+}: IRadioGroup) {
   const [selected, setSelected] = useState(defaultValue);
 
   const handleChange = (value: string) => {

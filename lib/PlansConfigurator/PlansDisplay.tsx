@@ -1,15 +1,13 @@
 import { useState, useContext } from "react";
-import { IPlanField, IPlansDisplay, ISources } from "./interface";
+import { IPlanField, IPlansDisplay, ISources } from "./interfaces";
 import PlansSearcher from "./PlansSearcher";
 import FeaturedPlanCheckbox from "./FeaturedPlanCheckbox";
 import { GlobalContext } from "../context";
 
-export default function PlansDisplay({
-  sources,
-}: IPlansDisplay) {
+export default function PlansDisplay({ sources }: IPlansDisplay) {
   const { state, setState } = useContext(GlobalContext);
-  const commonPlans: ISources["commonFields"] = sources.commonFields
-  const advancedPlans: ISources["advancedFields"] = sources.advancedFields
+  const commonPlans: ISources["commonFields"] = sources.commonFields;
+  const advancedPlans: ISources["advancedFields"] = sources.advancedFields;
   var filteredInstallments: IPlanField[] = [];
 
   // Gets plans from selected source
@@ -21,7 +19,7 @@ export default function PlansDisplay({
 
   // togglePlanCheckbox handles individual checkbox plans states
   const togglePlanCheckbox = (uid: string) => {
-    const { selectedPlans, advancedPlans} = state;
+    const { selectedPlans, advancedPlans } = state;
 
     // set selected plans
     const selectedPlansNew = selectedPlans.includes(uid)
@@ -64,9 +62,9 @@ export default function PlansDisplay({
 
     // updates global state
     setState({
-        ...state,
-        selectedPlans: newSelectedPlans,
-        advancedPlans: newAdvancedPlans,
+      ...state,
+      selectedPlans: newSelectedPlans,
+      advancedPlans: newAdvancedPlans,
     });
   };
 
@@ -78,32 +76,31 @@ export default function PlansDisplay({
   };
 
   return (
-    state.selectedSource &&
-    (
+    state.selectedSource && (
       <div className="mobbex-pc-config-bottom-section">
         <PlansSearcher onSearch={setSearchQuery} />
         <span className="mobbex-pc-config-checkbox-title">
           Selecciona uno de los planes
         </span>
-        
+
         <div className="mobbex-pc-config-checkbox-container">
-          {filteredInstallments.length > 0 && 
-          <label className="mobbex-pc-checkbox-label">
-            <input
-              className="mobbex-pc-config-checkbox"
-              type="checkbox"
-              name={`mobbex_plan_${state.selectedSource}_all`}
-              id={`mobbex_plan_${state.selectedSource}_all`}
-              checked={filteredInstallments.every((i) =>
-                state.selectedPlans.includes(i.id)
-              )}
-              onChange={activateAllCheckboxes}
-            />
-            <span className="mobbex-pc-checkbox-text">
-              Activar todos los planes
-            </span>
-          </label>
-          }
+          {filteredInstallments.length > 0 && (
+            <label className="mobbex-pc-checkbox-label">
+              <input
+                className="mobbex-pc-config-checkbox"
+                type="checkbox"
+                name={`mobbex_plan_${state.selectedSource}_all`}
+                id={`mobbex_plan_${state.selectedSource}_all`}
+                checked={filteredInstallments.every((i) =>
+                  state.selectedPlans.includes(i.id)
+                )}
+                onChange={activateAllCheckboxes}
+              />
+              <span className="mobbex-pc-checkbox-text">
+                Activar todos los planes
+              </span>
+            </label>
+          )}
 
           {Object.values(commonPlans).map((commonPlan) => (
             <div
@@ -122,7 +119,10 @@ export default function PlansDisplay({
                   checked={true}
                   disabled={true}
                 />
-                <span className="mobbex-pc-checkbox-text" title={commonPlan.description}>
+                <span
+                  className="mobbex-pc-checkbox-text"
+                  title={commonPlan.description}
+                >
                   {commonPlan.label}
                 </span>
               </label>
@@ -132,8 +132,8 @@ export default function PlansDisplay({
                   onPlanChecked={handleFeaturedPlansUpdate}
                 />
               )}
-             </div>
-          ))} 
+            </div>
+          ))}
           {filteredInstallments.map((advancedPlan) => (
             <div
               key={advancedPlan.id}
@@ -151,7 +151,10 @@ export default function PlansDisplay({
                   checked={state.selectedPlans.includes(advancedPlan.id)}
                   onChange={() => togglePlanCheckbox(advancedPlan.id)}
                 />
-                <span className="mobbex-pc-checkbox-text" title={advancedPlan.description}>
+                <span
+                  className="mobbex-pc-checkbox-text"
+                  title={advancedPlan.description}
+                >
                   {advancedPlan.label}
                 </span>
               </label>

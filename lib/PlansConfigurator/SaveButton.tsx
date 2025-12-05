@@ -1,4 +1,4 @@
-import { ISaveButton } from "./interface";
+import { ISaveButton } from "./interfaces";
 
 export default function SaveButton({ settings }: ISaveButton) {
   return (

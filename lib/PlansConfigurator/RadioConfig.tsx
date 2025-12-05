@@ -6,12 +6,12 @@ export default function RadioConfig() {
   const { state, setState } = useContext(GlobalContext);
 
   const handleCustomFeatured = (selectedConfig: string) => {
-    setState({manual: selectedConfig === "manual"});
+    setState({ manual: selectedConfig === "manual" });
   };
 
   const handleShowFeaturedPlans = (selectedConfig: string) => {
-    setState({showFeaturedPlans : selectedConfig === "show"})
-  }
+    setState({ showFeaturedPlans: selectedConfig === "show" });
+  };
 
   return (
     <>
@@ -24,13 +24,13 @@ export default function RadioConfig() {
             id: "not_show",
             value: "not_show",
             label: "Ocultar planes destacados",
-            defaultChecked: !state.showFeaturedPlans
+            defaultChecked: !state.showFeaturedPlans,
           },
           {
             id: "show",
             value: "show",
             label: "Mostrar planes destacados",
-            defaultChecked: state.showFeaturedPlans
+            defaultChecked: state.showFeaturedPlans,
           },
         ]}
       />
@@ -44,15 +44,17 @@ export default function RadioConfig() {
               id: "best_three",
               value: "best_three",
               label: "Mostrar los 2 mejores planes",
-              title: "Calcula automáticamente y muestra hasta 2 planes de financiación más convenientes según precio y cuotas. ",
-              defaultChecked: !state.manual
+              title:
+                "Calcula automáticamente y muestra hasta 2 planes de financiación más convenientes según precio y cuotas. ",
+              defaultChecked: !state.manual,
             },
             {
               id: "manual",
               value: "manual",
               label: "Definir manualmente los planes destacados",
-              title: "Se mostrarán los planes seleccionados en hasta 3 filas con los medios de pago que compartan precio y cantidad de cuotas",
-              defaultChecked: state.manual
+              title:
+                "Se mostrarán los planes seleccionados en hasta 3 filas con los medios de pago que compartan precio y cantidad de cuotas",
+              defaultChecked: state.manual,
             },
           ]}
         />

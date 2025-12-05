@@ -31,8 +31,8 @@ export interface ISources {
 
 export interface IPlansConfiguratorProps {
   sources: ISources;
-  manual : boolean;
-  formName: string,
+  manual: boolean;
+  formName: string;
   selectedPlans: string[];
   advancedPlans: string[];
   featuredPlans: string[];
@@ -43,7 +43,7 @@ export interface ISourcesLayout {
   sourceNames: ISources["sourceNames"];
 }
 
-export  interface ISaveButton {
+export interface ISaveButton {
   settings: string[];
 }
 
@@ -59,17 +59,23 @@ export interface IRadioOption {
 
 export interface IRadioGroup {
   name: string;
-  options: { id: string; value: string; label: string, title?:string, defaultChecked?:boolean }[];
+  options: {
+    id: string;
+    value: string;
+    label: string;
+    title?: string;
+    defaultChecked?: boolean;
+  }[];
   defaultValue?: string;
   onChange?: (value: string) => void;
 }
 
 export interface IRadioConfig {
-  onCustomFeatured: (value:boolean) => void;
+  onCustomFeatured: (value: boolean) => void;
 }
 
 export interface IPlansDisplay {
-  sources : ISources;
+  sources: ISources;
 }
 
 export interface IPlansSearcher {
@@ -77,7 +83,7 @@ export interface IPlansSearcher {
 }
 
 export interface IFeaturedPlanCheckbox {
-  referenceTo : string,
-  featuredPlans?: string[] 
+  referenceTo: string;
+  featuredPlans?: string[];
   onPlanChecked?: (value: string[]) => void;
 }

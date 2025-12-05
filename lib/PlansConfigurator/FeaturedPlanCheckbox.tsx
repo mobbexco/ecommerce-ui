@@ -1,6 +1,6 @@
 import { GlobalContext } from "../context";
 import { useContext, useEffect } from "react";
-import { IFeaturedPlanCheckbox } from "./interface";
+import { IFeaturedPlanCheckbox } from "./interfaces";
 
 export default function FeaturedPlanCheckbox({
   referenceTo,

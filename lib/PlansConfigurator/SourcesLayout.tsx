@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ISourcesLayout } from "./interface";
+import { ISourcesLayout } from "./interfaces";
 import { GlobalContext } from "../context";
 
 export default function SourcesLayout({ sourceNames }: ISourcesLayout) {

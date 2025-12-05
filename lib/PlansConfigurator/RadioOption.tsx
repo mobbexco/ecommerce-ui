@@ -1,4 +1,4 @@
-import { IRadioOption } from "./interface";
+import { IRadioOption } from "./interfaces";
 
 export function RadioOption({
   id,
