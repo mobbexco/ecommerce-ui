@@ -17,54 +17,32 @@ export default function PlansDisplay({ sources }: IPlansDisplay) {
       i.label.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-  // togglePlanCheckbox handles individual checkbox plans states
+  // Handles individual checkbox plans states
   const togglePlanCheckbox = (uid: string) => {
-    const { selectedPlans, advancedPlans } = state;
-
-    // set selected plans
-    const selectedPlansNew = selectedPlans.includes(uid)
-      ? selectedPlans.filter((id: string) => id !== uid)
-      : [...new Set([...selectedPlans, uid])];
-
-    // set advanced plans
-    const advancedPlansNew = advancedPlans.includes(uid)
-      ? advancedPlans.filter((id: string) => id !== uid)
-      : [...new Set([...advancedPlans, uid])];
-
     setState({
-      selectedPlans: selectedPlansNew,
-      advancedPlans: advancedPlansNew,
+      advancedPlans: state.advancedPlans.includes(uid)
+        ? state.advancedPlans.filter((id: string) => id !== uid)
+        : [...state.advancedPlans, uid],
     });
   };
 
-  // activateAllCheckboxes handles bulk activation only for current source
-  const activateAllCheckboxes = (): void => {
-    // gets actual source uids
+  // Handles bulk activation only for current source
+  const activateAllCheckboxes = () => {
     const sourceUids = filteredInstallments.map((i) => i.id);
 
-    // keep selected plans from other source
-    const currentSelected = state.selectedPlans.filter(
+    // IDs from outside the current source
+    const outside = state.advancedPlans.filter(
       (id: string) => !sourceUids.includes(id)
     );
 
-    // verify actual source plans state
-    const allSelectedInSource = sourceUids.every((id) =>
-      state.selectedPlans.includes(id)
+    // Are all plans from this source active?
+    const allSelected = sourceUids.every((id: string) =>
+      state.advancedPlans.includes(id)
     );
 
-    const newSelectedPlans = allSelectedInSource
-      ? currentSelected
-      : [...new Set([...currentSelected, ...sourceUids])];
-
-    const newAdvancedPlans = allSelectedInSource
-      ? state.advancedPlans.filter((id: string) => !sourceUids.includes(id))
-      : [...new Set([...state.advancedPlans, ...sourceUids])];
-
-    // updates global state
     setState({
       ...state,
-      selectedPlans: newSelectedPlans,
-      advancedPlans: newAdvancedPlans,
+      advancedPlans: allSelected ? outside : [...outside, ...sourceUids],
     });
   };
 
@@ -92,7 +70,7 @@ export default function PlansDisplay({ sources }: IPlansDisplay) {
                 name={`mobbex_plan_${state.selectedSource}_all`}
                 id={`mobbex_plan_${state.selectedSource}_all`}
                 checked={filteredInstallments.every((i) =>
-                  state.selectedPlans.includes(i.id)
+                  state.advancedPlans.includes(i.id)
                 )}
                 onChange={activateAllCheckboxes}
               />
@@ -148,7 +126,7 @@ export default function PlansDisplay({ sources }: IPlansDisplay) {
                   type="checkbox"
                   name={`mobbex_plan_${state.selectedSource}_${advancedPlan.id}`}
                   id={`mobbex_plan_${state.selectedSource}_${advancedPlan.id}`}
-                  checked={state.selectedPlans.includes(advancedPlan.id)}
+                  checked={state.advancedPlans.includes(advancedPlan.id)}
                   onChange={() => togglePlanCheckbox(advancedPlan.id)}
                 />
                 <span

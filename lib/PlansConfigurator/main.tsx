@@ -8,17 +8,15 @@ declare global {
     mobbexSources: ISources;
     platformFormName: string;
     mobbexFeaturedPlans: string[];
-    mobbexSelectedPlans: string[];
     mobbexAdvancedPlans: string[];
     mobbexShowFeaturedPlans: boolean;
   }
 }
 
-const divId = "mbbx-plans-configurator";
 let root: ReturnType<typeof createRoot> | null = null;
 
 function renderPlansConfigurator() {
-  const container = document.getElementById(divId);
+  const container = document.getElementById("mbbx-plans-configurator");
 
   // Exit on container not found
   if (!container)
@@ -34,7 +32,6 @@ function renderPlansConfigurator() {
       formName={window.platformFormName || ""}
       sources={window.mobbexSources || undefined}
       featuredPlans={window.mobbexFeaturedPlans || []}
-      selectedPlans={window.mobbexSelectedPlans || []}
       advancedPlans={window.mobbexAdvancedPlans || []}
       showFeaturedPlans={window.mobbexShowFeaturedPlans || false}
     />

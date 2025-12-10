@@ -11,7 +11,6 @@ export interface IState {
   selectedSource: string;
   featuredPlans: any[];
   showFeaturedPlans: boolean;
-  selectedPlans: string[];
 }
 
 export interface ISources {
@@ -33,14 +32,13 @@ export interface IPlansConfiguratorProps {
   sources: ISources;
   manual: boolean;
   formName: string;
-  selectedPlans: string[];
   advancedPlans: string[];
   featuredPlans: string[];
   showFeaturedPlans: boolean;
 }
 
 export interface ISourcesLayout {
-  sourceNames: ISources["sourceNames"];
+  sourceNames: ISources['sourceNames'];
 }
 
 export interface ISaveButton {

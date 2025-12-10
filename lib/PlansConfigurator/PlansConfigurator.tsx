@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import SourcesLayout from "./SourcesLayout";
 import RadioConfig from "./RadioConfig";
 import styles from "./styles.css?inline";
@@ -13,7 +13,6 @@ export default function PlansConfigurator({
   sources,
   formName,
   featuredPlans,
-  selectedPlans,
   advancedPlans,
   showFeaturedPlans,
 }: IPlansConfiguratorProps) {
@@ -23,27 +22,7 @@ export default function PlansConfigurator({
     featuredPlans,
     showFeaturedPlans,
     selectedSource: "",
-    selectedPlans: [...new Set(selectedPlans)],
   });
-  // TO DO: Evaluate whether it is necessary to use selectedPlans, since ultimately what we end up using is advancedPlans.
-
-  // Merges common plans with selected advanced plans
-  // Common plans from console appear pre-checked
-  useEffect(() => {
-    if (sources?.commonFields) {
-      const newCommonPlans = Object.values(sources.commonFields).map(
-        (i) => i.id
-      );
-
-      setState((prevState) => ({
-        ...prevState,
-        selectedPlans: [
-          ...new Set([...prevState.selectedPlans, ...newCommonPlans]),
-        ],
-        advancedPlans: advancedPlans,
-      }));
-    }
-  }, [sources?.commonFields, advancedPlans]);
 
   if (!sources)
     console.error(
@@ -98,12 +77,6 @@ export default function PlansConfigurator({
           name="mobbex_advanced_plans"
           data-form-part={formName}
           value={JSON.stringify(state.advancedPlans)}
-        />
-        <input
-          type="hidden"
-          name="mobbex_selected_plans"
-          data-form-part={formName}
-          value={JSON.stringify(state.selectedPlans)}
         />
         <input
           type="hidden"

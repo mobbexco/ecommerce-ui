@@ -7,7 +7,7 @@ export default function FeaturedPlanCheckbox({
   onPlanChecked,
 }: IFeaturedPlanCheckbox) {
   const { state } = useContext(GlobalContext);
-  const planChecked = state.selectedPlans.includes(referenceTo);
+  const planChecked = state.advancedPlans.includes(referenceTo);
 
   // auto sync states
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function FeaturedPlanCheckbox({
   // handles featured plan merge
   const toggleFeaturedPlan = (id: string) => {
     // remove plan from featuredPlans if its not checked
-    if (!state.selectedPlans.includes(id)) {
+    if (!state.advancedPlans.includes(id)) {
       const updated = state.featuredPlans.filter((plan: string) => plan !== id);
       onPlanChecked?.(updated);
       return;
