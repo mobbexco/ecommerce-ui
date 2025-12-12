@@ -44,7 +44,7 @@ export default function PlansConfigurator({
               <div className="mobbex-pc-config">
                 <div className="mobbex-pc-config-top-section">
                   <span className="mobbex-pc-title">
-                    Configurar preferencia de planes destacados
+                    Planes destacados
                     <div className="tool-tip-container">
                       <span className="mobbex-tool-tip">?</span>
                       <div className="mobbex-tooltip-image">
@@ -52,14 +52,15 @@ export default function PlansConfigurator({
                           ¿Qué es un plan destacado?
                         </span>
                         <span className="tooltip-text">
-                          Los planes destacados son los que tu cliente verá
-                          primero en la página del producto. Puedes elegir
-                          destacarlos de forma automática (según cantidad de
-                          cuotas, interés y descuentos) o de forma manual,
-                          seleccionando vos mismo cuáles quieres resaltar.
+                          Son los planes que se muestran por encima del botón
+                          para "Ver financiación" en la página del
+                          producto/carrito. Puedes elegir que se seleccionen de
+                          forma automática (según cantidad de cuotas, interés y
+                          descuentos) o de forma manual, seleccionando vos mismo
+                          cuáles quieres destacar.
                         </span>
                         <span className="tooltip-footer-text">
-                          Asi se verán los planes destacados:
+                          Ejemplo de vista
                         </span>
                         <img src={tooltipImg} alt="imagen_ejemplo" />
                       </div>

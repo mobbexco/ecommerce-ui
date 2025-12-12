@@ -23,13 +23,13 @@ export default function RadioConfig() {
           {
             id: "not_show",
             value: "not_show",
-            label: "Ocultar planes destacados",
+            label: "Ocultar",
             defaultChecked: !state.showFeaturedPlans,
           },
           {
             id: "show",
             value: "show",
-            label: "Mostrar planes destacados",
+            label: "Mostrar",
             defaultChecked: state.showFeaturedPlans,
           },
         ]}
