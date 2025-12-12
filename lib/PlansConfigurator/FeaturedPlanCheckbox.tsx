@@ -4,37 +4,30 @@ import { IFeaturedPlanCheckbox } from "./interfaces";
 
 export default function FeaturedPlanCheckbox({
   referenceTo,
-  onPlanChecked,
+  planChecked,
 }: IFeaturedPlanCheckbox) {
-  const { state } = useContext(GlobalContext);
-  const planChecked = state.advancedPlans.includes(referenceTo);
+  const { state, setState } = useContext(GlobalContext);
 
   // auto sync states
   useEffect(() => {
     // remove plan from featuredPlans if its not checked
     if (!state.featuredPlans.includes(referenceTo)) {
-      const updated = state.featuredPlans.filter(
-        (plan: string) => plan !== referenceTo
-      );
-      onPlanChecked?.(updated);
+      setState({
+        featuredPlans: state.featuredPlans.filter(
+          (plan: string) => plan !== referenceTo
+        ),
+      });
     }
-  }, planChecked);
+  }, [planChecked]);
 
   // handles featured plan merge
   const toggleFeaturedPlan = (id: string) => {
-    // remove plan from featuredPlans if its not checked
-    if (!state.advancedPlans.includes(id)) {
-      const updated = state.featuredPlans.filter((plan: string) => plan !== id);
-      onPlanChecked?.(updated);
-      return;
-    }
-
-    // add plan
-    const updated = state.featuredPlans.includes(id)
-      ? state.featuredPlans.filter((plan: string) => plan !== id)
-      : [...state.featuredPlans, id];
-
-    onPlanChecked?.(updated);
+    setState({
+      featuredPlans:
+        !planChecked || state.featuredPlans.includes(id)
+          ? state.featuredPlans.filter((plan: string) => plan !== id)
+          : [...state.featuredPlans, id],
+    });
   };
 
   return (

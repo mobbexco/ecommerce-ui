@@ -6,7 +6,6 @@ import { GlobalContext } from "../context";
 
 export default function PlansDisplay({ sources }: IPlansDisplay) {
   const { state, setState } = useContext(GlobalContext);
-  const commonPlans: ISources["commonFields"] = sources.commonFields;
   const advancedPlans: ISources["advancedFields"] = sources.advancedFields;
   var filteredInstallments: IPlanField[] = [];
 
@@ -46,12 +45,11 @@ export default function PlansDisplay({ sources }: IPlansDisplay) {
     });
   };
 
-  // handleFeaturedPlansUpdate manages featured plans activation
-  const handleFeaturedPlansUpdate = (updatedFeaturedPlans: string[]): void => {
-    setState({
-      featuredPlans: updatedFeaturedPlans,
-    });
-  };
+  const commonPlans = state.selectedSource
+    ? Object.values(sources.commonFields).filter(({ label }) =>
+        sources.sourceGroups?.[label]?.includes(state.selectedSource)
+      )
+    : [];
 
   return (
     state.selectedSource && (
@@ -80,7 +78,7 @@ export default function PlansDisplay({ sources }: IPlansDisplay) {
             </label>
           )}
 
-          {Object.values(commonPlans).map((commonPlan) => (
+          {commonPlans.map((commonPlan) => (
             <div
               key={commonPlan.id}
               className="mobbex-pc-checkbox-label-dinamic"
@@ -107,7 +105,7 @@ export default function PlansDisplay({ sources }: IPlansDisplay) {
               {state.manual && (
                 <FeaturedPlanCheckbox
                   referenceTo={commonPlan.id}
-                  onPlanChecked={handleFeaturedPlansUpdate}
+                  planChecked={true}
                 />
               )}
             </div>
@@ -140,7 +138,7 @@ export default function PlansDisplay({ sources }: IPlansDisplay) {
               {state.manual && (
                 <FeaturedPlanCheckbox
                   referenceTo={advancedPlan.id}
-                  onPlanChecked={handleFeaturedPlansUpdate}
+                  planChecked={state.advancedPlans.includes(advancedPlan.id)}
                 />
               )}
             </div>
