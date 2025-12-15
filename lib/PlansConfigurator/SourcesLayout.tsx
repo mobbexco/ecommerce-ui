@@ -31,7 +31,7 @@ export default function SourcesLayout({ sourceNames }: ISourcesLayout) {
                 </div>
               </div>
             </div>
-            <div className="mobbex-arrow">{">"}</div>
+            <div className="mobbex-arrow">〉</div>
           </button>
         );
       })}
