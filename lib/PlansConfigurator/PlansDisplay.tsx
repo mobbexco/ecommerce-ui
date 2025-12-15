@@ -97,9 +97,11 @@ export default function PlansDisplay({ sources }: IPlansDisplay) {
                 />
                 <span
                   className="mobbex-pc-checkbox-text"
-                  title={commonPlan.description}
+                  title={commonPlan?.label + "\n" + commonPlan?.description}
                 >
-                  {commonPlan.label}
+                  {commonPlan?.label?.length <= 19
+                    ? commonPlan?.label
+                    : commonPlan?.label?.slice(0, 15) + "..."}
                 </span>
               </label>
               {state.manual && (
@@ -129,9 +131,11 @@ export default function PlansDisplay({ sources }: IPlansDisplay) {
                 />
                 <span
                   className="mobbex-pc-checkbox-text"
-                  title={advancedPlan.description}
+                  title={advancedPlan?.label + "\n" + advancedPlan?.description}
                 >
-                  {advancedPlan.label}
+                  {advancedPlan?.label?.length <= 19
+                    ? advancedPlan?.label
+                    : advancedPlan?.label?.slice(0, 15) + "..."}
                 </span>
               </label>
 

@@ -6,7 +6,8 @@
     color: #000;
     display: grid;
     font-family: sans-serif;
-    width: 700px;
+    min-width: 700px;
+    max-width: 800px;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
@@ -356,10 +357,6 @@
 
 .mobbex-pc-featured-checkbox-label-disabled{
     color: #a39db7;
-}
-
-.mobbex-pc-checkbox-text {
-    width: max-content;
 }
 
 .mobbex-pc-featured-checkbox {
