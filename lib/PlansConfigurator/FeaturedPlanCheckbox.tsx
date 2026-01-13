@@ -11,7 +11,8 @@ export default function FeaturedPlanCheckbox({
   // auto sync states
   useEffect(() => {
     // remove plan from featuredPlans if its not checked
-    if (!state.featuredPlans.includes(referenceTo)) {
+    // or plan is not checked
+    if (!planChecked || !state.featuredPlans.includes(referenceTo)) {
       setState({
         featuredPlans: state.featuredPlans.filter(
           (plan: string) => plan !== referenceTo
